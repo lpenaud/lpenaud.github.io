@@ -1,0 +1,13 @@
+# Python
+__pycache__
+
+# Vagrant
+.vagrant
+*.log
+
+# Output
+output
+
+# Downloaded contents
+themes
+plugins
