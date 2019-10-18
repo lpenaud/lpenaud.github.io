@@ -6,7 +6,7 @@ __pycache__
 *.log
 
 # Output
-output
+public
 
 # Downloaded contents
 themes
