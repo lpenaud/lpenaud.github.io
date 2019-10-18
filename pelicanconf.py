@@ -66,7 +66,12 @@ AUTHOR_FEED_RSS = None
 #LINKS = ()
 
 # Social widget
-SOCIAL = (('github', 'https://github.com/lpenaud'),)
+SOCIAL = (
+    ('envelope-o', 'mailto:l.penaud@zaclys.net'),
+    ('github', 'https://github.com/lpenaud'),
+    ('linkedin', 'https://www.linkedin.com/in/lo%C3%AFc-penaud-296067129/'),
+    ('twitter', 'https://twitter.com/LoicPenaud'),
+)
 
 DEFAULT_PAGINATION = 10
 
