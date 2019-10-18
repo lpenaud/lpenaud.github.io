@@ -9,5 +9,6 @@ Vagrant
 :lang: en
 :authors: Penaud Loïc
 :summary: Pourquoi Vagrant c'est bien et comment l'installer et l'utiliser
+:status: draft
 
 To do
