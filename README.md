@@ -1,6 +1,6 @@
 # lpenaud.github.io
 
-My website powered by Pelican - Flex theme by Alexandre Vicenzi
+My website powered by [Pelican](https://github.com/getpelican/pelican) - [Flex theme by Alexandre Vicenzi](https://github.com/alexandrevicenzi/Flex)
 
 ## TODO
 
