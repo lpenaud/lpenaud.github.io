@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
+from datetime import datetime
 
 PORT = 8000
 BIND = '0.0.0.0'
 
 AUTHOR = 'Loïc Penaud'
 SITENAME = AUTHOR
-SITEURL = ''
+SITEURL = 'http://localhost:8000'
 SITETITLE = 'Loïc Penaud'
 SITESUBTITLE = 'Développeur web'
 SITEDESCRIPTION = 'Site d\'article sur l\'informatique'
@@ -20,18 +21,18 @@ PYGMENTS_STYLE = 'manni'
 BROWSER_COLOR = '#333'
 ROBOTS = 'index, follow'
 
+COPYRIGHT_YEAR = datetime.now().year
+COPYRIGHT_NAME = AUTHOR
 CC_LICENSE = {
     'name': 'Creative Commons Attribution-ShareAlike',
     'version': '4.0',
     'slug': 'by-sa',
 }
 
-COPYRIGHT_YEAR = 2019
-
 MAIN_MENU = True
 
 PATH = 'content'
-# STATIC_PATHS = ['includes']
+STATIC_PATHS = ['images']
 
 TIMEZONE = 'Europe/Paris'
 
