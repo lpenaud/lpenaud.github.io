@@ -2,8 +2,8 @@
 Vagrant
 =======
 
-:date: 2019-10-17 19:18:42
-:modified: 2019-10-17 19:21:04
+:date: 2019-10-20 19:59:58
+:modified: 2019-10-20 20:00:03
 :category: Développement
 :tags: virtualisation, développement, virtualbox, vagrant, linux, windows
 :slug: vagrant
@@ -13,7 +13,7 @@ Vagrant
 
 Vagrant est un outil puissant pour les développeurs surtout lorsqu’on sait s’en servir.
 
-Cette article a pour but de vous faire savoir pourquoi j’ai commencé à utiliser Vagrant et à faire un tour d’horizon sur les fonctionnalités qu’il propose.
+Cet article a pour but de vous faire savoir pourquoi j’ai commencé à utiliser Vagrant et à faire un tour d’horizon sur les fonctionnalités qu’il propose.
 
 ------------------
 
@@ -23,20 +23,20 @@ Cette article a pour but de vous faire savoir pourquoi j’ai commencé à utili
 ------------------
 
 ---------------------
-Pourquoi l’utiliser ?
+Pourquoi l’utiliser ?
 ---------------------
 
 Le problème initial
 ===================
 
-Bien que je suis un très fan de GNU / Linux parfois j’utilise Windows.
+Bien que je sois un très fan de GNU / Linux parfois j’utilise Windows.
 Cependant, je n’apprécie pas Windows en tant que système d’exploitation pour faire du développement
 et j’ai trouvé très vite lourd le fait de devoir passer d’un système d’exploitation à un autre à l’aide d’un amorçage double [1]_.
 
 La solution
 ===========
 
-Vagrant permet de créer facilement une machine virtuel sur VirtualBox et plein d’autre hyperviseur.
+Vagrant permet de créer facilement une machine virtuelle sur VirtualBox et plein d’autre hyperviseur.
 Ce qui me permet de développer sur GNU / Linux, le tout en étant sur Windows.
 
 De plus à l’aide d’un fichier qu’on appelle ``Vagrantfile`` on peut configurer facilement la machine virtuelle.
@@ -45,7 +45,7 @@ De plus à l’aide d’un fichier qu’on appelle ``Vagrantfile`` on peut confi
 Comment l’utiliser ?
 --------------------
 
-Première étape - Installations
+Première étape – Installations
 ==============================
 
 GNU / Linux
@@ -70,7 +70,7 @@ Ou vous utiliser chocolatey_ avec la commande suivante :
 
 .. note:: 
 
-    Au vus de se prémunir d’un problème d’encodage,
+    Au vu de se prémunir d’un problème d’encodage,
     lancer VirtualBox puis aller dans le menu fichiers,
     puis changer le dossier par défaut des machines vers un dossier sans espace ni accent à la racine de l’un de vos lecteurs.
 
@@ -90,11 +90,11 @@ Ou vous utiliser chocolatey_ avec la commande suivante :
 
 .. note:: 
 
-    Au vus de se prémunir d’un problème d’encodage,
+    Au vu de se prémunir d’un problème d’encodage,
     rajouter la variable suivante dans votre environnement ``VAGRANT_HOME=<chemin vers un dossier sans espace ni accent à la racine de l’un de vos lecteurs>`` 
 
 
-Seconde étape - Initialisation
+Seconde étape – Initialisation
 ==============================
 
 Il faut choisir une Vagrant Boxes qui est un système d’exploitation pré-configuré il en existe plein.
@@ -106,9 +106,9 @@ Puis il suffit de taper la commande suivante dans le répertoire de votre choix 
 
     vagrant init ubuntu/bionic64
 
-Cette commande devra générer une fichier nommée ``Vagrantfile``.
+Cette commande devra générer un fichier nommé ``Vagrantfile``.
 
-Troisième étape - Lancement
+Troisième étape – Lancement
 ===========================
 
 Une fois que vous avez votre ``Vagrantfile``, vous pouvez taper la commande suivante dans le même répertoire afin de lancer la machine virtuelle :
@@ -119,10 +119,10 @@ Une fois que vous avez votre ``Vagrantfile``, vous pouvez taper la commande suiv
 
 La première fois ça prend toujours un peu plus de temps, car Vagrant télécharge la boîte.
 
-Quatrième étape - Communication
+Quatrième étape – Communication
 ===============================
 
-Une fois que votre machine virtuelle c’est bien initialisée.
+Une fois que votre machine virtuelle c’est bien initialisé.
 Vous pouvez communiquer avec elle.
 
 Par ssh
@@ -137,18 +137,18 @@ Vous pouvez lancer la commande suivante afin de communiquer en ssh avec la machi
 Via le répertoire partagé
 -------------------------
 
-En allant listant le contenue du répertoire ``/vagrant`` de votre machine virtuelle vous pouvez constater qu’il y a les même fichiers que sur votre machine.
+En allant listant le contenu du répertoire ``/vagrant`` de votre machine virtuelle vous pouvez constater qu’il y a les même fichiers que sur votre machine.
 Les machines créées par Vagrant, partage toujours le dossier où il y a le ``Vagrantfile`` de votre machine hôte.
 
 Donc si vous créez un fichier dans ce répertoire il sera automatiquement partagé entre la machine hôte et virtuelle.
 
-Cinquième étape - Configuration
+Cinquième étape – Configuration
 ===============================
 
 Maintenant nous allons voir des fonctionnalités que propose Vagrant grâce au ``Vagrantfile``.
 En effet avoir une belle machine virtuelle c’est bien mais configurée directement c’est mieux.
-Cela vous permettre de rajouter à vos projet le fichier ``Vagrantfile`` qui permettra aux développeur
-et à vous même d’avoir un environnement de développement prêt même si vous changez d’ordinateur.
+Cela vous permet de rajouter à vos projets le fichier ``Vagrantfile`` qui permettra aux développeurs
+et à vous-même d’avoir un environnement de développement prêt même si vous changez d’ordinateur.
 
 .. caution::
 
@@ -163,7 +163,7 @@ Redirection de port
 
 L’un des points pratique de Vagrant c’est qu’on peut facilement faire de la redirection de port.
 
-C’est d’ailleurs l’une des première chose que fait Vagrant après avoir allumé votre machine.
+C’est d’ailleurs l’une des premières chose que fait Vagrant après avoir allumé votre machine.
 Pour le vérifier vous pouvez taper cette ligne de votre terminale :
 
 .. code-block:: shell
@@ -182,7 +182,7 @@ Comme l’indiquer sur le schéma suivant :
 Redirection de l’hôte local de votre machine
 ````````````````````````````````````````````
 
-Vous pouvez rajouter rediriger d’autre ports de la machine virtuelle.
+Vous pouvez rajouter rediriger d’autres ports de la machine virtuelle.
 
 Imaginons que votre application utilise le port 8000 avec le protocole http et que vous souhaitez y accéder à l’adresse suivante : ``localhost:8000``
 
@@ -192,12 +192,12 @@ Décommentez la ligne 31 de votre ``Vagrantfile`` :
 
     config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
 
-Cette ligne signifie que le port 80 de votre machine virtuelle va être redirigé sur le port 8080 de votre adresse local.
+Cette ligne signifie que le port 80 de votre machine virtuelle va être redirigé sur le port 8080 de l’hôte local.
 Il suffit donc de changer l’argument ``guest`` et ``host`` par 8000.
 
 .. caution::
 
-    Votre application sur votre machine virtuel ne doit pas écouter que le localhost.
+    Votre application sur votre machine virtuelle ne doit pas écouter que l'hôte local.
     Il faut qu’elle écoute son adresse publique.
     La solution la plus simple est de changer l’adresse d’écoute par l’adresse ``0.0.0.0`` si ce n’est pas déjà fait.
 
@@ -214,7 +214,7 @@ Vous devriez avoir donc cette ligne :
 Étendre la portée de votre machine virtuelle
 ````````````````````````````````````````````
 
-Si vous voulez que les autres machines de votre réseau puisse accéder elle aussi au services de votre machine virtuelle vous pouvez modifier la ligne 26 :
+Si vous voulez que les autres machines de votre réseau puissent accéder elle aussi aux services de votre machine virtuelle vous pouvez modifier la ligne 26 :
 
 .. code-block:: ruby
 
@@ -226,7 +226,7 @@ Dans ce cas, le port 8000 de votre machine virtuelle sera accessible via le port
 
     <div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;lightbox&quot;:false,&quot;nav&quot;:true,&quot;zoom&quot;:1.5,&quot;resize&quot;:true,&quot;toolbar&quot;:&quot;zoom&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;Electron\&quot; modified=\&quot;2019-10-19T16:27:54.784Z\&quot; agent=\&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/12.1.0 Chrome/76.0.3809.139 Electron/6.0.7 Safari/537.36\&quot; etag=\&quot;bvYsO9_oSJATClRZsn9X\&quot; version=\&quot;12.1.0\&quot; type=\&quot;device\&quot; pages=\&quot;3\&quot;&gt;&lt;diagram name=\&quot;step-3\&quot; id=\&quot;oYa7kyQJZyjASMcxxCIH\&quot;&gt;5VlNc5swEP01PpZBCLA4xnHSTqeddppO2xwVkEEtRoyQazu/visQ2CCP03qCm4+TpUVaSe/tW61hgi+Xm7eSltlHkbB84rnJZoLnE89DiATwoy3bxhK2hlTyxAzaGW74PTNG11hXPGFVb6ASIle87BtjURQsVj0blVKs+8MWIu+vWtKUWYabmOa29TtPVNZYiTfd2d8xnmZm5YDg5sGStmPNQaqMJmK9Z8JXE3wphVBNa7m5ZLnGroXl/Zvk9n79jVxXV1/KhPz6vGbqTePs+l+mdCeQrFCP69prXP+m+crA9ZHGGS/YxAtzWGt2J6GV6tY3LtVKx0aNhdq2+MIqQCV0ZuuMK3ZT0lg/WUM0gS1Tyxx6CJq0Kht+F3zDYFMzszaTim0GXD1wUtTBD2HLxJIpuYV5xotvCDMBS0x3vWMftZxme8x3RmoiLu0872CFhkH2H1DGFsqfZMILqthKPgs8nxqgKLRhS0D1pluIQuMnxapINDJzF3pCqkykoqD5ByFKg+FPptTW5Cy6UqKPMCuSC52Bdi7Bcs31XmuXAKrc/ugGQ+dWP3GCtjvf7I+cb01vAS4uRS5kvXWcUEYWMdgrJcUvtvckjAm7W3TU6jOeQCzgJFYyZsfG+SYzU5myYw7x4UiRLKeK/+7v7vFp95+3kMKBkDz3vyvJRtTG0VJBTyJGAm5PAg8IgG246nQD7ds9+26K7rQzxhaAd6b4N1M/Cw7b7gIDDQODDPhu9m9m7V/yA0cQYscdNQe0HNWx053n9HAKrHCqqsyKKJCV6oeRZBW/p3f1AE13qTdYbzmYTYK5Filk56pJ1LVmc54W0M7ZQrvSWuVQ810Ys9IZflaB5HmRfq3TPYT6eMoe4h7awsYHdD2arEOLB+Q6xHEdUN3FAY2/PEbQw1UgOScj01ESLToh0aLXnGh9z/G90HdDMkUo8qJpL0gQmTrBFAcRRh4h7tTFp6VhjA/7+ctlRk7SxArFTKnyFeQELwj6PER2UvDPmRSiY2mauG1V8KJJQYOrEx24O6NzktK+uNpjJRcAUCYqVd+er+L+xPjB+/O8rKCjrLwSsWD01MRi1zVwrTooJA56ilns1Fcvj09lEAyoxDaVCJ2Ty0Ml6Yt+q9ZWx20RvLfOf6uP8V/Wx94o9TF2Iyfy/dDFJCAugSgdFK6uEwVegKZBBFU0IqeVxx4KnIFjdxDUI5fAnv1K/gtLuGSx4qIYM1/FECZMPsuMZV0+aLT/1NDdfVhrSN99ncRXfwA=&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}"></div>
 
-Sinon vous pouvez aussi faire en sorte que machine virtuelle fasse partis de votre réseau, pour cela décommentez la ligne 40.
+Sinon vous pouvez aussi faire en sorte que machine virtuelle fasse partie de votre réseau, pour cela décommentez la ligne 40.
 
 .. code-block:: ruby
 
@@ -243,9 +243,9 @@ Installation des dépendances du projet
 
 L’un des points pratique de Vagrant c’est que l’on peut exécuter des lignes de commande lors du premier démarrage de la machine.
 
-En effet grâce à l’option ``config.vm.provision`` du ``Vagrantfile`` vous pouvez lancer des lignes de commande aux démarrage de votre machine.
+En effet grâce à l’option ``config.vm.provision`` du ``Vagrantfile`` vous pouvez lancer des lignes de commande au démarrage de votre machine.
 
-Par exemple vous pouvez rajouter les commandes suivante installer NGINX :
+Par exemple vous pouvez rajouter les commandes suivantes pour installer NGINX :
 
 .. code-block:: ruby
 
@@ -255,7 +255,7 @@ Par exemple vous pouvez rajouter les commandes suivante installer NGINX :
     SHELL
 
 Ces lignes de commande devront s’éxécuter après l’installation de la machine virtuelle.
-Si vous voulez les exécuter après, vous pouvez tapez cette commande dans le terminal de votre ordinateur :
+Si vous voulez les exécuter après, vous pouvez taper cette commande dans le terminal de votre ordinateur :
 
 .. code-block:: shell
 
@@ -280,20 +280,21 @@ Aide-mémoire
 Commandes
 ---------
 
-- ``vagrant init <vagrant box>`` Crée le ``Vagrantfile`` avec la boîte que vous avez choisi.
+- ``vagrant init <vagrant box>`` Crée le ``Vagrantfile`` avec la boîte que vous avez choisie.
 - ``vagrant up`` Installe et / ou démarre la machine virtuelle configurée par le ``Vagrantfile``.
 - ``vagrant reload`` Redémarrer la machine virtuelle configurée par le ``Vagrantfile``.
 - ``vagrant halt`` Éteint la machine virtuelle configurée par le ``Vagrantfile``.
 - ``vagrant destroy`` Supprime la machine virtuelle configurée par le ``Vagrantfile`` et l'éteint si ce n’est pas déjà fait.
 - ``vagrant provision`` Éxecute le script post-installation de la machine virtuelle configurée par le ``Vagrantfile``.
+- ``vagrant box update`` Met à jour la boîte spécifiée dans le fichier ``Vagrantfile``.
 
 Vagrantfile
 -----------
 
 - ``config.vm.box = "ubuntu/bionic64"`` Le nom de la boîte à installer.
-- ``config.vm.box_check_update`` Si Vagrant doit vérifier si la boîte a des mise à jour disponible (``true`` / ``false`` par défaut ``true``).
+- ``config.vm.box_check_update`` Si Vagrant doit vérifier si la boîte a des mises à jour disponible (``true`` / ``false`` par défaut ``true``).
 - ``config.vm.network "forwarded_port"`` Configure une redirection de port de la machine virtuelle, voir : `Redirection de port`_.
-- ``config.vm.network "private_network"`` Crée un réseau privée entre la machine virtuelle et l’hôte.
+- ``config.vm.network "private_network"`` Crée un réseau privé entre la machine virtuelle et l’hôte.
 - ``config.vm.network "public_network"`` Permet à la machine virtuelle de rejoindre le réseau de l’hôte comme un appareil normal.
 - ``config.vm.synced_folder <chemin vers un dossier de l’hôte> <chemin vers un dossier de la machine virtuelle>`` Permet de rajouter un nouveau dossier à synchroniser entre la machine virtuelle et l’hôte.
 - ``config.vm.provision "shell", <inline | path>`` Script post-installation de la machine virtuelle soit un chemin fait un fichier script (sh) soit directement des instructions, voir : `Installation des dépendances du projet`_. 
