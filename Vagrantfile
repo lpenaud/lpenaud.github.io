@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
-    sudo apt-get install -y python3-pip subversion
+    sudo apt-get install -y python3-pip subversion ghp-import python-pip
     sudo python3 -m pip install pelican
     git clone -b v2.2.0 https://github.com/alexandrevicenzi/Flex /vagrant/themes/Flex
     svn export https://github.com/getpelican/pelican-plugins.git/trunk/i18n_subsites /vagrant/plugins/i18n_subsites
