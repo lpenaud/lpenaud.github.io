@@ -261,7 +261,7 @@ Si vous voulez les exécuter après, vous pouvez taper cette commande dans le te
 
     vagrant provision
 
-Si vous avez un script shell déjà à votre disposition vous pouvez l’exécuter en remplaçant de que nous avons fait au-dessus par :
+Si vous avez un script shell déjà à votre disposition vous pouvez l’exécuter en remplaçant de que nous avons fait plus tôt par :
 
 .. code-block:: ruby
 
