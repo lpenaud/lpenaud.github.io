@@ -32,7 +32,7 @@ CC_LICENSE = {
 MAIN_MENU = True
 
 PATH = 'content'
-STATIC_PATHS = ['images']
+STATIC_PATHS = ['images', 'js']
 
 TIMEZONE = 'Europe/Paris'
 
