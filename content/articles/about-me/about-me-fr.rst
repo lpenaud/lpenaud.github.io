@@ -26,7 +26,7 @@ Je m’appelle Loïc Penaud, j’ai 21 ans et j’habite en Bretagne.
 Comment j’ai commencé l’informatique ?
 --------------------------------------
 
-J’ai commencé l’informatique au lycée, je bidouillais du Python_, et du JavaScript_ sur mon temps libre.
+J’ai commencé l’informatique au lycée, je bidouillais des scripts en Python_, et en JavaScript_ sur mon temps libre.
 
 Ce qui m’a été utile lors de mon projet de fin année de mon baccalauréat Sciences et Technologies de l’Industrie et du Développement Durable (STI2D).
 En effet, j'ai utilisé du JavaScript coté serveur grâce à node.js_.
