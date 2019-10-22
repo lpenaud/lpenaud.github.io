@@ -10,7 +10,7 @@ AUTHOR = 'Loïc Penaud'
 SITENAME = AUTHOR
 SITEURL = 'http://localhost:8000'
 SITETITLE = 'Loïc Penaud'
-SITESUBTITLE = 'Développeur web'
+SITESUBTITLE = 'Développeur Back-end'
 SITEDESCRIPTION = 'Site d\'article sur l\'informatique'
 # TODO: Create SITELOGO & FAVICON
 #SITELOGO = SITEURL + '/images/profile.png'
@@ -50,7 +50,7 @@ JINJA_ENVIRONMENT = {
 
 I18N_SUBSITES = {
     'en': {
-        'SITESUBTITLE': 'Web developer',
+        'SITESUBTITLE': 'Back-end Developer',
         'LOCALE': 'en_US',
         'OG_LOCALE': 'en_US',
     }
