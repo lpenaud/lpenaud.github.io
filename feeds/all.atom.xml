@@ -54,7 +54,11 @@ Then for the first time, I put my passion at the service of my studies.&lt;/p&gt
     &lt;img style="border: 2px solid #242121; border-radius: 21px" alt="/images/resume.pdf" src="/images/resume.png"&gt;
 &lt;/a&gt;&lt;/div&gt;
 </content><category term="Personal"></category><category term="résumé"></category><category term="personal"></category></entry><entry><title>Vagrant</title><link href="https://lpenaud.github.io/vagrant.html" rel="alternate"></link><published>2019-10-20T19:59:58+02:00</published><updated>2019-10-20T20:00:03+02:00</updated><author><name>Penaud Loïc</name></author><id>tag:lpenaud.github.io,2019-10-20:/vagrant.html</id><summary type="html">&lt;p class="first last"&gt;Pourquoi Vagrant c’est bien et comment l’installer et l’utiliser&lt;/p&gt;
-</summary><content type="html">&lt;p&gt;Vagrant est un outil puissant pour les développeurs surtout lorsqu’on sait s’en servir.&lt;/p&gt;
+</summary><content type="html">&lt;div class="figure"&gt;
+&lt;object data="/images/vagrant-logo.svg" type="image/svg+xml"&gt;
+&lt;/object&gt;
+&lt;/div&gt;
+&lt;p&gt;Vagrant est un outil puissant pour les développeurs surtout lorsqu’on sait s’en servir.&lt;/p&gt;
 &lt;p&gt;Cet article a pour but de vous faire savoir pourquoi j’ai commencé à utiliser Vagrant et à faire un tour d’horizon sur les fonctionnalités qu’il propose.&lt;/p&gt;
 &lt;hr class="docutils" /&gt;
 &lt;div class="contents topic" id="sommaire"&gt;
