@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Loïc Penaud - Personnel</title><link href="https://lpenaud.github.io/" rel="alternate"></link><link href="https://lpenaud.github.io/feeds/personnel.atom.xml" rel="self"></link><id>https://lpenaud.github.io/</id><updated>2019-10-21T18:26:39+02:00</updated><subtitle>Développeur web</subtitle><entry><title>À propos de moi</title><link href="https://lpenaud.github.io/about-me.html" rel="alternate"></link><published>2019-10-21T18:26:31+02:00</published><updated>2019-10-21T18:26:39+02:00</updated><author><name>Penaud Loïc</name></author><id>tag:lpenaud.github.io,2019-10-21:/about-me.html</id><summary type="html">&lt;p class="first last"&gt;Qui suis-je ?&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Bonjour, et bienvenue sur mon site où vous pourrez trouver des articles en rapport avec l’informatique.&lt;/p&gt;
+&lt;p&gt;Cet article est là pour faire une brève description de moi.
+À la fin de cet article vous pourrez voir mon &lt;a class="reference internal" href="#curriculum-vitae"&gt;Curriculum Vitae&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="section" id="qui-suis-je"&gt;
+&lt;h2&gt;Qui suis-je&amp;nbsp;?&lt;/h2&gt;
+&lt;p&gt;Je m’appelle Loïc Penaud, j’ai 21 ans et j’habite en Bretagne.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="comment-jai-commence-linformatique"&gt;
+&lt;h2&gt;Comment j’ai commencé l’informatique&amp;nbsp;?&lt;/h2&gt;
+&lt;p&gt;J’ai commencé l’informatique au lycée, je bidouillais des scripts en &lt;a class="reference external" href="https://www.python.org/"&gt;Python&lt;/a&gt;, et en &lt;a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript"&gt;JavaScript&lt;/a&gt; sur mon temps libre.&lt;/p&gt;
+&lt;p&gt;Ce qui m’a été utile lors de mon projet de fin année de mon baccalauréat Sciences et Technologies de l’Industrie et du Développement Durable (STI2D).
+En effet, j'ai utilisé du JavaScript coté serveur grâce à &lt;a class="reference external" href="https://nodejs.org/fr/"&gt;node.js&lt;/a&gt;.
+Donc pour la première fois j’ai mis à profit ma passion pour mes études.&lt;/p&gt;
+&lt;p&gt;Et depuis je continue sur ma lancée, en effet maintenant je suis en Master 1 d’informatique à l’&lt;a class="reference external" href="https://www.univ-brest.fr/"&gt;Université de Bretagne Occidentale (UBO)&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="quel-est-le-but-de-ce-site"&gt;
+&lt;h2&gt;Quel est le but de ce site&amp;nbsp;?&lt;/h2&gt;
+&lt;p&gt;Ce site me permet d’écrire des articles afin de partager mes connaissances, ainsi qu’à les approfondir.&lt;/p&gt;
+&lt;p&gt;Je ne m’imposerai pas de rythme de publication pour le moment, car j’écris lorsque j'ai du temps libre.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="curriculum-vitae"&gt;
+&lt;h2&gt;Curriculum Vitae&lt;/h2&gt;
+&lt;p&gt;Vous pouvez cliquer sur l’image ci-dessous pour avoir la &lt;a href="/images/cv.pdf" target="_blank"&gt;version PDF de mon CV&lt;/a&gt;.&lt;/p&gt;
+&lt;a href="/images/cv.pdf" target="_blank"&gt;
+    &lt;img style="border: 2px solid #242121; border-radius: 21px" alt="/images/cv.pdf" src="/images/cv.png"&gt;
+&lt;/a&gt;&lt;/div&gt;
+</content><category term="Personnel"></category><category term="cv"></category><category term="personnel"></category></entry></feed>

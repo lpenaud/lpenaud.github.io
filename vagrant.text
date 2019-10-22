@@ -261,7 +261,7 @@ Si vous voulez les exécuter après, vous pouvez taper cette commande dans le te
 
     vagrant provision
 
-Si vous avez un script shell déjà à votre disposition vous pouvez l’exécuter en remplaçant de que nous avons fait plus tôt par :
+Si vous avez un script shell déjà à votre disposition vous pouvez l’exécuter en remplaçant ce que nous avons fait plus tôt par :
 
 .. code-block:: ruby
 
@@ -301,4 +301,4 @@ Vagrantfile
 
 .. raw:: html
 
-    <script type="text/javascript" src="https://www.draw.io/js/viewer.min.js"></script>
+    <script type="text/javascript" src="/js/viewer.min.js"></script>

@@ -193,7 +193,7 @@ La solution la plus simple est de changer l’adresse d’écoute par l’adress
 Si vous voulez les exécuter après, vous pouvez taper cette commande dans le terminal de votre ordinateur :&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vagrant provision
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Si vous avez un script shell déjà à votre disposition vous pouvez l’exécuter en remplaçant de que nous avons fait plus tôt par :&lt;/p&gt;
+&lt;p&gt;Si vous avez un script shell déjà à votre disposition vous pouvez l’exécuter en remplaçant ce que nous avons fait plus tôt par :&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;provision&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;shell&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;path&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;script.sh&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Après l’installation de la machine virtuelle le fichier &lt;tt class="docutils literal"&gt;script.sh&lt;/tt&gt; devra être exécuté.&lt;/p&gt;
@@ -242,7 +242,7 @@ Si vous voulez les exécuter après, vous pouvez taper cette commande dans le te
 &lt;li&gt;&lt;tt class="docutils literal"&gt;config.vm.synced_folder &amp;lt;chemin vers un dossier de l’hôte&amp;gt; &amp;lt;chemin vers un dossier de la machine virtuelle&amp;gt;&lt;/tt&gt; Permet de rajouter un nouveau dossier à synchroniser entre la machine virtuelle et l’hôte.&lt;/li&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;config.vm.provision &amp;quot;shell&amp;quot;, &amp;lt;inline | path&amp;gt;&lt;/tt&gt; Script post-installation de la machine virtuelle soit un chemin fait un fichier script (sh) soit directement des instructions, voir : &lt;a class="reference internal" href="#installation-des-dependances-du-projet"&gt;Installation des dépendances du projet&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;script type="text/javascript" src="https://www.draw.io/js/viewer.min.js"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="/js/viewer.min.js"&gt;&lt;/script&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </content><category term="Développement"></category><category term="virtualisation"></category><category term="développement"></category><category term="virtualbox"></category><category term="vagrant"></category><category term="linux"></category><category term="windows"></category></entry></feed>
