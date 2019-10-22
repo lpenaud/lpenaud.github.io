@@ -10,6 +10,9 @@ Vagrant
 :lang: fr
 :authors: Penaud Loïc
 :summary: Pourquoi Vagrant c’est bien et comment l’installer et l’utiliser
+:cover: images/vagrant-cover.png
+
+.. figure:: /images/vagrant-logo.svg    
 
 Vagrant est un outil puissant pour les développeurs surtout lorsqu’on sait s’en servir.
 
