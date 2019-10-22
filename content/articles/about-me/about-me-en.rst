@@ -26,9 +26,9 @@ My name is Loïc Penaud, I'm 21 years old and I live in Brittany, France.
 How I started computer science ?
 --------------------------------
 
-I started computer science at high school, I was fiddling some scripts on Python_ and JavaScript_ on my free time.
+I started computer science at high school, when I was fiddling some scripts on Python_ and JavaScript_ on my free time.
 
-What was useful to me during my end project of baccalaureate Sciences and Technology of the industry in sustainable development,
+What was useful to me during my end project of baccalaureate sciences and technology of the industry in sustainable development,
 where I programmed a server with some JavaScript helped by node.js_.
 Then for the first time, I put my passion at the service of my studies.
 
@@ -55,6 +55,6 @@ Résumé
 
 
 .. _Python: https://www.python.org/
-.. _JavaScript: https://developer.mozilla.org/fr/docs/Web/JavaScript
-.. _node.js: https://nodejs.org/fr/
+.. _JavaScript: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+.. _node.js: https://nodejs.org/en/
 .. _`UBO college`: https://www.univ-brest.fr/GB
