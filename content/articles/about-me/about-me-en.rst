@@ -13,7 +13,7 @@ About me
 
 Hi and welcome on my website where you can find articles about computer science.
 
-This article is here to do a brief description of me.
+This article is supposed to describe me.
 At the end of this article you can see my `Résumé`_.
 
 ----------
