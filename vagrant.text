@@ -94,7 +94,7 @@ Ou vous utiliser chocolatey_ avec la commande suivante :
 .. note:: 
 
     Au vu de se prémunir d’un problème d’encodage,
-    rajouter la variable suivante dans votre environnement ``VAGRANT_HOME=<chemin vers un dossier sans espace ni accent à la racine de l’un de vos lecteurs>`` 
+    rajouter la variable suivante dans votre environnement ``VAGRANT_HOME=<chemin vers un dossier sans espace ni accent à la racine de l’un de vos lecteurs>``.
 
 
 Seconde étape – Initialisation
@@ -277,11 +277,12 @@ Après l’installation de la machine virtuelle le fichier ``script.sh`` devra �
 .. [2] Une version LTS (Long Term Support, Support à long terme en français) d’Ubuntu garanti le support du système pendant 5 ans.
 .. [3] L’hôte local ou localhost du machine est une adresse accessible uniquement par elle-même.
 
+------------
 Aide-mémoire
-============
+------------
 
 Commandes
----------
+=========
 
 - ``vagrant init <vagrant box>`` Crée le ``Vagrantfile`` avec la boîte que vous avez choisie.
 - ``vagrant up`` Installe et / ou démarre la machine virtuelle configurée par le ``Vagrantfile``.
@@ -292,7 +293,7 @@ Commandes
 - ``vagrant box update`` Met à jour la boîte spécifiée dans le fichier ``Vagrantfile``.
 
 Vagrantfile
------------
+===========
 
 - ``config.vm.box = "ubuntu/bionic64"`` Le nom de la boîte à installer.
 - ``config.vm.box_check_update`` Si Vagrant doit vérifier si la boîte a des mises à jour disponible (``true`` / ``false`` par défaut ``true``).

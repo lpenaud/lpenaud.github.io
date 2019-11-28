@@ -33,11 +33,11 @@
 &lt;li&gt;&lt;a class="reference internal" href="#installation-des-dependances-du-projet" id="id22"&gt;Installation des dépendances du projet&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#aide-memoire" id="id23"&gt;Aide-mémoire&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#commandes" id="id24"&gt;Commandes&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#vagrantfile" id="id25"&gt;Vagrantfile&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -92,7 +92,7 @@ puis changer le dossier par défaut des machines vers un dossier sans espace ni 
 &lt;div class="admonition note"&gt;
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
 &lt;p class="last"&gt;Au vu de se prémunir d’un problème d’encodage,
-rajouter la variable suivante dans votre environnement &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;VAGRANT_HOME=&amp;lt;chemin&lt;/span&gt; vers un dossier sans espace ni accent à la racine de l’un de vos lecteurs&amp;gt;&lt;/tt&gt;&lt;/p&gt;
+rajouter la variable suivante dans votre environnement &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;VAGRANT_HOME=&amp;lt;chemin&lt;/span&gt; vers un dossier sans espace ni accent à la racine de l’un de vos lecteurs&amp;gt;&lt;/tt&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -221,10 +221,11 @@ Si vous voulez les exécuter après, vous pouvez taper cette commande dans le te
 &lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;/div&gt;
 &lt;div class="section" id="aide-memoire"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="#id23"&gt;Aide-mémoire&lt;/a&gt;&lt;/h3&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id23"&gt;Aide-mémoire&lt;/a&gt;&lt;/h2&gt;
 &lt;div class="section" id="commandes"&gt;
-&lt;h4&gt;&lt;a class="toc-backref" href="#id24"&gt;Commandes&lt;/a&gt;&lt;/h4&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id24"&gt;Commandes&lt;/a&gt;&lt;/h3&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;vagrant init &amp;lt;vagrant box&amp;gt;&lt;/tt&gt; Crée le &lt;tt class="docutils literal"&gt;Vagrantfile&lt;/tt&gt; avec la boîte que vous avez choisie.&lt;/li&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;vagrant up&lt;/tt&gt; Installe et / ou démarre la machine virtuelle configurée par le &lt;tt class="docutils literal"&gt;Vagrantfile&lt;/tt&gt;.&lt;/li&gt;
@@ -236,7 +237,7 @@ Si vous voulez les exécuter après, vous pouvez taper cette commande dans le te
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="vagrantfile"&gt;
-&lt;h4&gt;&lt;a class="toc-backref" href="#id25"&gt;Vagrantfile&lt;/a&gt;&lt;/h4&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#id25"&gt;Vagrantfile&lt;/a&gt;&lt;/h3&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;config.vm.box = &amp;quot;ubuntu/bionic64&amp;quot;&lt;/tt&gt; Le nom de la boîte à installer.&lt;/li&gt;
 &lt;li&gt;&lt;tt class="docutils literal"&gt;config.vm.box_check_update&lt;/tt&gt; Si Vagrant doit vérifier si la boîte a des mises à jour disponible (&lt;tt class="docutils literal"&gt;true&lt;/tt&gt; / &lt;tt class="docutils literal"&gt;false&lt;/tt&gt; par défaut &lt;tt class="docutils literal"&gt;true&lt;/tt&gt;).&lt;/li&gt;
@@ -247,6 +248,5 @@ Si vous voulez les exécuter après, vous pouvez taper cette commande dans le te
 &lt;li&gt;&lt;tt class="docutils literal"&gt;config.vm.provision &amp;quot;shell&amp;quot;, &amp;lt;inline | path&amp;gt;&lt;/tt&gt; Script post-installation de la machine virtuelle soit un chemin fait un fichier script (sh) soit directement des instructions, voir : &lt;a class="reference internal" href="#installation-des-dependances-du-projet"&gt;Installation des dépendances du projet&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;script type="text/javascript" src="/js/viewer.min.js"&gt;&lt;/script&gt;&lt;/div&gt;
-&lt;/div&gt;
 &lt;/div&gt;
 </content><category term="Développement"></category><category term="virtualisation"></category><category term="développement"></category><category term="virtualbox"></category><category term="vagrant"></category><category term="linux"></category><category term="windows"></category></entry></feed>

@@ -15,6 +15,7 @@
   <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/pygments/manni.min.css">
   <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/font-awesome/css/font-awesome.min.css">
 
+    <link href="https://lpenaud.github.io/style.css" rel="stylesheet">
 
     <link href="https://lpenaud.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Loïc Penaud Atom">
 
@@ -131,11 +132,11 @@
 <li><a class="reference internal" href="#installation-des-dependances-du-projet" id="id22">Installation des dépendances du projet</a></li>
 </ul>
 </li>
+</ul>
+</li>
 <li><a class="reference internal" href="#aide-memoire" id="id23">Aide-mémoire</a><ul>
 <li><a class="reference internal" href="#commandes" id="id24">Commandes</a></li>
 <li><a class="reference internal" href="#vagrantfile" id="id25">Vagrantfile</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -190,7 +191,7 @@ puis changer le dossier par défaut des machines vers un dossier sans espace ni 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Au vu de se prémunir d’un problème d’encodage,
-rajouter la variable suivante dans votre environnement <tt class="docutils literal"><span class="pre">VAGRANT_HOME=&lt;chemin</span> vers un dossier sans espace ni accent à la racine de l’un de vos lecteurs&gt;</tt></p>
+rajouter la variable suivante dans votre environnement <tt class="docutils literal"><span class="pre">VAGRANT_HOME=&lt;chemin</span> vers un dossier sans espace ni accent à la racine de l’un de vos lecteurs&gt;</tt>.</p>
 </div>
 </div>
 </div>
@@ -319,10 +320,11 @@ Si vous voulez les exécuter après, vous pouvez taper cette commande dans le te
 </table>
 </div>
 </div>
+</div>
 <div class="section" id="aide-memoire">
-<h3><a class="toc-backref" href="#id23">Aide-mémoire</a></h3>
+<h2><a class="toc-backref" href="#id23">Aide-mémoire</a></h2>
 <div class="section" id="commandes">
-<h4><a class="toc-backref" href="#id24">Commandes</a></h4>
+<h3><a class="toc-backref" href="#id24">Commandes</a></h3>
 <ul class="simple">
 <li><tt class="docutils literal">vagrant init &lt;vagrant box&gt;</tt> Crée le <tt class="docutils literal">Vagrantfile</tt> avec la boîte que vous avez choisie.</li>
 <li><tt class="docutils literal">vagrant up</tt> Installe et / ou démarre la machine virtuelle configurée par le <tt class="docutils literal">Vagrantfile</tt>.</li>
@@ -334,7 +336,7 @@ Si vous voulez les exécuter après, vous pouvez taper cette commande dans le te
 </ul>
 </div>
 <div class="section" id="vagrantfile">
-<h4><a class="toc-backref" href="#id25">Vagrantfile</a></h4>
+<h3><a class="toc-backref" href="#id25">Vagrantfile</a></h3>
 <ul class="simple">
 <li><tt class="docutils literal">config.vm.box = &quot;ubuntu/bionic64&quot;</tt> Le nom de la boîte à installer.</li>
 <li><tt class="docutils literal">config.vm.box_check_update</tt> Si Vagrant doit vérifier si la boîte a des mises à jour disponible (<tt class="docutils literal">true</tt> / <tt class="docutils literal">false</tt> par défaut <tt class="docutils literal">true</tt>).</li>
@@ -345,7 +347,6 @@ Si vous voulez les exécuter après, vous pouvez taper cette commande dans le te
 <li><tt class="docutils literal">config.vm.provision &quot;shell&quot;, &lt;inline | path&gt;</tt> Script post-installation de la machine virtuelle soit un chemin fait un fichier script (sh) soit directement des instructions, voir : <a class="reference internal" href="#installation-des-dependances-du-projet">Installation des dépendances du projet</a>.</li>
 </ul>
 <script type="text/javascript" src="/js/viewer.min.js"></script></div>
-</div>
 </div>
 
   </div>
