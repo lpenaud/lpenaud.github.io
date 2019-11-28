@@ -12,6 +12,7 @@ SITEURL = 'http://localhost:8000'
 SITETITLE = 'Loïc Penaud'
 SITESUBTITLE = 'Développeur Back-end'
 SITEDESCRIPTION = 'Site d\'article sur l\'informatique'
+
 # TODO: Create SITELOGO & FAVICON
 #SITELOGO = SITEURL + '/images/profile.png'
 #FAVICON = SITEURL + '/images/favicon.ico'
@@ -20,6 +21,7 @@ THEME = 'themes/Flex'
 PYGMENTS_STYLE = 'manni'
 BROWSER_COLOR = '#333'
 ROBOTS = 'index, follow'
+LINKS_IN_NEW_TAB = 'external'
 
 COPYRIGHT_YEAR = datetime.now().year
 COPYRIGHT_NAME = AUTHOR
@@ -32,7 +34,11 @@ CC_LICENSE = {
 MAIN_MENU = True
 
 PATH = 'content'
-STATIC_PATHS = ['images', 'js']
+STATIC_PATHS = ['images', 'js', 'css']
+EXTRA_PATH_METADATA = {
+    'css/style.css': { 'path': 'style.css' }
+}
+CUSTOM_CSS = 'style.css'
 
 TIMEZONE = 'Europe/Paris'
 

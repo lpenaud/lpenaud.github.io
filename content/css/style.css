@@ -1,0 +1,206 @@
+:root {
+    --first-title-color: #d9411e;
+    --first-title-color-hover: #ff5a09;
+    --second-title-color: #4169e1;
+    --second-title-color-hover: #6782f6;
+    --third-title-color: #3cb371;
+    --third-title-color-hover: #62cc86;
+    counter-reset: first-title;
+}
+
+/* Table of content style */
+
+.topic-title.first {
+    font-weight: 600;
+}
+
+.contents.topic ul {
+    list-style: none;
+    line-height: 1.5em;
+}
+
+.contents.topic ul a:hover {
+    font-weight: 700;
+}
+
+.contents.topic > ul {
+    counter-reset: first-level;
+    color: var(--first-title-color);
+}
+
+.contents.topic > ul > li::before {
+    counter-increment: first-level;
+    content: counters(first-level, ".", upper-roman) ". ";
+}
+
+.contents.topic > ul > li > a {
+    color: var(--first-title-color);
+}
+
+.contents.topic > ul > li > a:hover {
+    color: var(--first-title-color-hover);
+}
+
+.contents.topic > ul > li > ul {
+    counter-reset: second-level;
+    color: var(--second-title-color);
+}
+
+.contents.topic > ul > li > ul > li::before {
+    counter-increment: second-level;
+    content: counters(first-level, "", upper-roman) "." counters(second-level, "", decimal) ") ";
+}
+
+.contents.topic > ul > li > ul > li > a {
+    color: var(--second-title-color);
+}
+
+.contents.topic > ul > li > ul > li > a:hover {
+    color: var(--second-title-color-hover);
+}
+
+.contents.topic > ul > li > ul > li > ul {
+    counter-reset: third-level;
+    color: var(--third-title-color);
+}
+
+.contents.topic > ul > li > ul > li > ul > li::before {
+    counter-increment: third-level;
+    content: counters(first-level, ".", upper-roman) "." counters(second-level, "", decimal) "." counters(third-level, "", lower-alpha) ") ";
+}
+
+.contents.topic > ul > li > ul > li > ul > li > a {
+    color: var(--third-title-color);
+}
+
+.contents.topic > ul > li > ul > li > ul > li > a:hover {
+    color: var(--third-title-color-hover);
+}
+
+/* Section Heading */
+
+.section > h2 {
+    counter-reset: second-title;
+    color: var(--first-title-color);
+}
+
+.section > h2::before {
+    counter-increment: first-title;
+    content: counters(first-title, "", upper-roman) ". ";
+}
+
+.section > h2 > a {
+    color: var(--first-title-color);
+}
+
+.section > h2 > a:hover {
+    color: var(--first-title-color-hover);
+    text-decoration: underline;
+}
+
+.section > h3 {
+    counter-reset: third-title;
+    color: var(--second-title-color);
+}
+
+.section > h3::before {
+    counter-increment: second-title;
+    content: counters(first-title, "", upper-roman) "." counters(second-title, "", decimal) ") ";
+}
+
+.section > h3 > a {
+    color: var(--second-title-color);
+}
+
+.section > h3 > a:hover {
+    color: var(--second-title-color-hover);
+    text-decoration: underline;
+}
+
+.section > h4 {
+    color: var(--third-title-color);
+}
+
+.section > h4::before {
+    counter-increment: third-title;
+    content: counters(first-title, "", upper-roman) "." counters(second-title, "", decimal) "." counters(third-title, "", lower-alpha) ") ";
+}
+
+.section > h4 > a {
+    color: var(--third-title-color);
+}
+
+.section > h4 > a:hover {
+    color: var(--third-title-color-hover);
+    text-decoration: underline;
+}
+
+/* Admonition style */
+
+.admonition {
+    margin-bottom: 1.5rem;
+}
+
+.admonition-title {
+    border-radius: 4px 4px 0 0 !important;
+    align-items: center;
+    display: flex;
+    font-weight: 600;
+    justify-content: space-between;
+    line-height: 1.25em;
+    padding: .5em 1em;
+    position: relative;
+    margin-bottom: 0;
+}
+
+.admonition.note > .admonition-title {
+    background-color: #3298dc;
+    color: #fff;
+}
+
+.admonition.caution > .admonition-title {
+    background-color: #ffdd57;
+    color: rgba(0,0,0,.7);
+}
+
+.admonition > p, .admonition > div {
+    border-radius: 4px;
+}
+
+.admonition > p:not(.first), .admonition > div:not(.first) {
+    padding: 1.25em 1.5em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.admonition > p:not(.last):not(.first), .admonition > div:not(.last):not(.first) {
+    padding-top: 1.25em;
+    padding-bottom: 0;
+    margin-bottom: -2em;
+}
+
+.admonition > .last {
+    padding-bottom: 1.25em;
+    padding-top: 1.25em;
+}
+
+.admonition.note > p, .admonition.note > div {
+    border-color: #3298dc;
+    color: #1d72aa;
+    background-color: #eef6fc;
+}
+
+.admonition.caution > p, .admonition.caution > div {
+    border-color: #ffdd57;
+    color: #947600;
+}
+
+.admonition-title, .admonition.note > p, .admonition.note > div {
+    border-width: 0;
+    border-top-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.admonition > .last {
+    margin-bottom: unset;
+}
