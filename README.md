@@ -5,6 +5,6 @@
 ## TODO
 
 - [ ] See how translate in template "This work is licensed under a"
-- [ ] Modify attention paragraph
+- [x] Modify attention paragraph (See: https://github.com/alexandrevicenzi/Flex/pull/191)
 - [ ] Add a button to come back on the top of the page
-- [ ] Modify table of content style
+- [x] Modify table of content style (Add custom css)
