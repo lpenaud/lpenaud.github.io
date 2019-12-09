@@ -8,8 +8,8 @@ BIND = '0.0.0.0'
 
 AUTHOR = 'Loïc Penaud'
 SITENAME = AUTHOR
+SITETITLE = AUTHOR
 SITEURL = 'http://localhost:8000'
-SITETITLE = 'Loïc Penaud'
 SITESUBTITLE = 'Développeur Back-end'
 SITEDESCRIPTION = 'Site d\'article sur l\'informatique'
 
@@ -36,7 +36,7 @@ MAIN_MENU = True
 PATH = 'content'
 STATIC_PATHS = ['images', 'js', 'css']
 EXTRA_PATH_METADATA = {
-    'css/style.css': { 'path': 'style.css' }
+    'css/style.css': { 'path': 'style.css' },
 }
 CUSTOM_CSS = 'style.css'
 
@@ -74,7 +74,7 @@ AUTHOR_FEED_RSS = None
 
 # Social widget
 SOCIAL = (
-    ('envelope-o', 'mailto:l.penaud@zaclys.net'),
+    ('envelope', 'mailto:l.penaud@zaclys.net'),
     ('github', 'https://github.com/lpenaud'),
     ('linkedin', 'https://www.linkedin.com/in/lo%C3%AFc-penaud-296067129/'),
     ('twitter', 'https://twitter.com/LoicPenaud'),
