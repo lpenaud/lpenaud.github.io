@@ -28,7 +28,7 @@ How I started computer science ?
 
 I started computer science at high school, when I was fiddling some scripts on Python_ and JavaScript_ on my free time.
 
-What was useful to me during my end project of baccalaureate sciences and technology of the industry in sustainable development,
+What was useful to me during my end project of baccalauréat sciences and technology of the industry in sustainable development,
 where I programmed a server with some JavaScript helped by node.js_.
 Then for the first time, I put my passion at the service of my studies.
 
