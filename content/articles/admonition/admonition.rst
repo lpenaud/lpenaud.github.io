@@ -3,7 +3,7 @@ Admonition
 ==========
 
 :date: 2019-10-21 18:26:31
-:modified: 2019-10-21 18:26:39
+:modified: 2020-01-17 19:29:28
 :category: Personnel
 :tags: cv, personnel
 :slug: admonition
@@ -18,7 +18,14 @@ Admonition
 .. caution:: 
     This is a caution admonition
 
-    On multi-line
+    On multi-block
+
+.. warning:: 
+    This is warning admonition
+
+    .. code-block:: shell
+        
+        echo "Bonjour le monde !"
 
 .. danger::
     This is a danger admonition
@@ -29,20 +36,13 @@ Admonition
 .. hint::
     This is a hint admonition
 
+.. tip::
+    This is a tip admonition
+
 .. important::
     This is a important admonition
 
 .. note:: 
     This is a note admonition
     
-    On multi-line
-
-.. tip::
-    This is a tip admonition
-
-
-
-
-
-
-
+    On multi-block
