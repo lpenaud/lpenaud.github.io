@@ -13,9 +13,8 @@ SITEURL = 'http://localhost:8000'
 SITESUBTITLE = 'Développeur Back-end'
 SITEDESCRIPTION = 'Site d\'article sur l\'informatique'
 
-# TODO: Create SITELOGO & FAVICON
-#SITELOGO = SITEURL + '/images/profile.png'
-#FAVICON = SITEURL + '/images/favicon.ico'
+SITELOGO = SITEURL + '/images/profile.jpg'
+FAVICON = SITEURL + '/images/favicon.ico'
 
 THEME = 'themes/Flex'
 PYGMENTS_STYLE = 'manni'
@@ -37,6 +36,7 @@ PATH = 'content'
 STATIC_PATHS = ['images', 'js', 'css']
 EXTRA_PATH_METADATA = {
     'css/style.css': { 'path': 'style.css' },
+    '/en/style.css': { 'path': 'style.css' },
 }
 CUSTOM_CSS = 'style.css'
 
