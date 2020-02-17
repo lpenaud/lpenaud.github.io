@@ -22,6 +22,8 @@
     <link href="https://lpenaud.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Loïc Penaud Atom">
 
 
+    <link rel="shortcut icon" href="http://localhost:8000/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://localhost:8000/images/favicon.ico" type="image/x-icon">
 
 
     <!-- Chrome, Firefox OS and Opera -->
@@ -35,32 +37,32 @@
     <meta name="msapplication-TileColor" content="#333">
 
 <meta name="author" content="Penaud Loïc" />
-<meta name="description" content="Admonition style" />
-<meta name="keywords" content="cv, personnel">
+<meta name="description" content="Conversion, gestion de flux audio / vidéo en ligne de commande à l’aide de ffmpeg et mkvtoolnix." />
+<meta name="keywords" content="cli, video">
 
 
 <meta property="og:site_name" content="Loïc Penaud"/>
-<meta property="og:title" content="Admonition"/>
-<meta property="og:description" content="Admonition style"/>
+<meta property="og:title" content="La gestion vidéo en ligne de commande"/>
+<meta property="og:description" content="Conversion, gestion de flux audio / vidéo en ligne de commande à l’aide de ffmpeg et mkvtoolnix."/>
 <meta property="og:locale" content="fr_FR"/>
-<meta property="og:url" content="https://lpenaud.github.io/drafts/admonition-en.html"/>
+<meta property="og:url" content="https://lpenaud.github.io/drafts/video-cli.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2019-10-21 18:26:31+02:00"/>
-<meta property="article:modified_time" content="2019-10-21 18:26:39+02:00"/>
+<meta property="article:published_time" content="2020-01-12 18:00:00+01:00"/>
+<meta property="article:modified_time" content="2020-01-12 18:00:00+01:00"/>
 <meta property="article:author" content="https://lpenaud.github.io/author/penaud-loic.html">
-<meta property="article:section" content="Personnel"/>
-<meta property="article:tag" content="cv"/>
-<meta property="article:tag" content="personnel"/>
-<meta property="og:image" content="">
+<meta property="article:section" content="cli"/>
+<meta property="article:tag" content="cli"/>
+<meta property="article:tag" content="video"/>
+<meta property="og:image" content="http://localhost:8000/images/profile.jpg">
 
-  <title>Loïc Penaud &ndash; Admonition</title>
+  <title>Loïc Penaud &ndash; La gestion vidéo en ligne de commande</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="https://lpenaud.github.io">
-        <img src="https://lpenaud.github.io/theme/img/profile.png" alt="Loïc Penaud" title="Loïc Penaud">
+        <img src="http://localhost:8000/images/profile.jpg" alt="Loïc Penaud" title="Loïc Penaud">
       </a>
       <h1><a href="https://lpenaud.github.io">Loïc Penaud</a></h1>
 
@@ -105,55 +107,46 @@
 <article class="single">
   <header>
       
-    <h1 id="admonition">Admonition</h1>
+    <h1 id="video-cli">La gestion vidéo en ligne de commande</h1>
     <p>
-      Posté le lun. 21 octobre 2019 dans <a href="https://lpenaud.github.io/category/personnel.html">Personnel</a>
+      Posté le dim. 12 janvier 2020 dans <a href="https://lpenaud.github.io/category/cli.html">cli</a>
 
     </p>
   </header>
 
 
   <div>
-    <div class="admonition attention">
-<p class="first admonition-title">Attention!</p>
-<p class="last">This is a attention admonition</p>
+    <p>Ayant un serveur de fichier qui contient majoritairement de l’audio et de la vidéo.
+Il peut arriver que j’ai besoin de faire de la conversion vidéo pour que ma Raspeberry Pi 3 puisse lire ces fichiers sans ralentissement et sans perte d’image.
+Cette article a donc pour but de faire un petit tour d’horizon sur les outils en ligne de commande disponible pour gérer les fichiers vidéos.</p>
+<p>Tout les logiciels dans cet article peuvent être installés via le gestionnaire de paquet de votre distribution (<tt class="docutils literal">apt</tt>, <tt class="docutils literal">pacman</tt>, etc).</p>
+<hr class="docutils" />
+<div class="contents topic" id="sommaire">
+<p class="topic-title">Sommaire</p>
+<ul class="simple">
+<li><a class="reference internal" href="#mediainfo" id="id1">Mediainfo</a></li>
+<li><a class="reference internal" href="#mkvtoolnix" id="id2">MKVToolNix</a></li>
+</ul>
 </div>
-<div class="admonition caution">
-<p class="first admonition-title">Avertissement!</p>
-<p>This is a caution admonition</p>
-<p class="last">On multi-line</p>
+<hr class="docutils" />
+<div class="section" id="mediainfo">
+<h2><a class="toc-backref" href="#id1">Mediainfo</a></h2>
+<p>Mediainfo est un logiciel qui permet d’obtenir la liste des flux contenue dans un fichier container comme le <strong>Matroska (mkv)</strong> par exemple.
+Il est possible d’utiliser ce logiciel en ligne de commande ou avec une interface graphique.</p>
+<p>Son utilisation est très simple. En effet pour obtenir les informations d’un fichier il suffit de faire :</p>
+<div class="highlight"><pre><span></span>mediainfo &lt;chemin vers une fichier multimédia&gt;
+</pre></div>
 </div>
-<div class="admonition danger">
-<p class="first admonition-title">!DANGER!</p>
-<p class="last">This is a danger admonition</p>
-</div>
-<div class="admonition error">
-<p class="first admonition-title">Erreur</p>
-<p class="last">This is a error admonition</p>
-</div>
-<div class="admonition hint">
-<p class="first admonition-title">Indication</p>
-<p class="last">This is a hint admonition</p>
-</div>
-<div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">This is a important admonition</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>This is a note admonition</p>
-<p class="last">On multi-line</p>
-</div>
-<div class="admonition tip">
-<p class="first admonition-title">Astuce</p>
-<p class="last">This is a tip admonition</p>
+<div class="section" id="mkvtoolnix">
+<h2><a class="toc-backref" href="#id2">MKVToolNix</a></h2>
+<p>MKVToolNix est un logiciel qui permet de lister, d’extraire, de mélanger des fichier mkv.</p>
 </div>
 
   </div>
   <div class="tag-cloud">
     <p>
-      <a href="https://lpenaud.github.io/tag/cv.html">cv</a>
-      <a href="https://lpenaud.github.io/tag/personnel.html">personnel</a>
+      <a href="https://lpenaud.github.io/tag/cli.html">cli</a>
+      <a href="https://lpenaud.github.io/tag/video.html">video</a>
     </p>
   </div>
 
@@ -165,7 +158,7 @@
 
     <footer>
 <p>
-  &copy; Loïc Penaud 2019 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+  &copy; Loïc Penaud 2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
 </p>
 <p>Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme</p><p>
   <a rel="license"
@@ -190,7 +183,7 @@
   "@type" : "Blog",
   "name": " Loïc Penaud ",
   "url" : "https://lpenaud.github.io",
-  "image": "",
+  "image": "http://localhost:8000/images/profile.jpg",
   "description": "Site d'article sur l'informatique"
 }
 </script>

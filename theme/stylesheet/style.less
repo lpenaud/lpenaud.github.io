@@ -485,6 +485,10 @@ ul.social {
   a.sc-flickr {
     background-color: @flickr-bg-color;
   }
+
+  a.sc-lastfm {
+    background-color: @lastfm-bg-color;
+  }
 }
 
 .ads-aside {
@@ -567,6 +571,14 @@ ul.social {
 div.admonition {
   margin-bottom: 2.5rem;
 
+  p.admonition-title::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    font-family: "Font Awesome 5 Free";
+  }
+
   p.admonition-title {
     border-radius: 4px 4px 0 0;
     font-weight: 600;
@@ -577,7 +589,7 @@ div.admonition {
   }
 
   p, div {
-    border-radius: 4px;
+    border-radius: 0 0 4px 4px;
     padding: 1.25em 1.25em 0 1.25em;
     margin-top: -1.25em;
     margin-bottom: 0;
@@ -589,9 +601,8 @@ div.admonition {
 }
 
 div.admonition.attention {
-  p.admonition-title {
-    color: @admonition-attention-title-color;
-    background-color: @admonition-attention-title-bg-color;
+  p.admonition-title::before {
+    content: @admonition-attention-icon;
   }
 
   p, div {
@@ -601,9 +612,8 @@ div.admonition.attention {
 }
 
 div.admonition.caution {
-  p.admonition-title {
-    color: @admonition-caution-title-color;
-    background-color: @admonition-caution-title-bg-color;
+  p.admonition-title::before {
+    content: @admonition-caution-icon;
   }
 
   p, div {
@@ -613,9 +623,8 @@ div.admonition.caution {
 }
 
 div.admonition.danger {
-  p.admonition-title {
-    color: @admonition-danger-title-color;
-    background-color: @admonition-danger-title-bg-color;
+  p.admonition-title::before {
+    content: @admonition-danger-icon;
   }
 
   p, div {
@@ -625,9 +634,8 @@ div.admonition.danger {
 }
 
 div.admonition.error {
-  p.admonition-title {
-    color: @admonition-error-title-color;
-    background-color: @admonition-error-title-bg-color;
+  p.admonition-title::before {
+    content: @admonition-error-icon;
   }
 
   p, div {
@@ -637,9 +645,8 @@ div.admonition.error {
 }
 
 div.admonition.hint {
-  p.admonition-title {
-    color: @admonition-hint-title-color;
-    background-color: @admonition-hint-title-bg-color;
+  p.admonition-title::before {
+    content: @admonition-hint-icon;
   }
 
   p, div {
@@ -649,9 +656,8 @@ div.admonition.hint {
 }
 
 div.admonition.important {
-  p.admonition-title {
-    color: @admonition-important-title-color;
-    background-color: @admonition-important-title-bg-color;
+  p.admonition-title::before {
+    content: @admonition-important-icon;
   }
 
   p, div {
@@ -661,9 +667,8 @@ div.admonition.important {
 }
 
 div.admonition.note {
-  p.admonition-title {
-    color: @admonition-note-title-color;
-    background-color: @admonition-note-title-bg-color;
+  p.admonition-title::before {
+    content: @admonition-note-icon;
   }
 
   p, div {
@@ -673,13 +678,23 @@ div.admonition.note {
 }
 
 div.admonition.tip {
-  p.admonition-title {
-    color: @admonition-tip-title-color;
-    background-color: @admonition-tip-title-bg-color;
+  p.admonition-title::before {
+    content: @admonition-tip-icon;
   }
 
   p, div {
     color: @admonition-tip-color;
     background-color: @admonition-tip-bg-color;
+  }
+}
+
+div.admonition.warning {
+  p.admonition-title::before {
+    content: @admonition-warning-icon;
+  }
+
+  p, div {
+    color: @admonition-warning-color;
+    background-color: @admonition-warning-bg-color;
   }
 }
