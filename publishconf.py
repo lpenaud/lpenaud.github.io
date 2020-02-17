@@ -19,6 +19,9 @@ CATEGORY_FEED_ATOM = 'feeds/{slug}.atom.xml'
 
 DELETE_OUTPUT_DIRECTORY = True
 
+SITELOGO = SITEURL + '/images/profile.jpg'
+FAVICON = SITEURL + '/images/favicon.ico'
+
 # Following items are often useful when publishing
 
 #DISQUS_SITENAME = ""
