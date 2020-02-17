@@ -10,6 +10,7 @@ La gestion vidéo en ligne de commande
 :lang: fr
 :authors: Penaud Loïc
 :summary: Conversion, gestion de flux audio / vidéo en ligne de commande à l’aide de ffmpeg et mkvtoolnix.
+:status: draft
 
 Ayant un serveur de fichier qui contient majoritairement de l’audio et de la vidéo.
 Il peut arriver que j’ai besoin de faire de la conversion vidéo pour que ma Raspeberry Pi 3 puisse lire ces fichiers sans ralentissement et sans perte d’image.
