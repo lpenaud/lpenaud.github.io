@@ -67,7 +67,7 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
     sudo apt-get install -y python3-pip subversion ghp-import python-pip
     sudo python3 -m pip install pelican
-    git clone -b v2.2.0 https://github.com/alexandrevicenzi/Flex /vagrant/themes/Flex
+    git clone https://github.com/alexandrevicenzi/Flex /vagrant/themes/Flex
     svn export https://github.com/getpelican/pelican-plugins.git/trunk/i18n_subsites /vagrant/plugins/i18n_subsites
     sudo locale-gen fr_FR fr_FR.utf8 en_US
   SHELL
