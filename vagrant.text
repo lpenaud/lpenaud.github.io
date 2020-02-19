@@ -22,6 +22,7 @@ Cet article a pour but de vous faire savoir pourquoi j’ai commencé à utilise
 
 .. contents::
     :depth: 3
+    :backlinks: top
 
 ------------------
 
@@ -67,9 +68,9 @@ Puis de choisir la bonne version pour votre système d’exploitation.
 
 Ou vous utiliser chocolatey_ avec la commande suivante :
 
-.. code-block:: batch
+.. code::
 
-    choco install virtualbox
+    $ choco install virtualbox
 
 .. note:: 
 
@@ -87,9 +88,9 @@ Puis de choisir la bonne version pour votre système d’exploitation.
 
 Ou vous utiliser chocolatey_ avec la commande suivante :
 
-.. code-block:: batch
+.. code::
 
-    choco install vagrant
+    $ choco install vagrant
 
 .. note:: 
 
@@ -105,9 +106,9 @@ Dans notre exemple on choisira la boîte ``ubuntu/bionic64`` qui est la dernièr
 
 Puis il suffit de taper la commande suivante dans le répertoire de votre choix :
 
-.. code-block:: shell
+.. code::
 
-    vagrant init ubuntu/bionic64
+    $ vagrant init ubuntu/bionic64
 
 Cette commande devra générer un fichier nommé ``Vagrantfile``.
 
@@ -116,9 +117,9 @@ Troisième étape – Lancement
 
 Une fois que vous avez votre ``Vagrantfile``, vous pouvez taper la commande suivante dans le même répertoire afin de lancer la machine virtuelle :
 
-.. code-block:: shell
+.. code::
 
-    vagrant up
+    $ vagrant up
 
 La première fois ça prend toujours un peu plus de temps, car Vagrant télécharge la boîte.
 
@@ -133,9 +134,9 @@ Par ssh
 
 Vous pouvez lancer la commande suivante afin de communiquer en ssh avec la machine virtuelle :
 
-.. code-block:: shell
+.. code::
 
-    vagrant ssh
+    $ vagrant ssh
 
 Via le répertoire partagé
 -------------------------
@@ -157,9 +158,9 @@ et à vous-même d’avoir un environnement de développement prêt même si vou
 
     Pour prendre au compte les modifications du ``Vagrantfile`` il faudra que vous redémarriez votre machine virtuelle à l’aide de la commande suivante :
     
-    .. code-block:: ruby
+    .. code
 
-        vagrant reload
+        $ vagrant reload
 
 Redirection de port
 -------------------
@@ -169,9 +170,9 @@ L’un des points pratique de Vagrant c’est qu’on peut facilement faire de l
 C’est d’ailleurs l’une des premières chose que fait Vagrant après avoir allumé votre machine.
 Pour le vérifier vous pouvez taper cette ligne de votre terminale :
 
-.. code-block:: shell
+.. code::
 
-    ssh vagrant@localhost -p 2222 -i .vagrant/machines/default/virtualbox/private_key
+    $ ssh vagrant@localhost -p 2222 -i .vagrant/machines/default/virtualbox/private_key
 
 Logiquement vous vous êtes connecté à votre machine virtuelle.
 En effet, Vagrant créer une redirection de port sur l’hôte local [3]_ au port 2222 vers le port 22 de la machine virtuel pour communiquer en ssh.
@@ -260,9 +261,9 @@ Par exemple vous pouvez rajouter les commandes suivantes pour installer NGINX :
 Ces lignes de commande devront s’éxécuter après l’installation de la machine virtuelle.
 Si vous voulez les exécuter après, vous pouvez taper cette commande dans le terminal de votre ordinateur :
 
-.. code-block:: shell
+.. code::
 
-    vagrant provision
+    $ vagrant provision
 
 Si vous avez un script shell déjà à votre disposition vous pouvez l’exécuter en remplaçant ce que nous avons fait plus tôt par :
 

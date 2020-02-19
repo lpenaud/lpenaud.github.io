@@ -164,37 +164,38 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="pourquoi-lutiliser">
-<h2><a class="toc-backref" href="#id8">Pourquoi l’utiliser&nbsp;?</a></h2>
+<h2><a class="toc-backref" href="#contents">Pourquoi l’utiliser&nbsp;?</a></h2>
 <div class="section" id="le-probleme-initial">
-<h3><a class="toc-backref" href="#id9">Le problème initial</a></h3>
+<h3><a class="toc-backref" href="#contents">Le problème initial</a></h3>
 <p>Bien que je sois un très grand fan de GNU / Linux parfois j’utilise Windows.
 Cependant, je n’apprécie pas Windows en tant que système d’exploitation pour faire du développement
 et j’ai trouvé très vite lourd le fait de devoir passer d’un système d’exploitation à un autre à l’aide d’un amorçage double <a class="footnote-reference" href="#id5" id="id1">[1]</a>.</p>
 </div>
 <div class="section" id="la-solution">
-<h3><a class="toc-backref" href="#id10">La solution</a></h3>
+<h3><a class="toc-backref" href="#contents">La solution</a></h3>
 <p>Vagrant permet de créer facilement une machine virtuelle sur VirtualBox et plein d’autre hyperviseur.
 Ce qui me permet de développer sur GNU / Linux, le tout en étant sur Windows.</p>
 <p>De plus à l’aide d’un fichier qu’on appelle <tt class="docutils literal">Vagrantfile</tt> on peut configurer facilement la machine virtuelle.</p>
 </div>
 </div>
 <div class="section" id="comment-lutiliser">
-<h2><a class="toc-backref" href="#id11">Comment l’utiliser ?</a></h2>
+<h2><a class="toc-backref" href="#contents">Comment l’utiliser ?</a></h2>
 <div class="section" id="premiere-etape-installations">
-<h3><a class="toc-backref" href="#id12">Première étape – Installations</a></h3>
+<h3><a class="toc-backref" href="#contents">Première étape – Installations</a></h3>
 <div class="section" id="gnu-linux">
-<h4><a class="toc-backref" href="#id13">GNU / Linux</a></h4>
+<h4><a class="toc-backref" href="#contents">GNU / Linux</a></h4>
 <p>Si vous êtes sur un système GNU / Linux utiliser votre gestionnaire de paquets en administrateur afin d’installer VirtualBox et Vagrant.</p>
 </div>
 <div class="section" id="windows">
-<h4><a class="toc-backref" href="#id14">Windows</a></h4>
+<h4><a class="toc-backref" href="#contents">Windows</a></h4>
 <div class="section" id="virtualbox">
 <h5>VirtualBox</h5>
 <p>Pour installer VirtualBox, il suffit d’aller sur le site officiel de VirtualBox à cette adresse : <a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></p>
 <p>Puis de choisir la bonne version pour votre système d’exploitation.</p>
 <p>Ou vous utiliser <a class="reference external" href="https://chocolatey.org/">chocolatey</a> avec la commande suivante :</p>
-<div class="highlight"><pre><span></span>choco install virtualbox
-</pre></div>
+<pre class="code literal-block">
+$ choco install virtualbox
+</pre>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Au vu de se prémunir d’un problème d’encodage,
@@ -207,8 +208,9 @@ puis changer le dossier par défaut des machines vers un dossier sans espace ni 
 <p>Pour installer Vagrant, il suffit d’aller sur le site officiel de Vagrant à cette adresse : <a class="reference external" href="https://www.vagrantup.com/downloads.html">https://www.vagrantup.com/downloads.html</a></p>
 <p>Puis de choisir la bonne version pour votre système d’exploitation.</p>
 <p>Ou vous utiliser <a class="reference external" href="https://chocolatey.org/">chocolatey</a> avec la commande suivante :</p>
-<div class="highlight"><pre><span></span>choco install vagrant
-</pre></div>
+<pre class="code literal-block">
+$ choco install vagrant
+</pre>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Au vu de se prémunir d’un problème d’encodage,
@@ -218,57 +220,62 @@ rajouter la variable suivante dans votre environnement <tt class="docutils liter
 </div>
 </div>
 <div class="section" id="seconde-etape-initialisation">
-<h3><a class="toc-backref" href="#id15">Seconde étape – Initialisation</a></h3>
+<h3><a class="toc-backref" href="#contents">Seconde étape – Initialisation</a></h3>
 <p>Il faut choisir une Vagrant Boxes qui est un système d’exploitation pré-configuré il en existe plein.
 Dans notre exemple on choisira la boîte <tt class="docutils literal">ubuntu/bionic64</tt> qui est la dernière version LTF d’ubuntu <a class="footnote-reference" href="#id6" id="id3">[2]</a>.</p>
 <p>Puis il suffit de taper la commande suivante dans le répertoire de votre choix :</p>
-<div class="highlight"><pre><span></span>vagrant init ubuntu/bionic64
-</pre></div>
+<pre class="code literal-block">
+$ vagrant init ubuntu/bionic64
+</pre>
 <p>Cette commande devra générer un fichier nommé <tt class="docutils literal">Vagrantfile</tt>.</p>
 </div>
 <div class="section" id="troisieme-etape-lancement">
-<h3><a class="toc-backref" href="#id16">Troisième étape – Lancement</a></h3>
+<h3><a class="toc-backref" href="#contents">Troisième étape – Lancement</a></h3>
 <p>Une fois que vous avez votre <tt class="docutils literal">Vagrantfile</tt>, vous pouvez taper la commande suivante dans le même répertoire afin de lancer la machine virtuelle :</p>
-<div class="highlight"><pre><span></span>vagrant up
-</pre></div>
+<pre class="code literal-block">
+$ vagrant up
+</pre>
 <p>La première fois ça prend toujours un peu plus de temps, car Vagrant télécharge la boîte.</p>
 </div>
 <div class="section" id="quatrieme-etape-communication">
-<h3><a class="toc-backref" href="#id17">Quatrième étape – Communication</a></h3>
+<h3><a class="toc-backref" href="#contents">Quatrième étape – Communication</a></h3>
 <p>Une fois que votre machine virtuelle c’est bien initialisé.
 Vous pouvez communiquer avec elle.</p>
 <div class="section" id="par-ssh">
-<h4><a class="toc-backref" href="#id18">Par ssh</a></h4>
+<h4><a class="toc-backref" href="#contents">Par ssh</a></h4>
 <p>Vous pouvez lancer la commande suivante afin de communiquer en ssh avec la machine virtuelle :</p>
-<div class="highlight"><pre><span></span>vagrant ssh
-</pre></div>
+<pre class="code literal-block">
+$ vagrant ssh
+</pre>
 </div>
 <div class="section" id="via-le-repertoire-partage">
-<h4><a class="toc-backref" href="#id19">Via le répertoire partagé</a></h4>
+<h4><a class="toc-backref" href="#contents">Via le répertoire partagé</a></h4>
 <p>En allant listant le contenu du répertoire <tt class="docutils literal">/vagrant</tt> de votre machine virtuelle vous pouvez constater qu’il y a les même fichiers que sur votre machine.
 Les machines créées par Vagrant, partage toujours le dossier où il y a le <tt class="docutils literal">Vagrantfile</tt> de votre machine hôte.</p>
 <p>Donc si vous créez un fichier dans ce répertoire il sera automatiquement partagé entre la machine hôte et virtuelle.</p>
 </div>
 </div>
 <div class="section" id="cinquieme-etape-configuration">
-<h3><a class="toc-backref" href="#id20">Cinquième étape – Configuration</a></h3>
+<h3><a class="toc-backref" href="#contents">Cinquième étape – Configuration</a></h3>
 <p>Maintenant nous allons voir des fonctionnalités que propose Vagrant grâce au <tt class="docutils literal">Vagrantfile</tt>.
 En effet avoir une belle machine virtuelle c’est bien mais configurée directement c’est mieux.
 Cela vous permet de rajouter à vos projets le fichier <tt class="docutils literal">Vagrantfile</tt> qui permettra aux développeurs
 et à vous-même d’avoir un environnement de développement prêt même si vous changez d’ordinateur.</p>
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
-<p>Pour prendre au compte les modifications du <tt class="docutils literal">Vagrantfile</tt> il faudra que vous redémarriez votre machine virtuelle à l’aide de la commande suivante :</p>
-<div class="last"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">reload</span>
-</pre></div>
-</div></div>
+<p class="last">Pour prendre au compte les modifications du <tt class="docutils literal">Vagrantfile</tt> il faudra que vous redémarriez votre machine virtuelle à l’aide de la commande suivante :</p>
+<!-- code
+
+$ vagrant reload -->
+</div>
 <div class="section" id="redirection-de-port">
-<h4><a class="toc-backref" href="#id21">Redirection de port</a></h4>
+<h4><a class="toc-backref" href="#contents">Redirection de port</a></h4>
 <p>L’un des points pratique de Vagrant c’est qu’on peut facilement faire de la redirection de port.</p>
 <p>C’est d’ailleurs l’une des premières chose que fait Vagrant après avoir allumé votre machine.
 Pour le vérifier vous pouvez taper cette ligne de votre terminale :</p>
-<div class="highlight"><pre><span></span>ssh vagrant@localhost -p <span class="m">2222</span> -i .vagrant/machines/default/virtualbox/private_key
-</pre></div>
+<pre class="code literal-block">
+$ ssh vagrant&#64;localhost -p 2222 -i .vagrant/machines/default/virtualbox/private_key
+</pre>
 <p>Logiquement vous vous êtes connecté à votre machine virtuelle.
 En effet, Vagrant créer une redirection de port sur l’hôte local <a class="footnote-reference" href="#id7" id="id4">[3]</a> au port 2222 vers le port 22 de la machine virtuel pour communiquer en ssh.
 Comme l’indiquer sur le schéma suivant :</p>
@@ -304,7 +311,7 @@ La solution la plus simple est de changer l’adresse d’écoute par l’adress
 <div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;lightbox&quot;:false,&quot;nav&quot;:true,&quot;zoom&quot;:1.5,&quot;resize&quot;:true,&quot;toolbar&quot;:&quot;zoom&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;Electron\&quot; modified=\&quot;2019-10-19T16:36:24.144Z\&quot; agent=\&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/12.1.0 Chrome/76.0.3809.139 Electron/6.0.7 Safari/537.36\&quot; etag=\&quot;yivDdXJfRHfQ7YiqTWAv\&quot; version=\&quot;12.1.0\&quot; type=\&quot;device\&quot; pages=\&quot;4\&quot;&gt;&lt;diagram name=\&quot;page-4\&quot; id=\&quot;1MSpEVdIaEvBATusKa1R\&quot;&gt;5VjbcpswEP0aHutBEjc/xnbSTJtMO0mnTfKmgAC1GDFCju18fVcgwAQ3FzfO5DLjB+1aWknnnD3YWGQ6X32WtEhPRcQyC9vRyiIzC2PkYGzpjx2t60zQJBLJIzOpS5zzW2aStskueMTK3kQlRKZ40U+GIs9ZqHo5KqVY9qfFIuvvWtCEDRLnIc2G2V88UmlzC7/LHzOepGZnNyD1F3PazDUXKVMaieVGihxaZCqFUPVovpqyTGPXwELOji+vUurfnJzFX45Pb69i/PVTXezoKUvaG0iWq+ctbai8odnCwHVKw5TnzMJeBntNriWMEj36yaVaaG1UWKh1gy/sAlRCMFmmXLHzgob6myWoCXKpmmcQIRjSsqj5jfmKwaEmZm8mFVvd4eqBm6IWfpAtE3Om5BrWmSqOIawRrAmXHfuo4TTdYL5NUqO4pK3cwQoDg+wTUCYDlL/JiOdUsYV8E3i+NkCdIWoRNL0Jc5Fr+KRY5JEGZmZDJKRKRSJymp0IURgIfzOl1say6EKJPsAsjw60AXUlIXPE9VGrkjEMpyITsjoCiSgL4hDypZLiD9v4xgsDdh23DOmz7sAP3FcsZMjumecaf6UyYffVw9v5liyjit/0D/fs5LlvvRt6zfAKusEbADqEcSDlns7hFBdG1FVwuRnMVr1o3UQrri6aCjC+3Mh3S3TQrNi3+vEj1U/+U/1m6XfB4ditLpD9D2E0Jerzm1WbD+o7hbD3QKH6goNClXba++wuJ38gp7JMB4qCrlJ9GUlW8lt6XU3QdBf6gNWR3YnlznSPgsWWtdtWLZvxJIdxxmJdSrcqh99tByattE1PSuh4nic/Ks8G499fY9/F3Rs2NtnS13tr62DAAxrjEfKCERpB4x1safP3Rwp6xI85+yVZGe/FbNEOZos+stk6eORgz7G9wEfQFmO/pxIU+CPXJ+6YIBwEtm+T3ayYkO11HrnNno26+Ye9ocVUqeIDuAJ23T4R46EtOC/pCgg9YNaB3bjUuyYG3XmGoi0PUYRelBnnbTGz65/KPXBp95usfaO3By4h7F6k1f7YvY0kh38B&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}"></div></div>
 </div>
 <div class="section" id="installation-des-dependances-du-projet">
-<h4><a class="toc-backref" href="#id22">Installation des dépendances du projet</a></h4>
+<h4><a class="toc-backref" href="#contents">Installation des dépendances du projet</a></h4>
 <p>L’un des points pratique de Vagrant c’est que l’on peut exécuter des lignes de commande lors du premier démarrage de la machine.</p>
 <p>En effet grâce à l’option <tt class="docutils literal">config.vm.provision</tt> du <tt class="docutils literal">Vagrantfile</tt> vous pouvez lancer des lignes de commande au démarrage de votre machine.</p>
 <p>Par exemple vous pouvez rajouter les commandes suivantes pour installer NGINX :</p>
@@ -315,8 +322,9 @@ La solution la plus simple est de changer l’adresse d’écoute par l’adress
 </pre></div>
 <p>Ces lignes de commande devront s’éxécuter après l’installation de la machine virtuelle.
 Si vous voulez les exécuter après, vous pouvez taper cette commande dans le terminal de votre ordinateur :</p>
-<div class="highlight"><pre><span></span>vagrant provision
-</pre></div>
+<pre class="code literal-block">
+$ vagrant provision
+</pre>
 <p>Si vous avez un script shell déjà à votre disposition vous pouvez l’exécuter en remplaçant ce que nous avons fait plus tôt par :</p>
 <div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="ss">path</span><span class="p">:</span> <span class="s2">&quot;script.sh&quot;</span>
 </pre></div>
@@ -343,9 +351,9 @@ Si vous voulez les exécuter après, vous pouvez taper cette commande dans le te
 </div>
 </div>
 <div class="section" id="aide-memoire">
-<h2><a class="toc-backref" href="#id23">Aide-mémoire</a></h2>
+<h2><a class="toc-backref" href="#contents">Aide-mémoire</a></h2>
 <div class="section" id="commandes">
-<h3><a class="toc-backref" href="#id24">Commandes</a></h3>
+<h3><a class="toc-backref" href="#contents">Commandes</a></h3>
 <ul class="simple">
 <li><tt class="docutils literal">vagrant init &lt;vagrant box&gt;</tt> Crée le <tt class="docutils literal">Vagrantfile</tt> avec la boîte que vous avez choisie.</li>
 <li><tt class="docutils literal">vagrant up</tt> Installe et / ou démarre la machine virtuelle configurée par le <tt class="docutils literal">Vagrantfile</tt>.</li>
@@ -357,7 +365,7 @@ Si vous voulez les exécuter après, vous pouvez taper cette commande dans le te
 </ul>
 </div>
 <div class="section" id="vagrantfile">
-<h3><a class="toc-backref" href="#id25">Vagrantfile</a></h3>
+<h3><a class="toc-backref" href="#contents">Vagrantfile</a></h3>
 <ul class="simple">
 <li><tt class="docutils literal">config.vm.box = &quot;ubuntu/bionic64&quot;</tt> Le nom de la boîte à installer.</li>
 <li><tt class="docutils literal">config.vm.box_check_update</tt> Si Vagrant doit vérifier si la boîte a des mises à jour disponible (<tt class="docutils literal">true</tt> / <tt class="docutils literal">false</tt> par défaut <tt class="docutils literal">true</tt>).</li>
