@@ -78,6 +78,8 @@ Les différentes branches de l’arbre sont :
 * **Pièces jointes** : Les pièces jointes peuvent être des images (par exemple la converture du DVD), du text…
 * **Chapitres** : Informations diverses sur les chapitres du fichier.
 
+.. TODO: Voir les informations d'un mkv
+
 Exemple
 -------
 
@@ -286,7 +288,7 @@ Découpons les arguments :
 
 1. ``--edit track:0`` : Sélectionne la piste 0 qui correspond à la piste vidéo dans notre cas.
 2. ``--set language=fre`` : Attribution de la langue française à la piste.
-3. ``movie.mkv```: Fichier qui va être modifié.
+3. ``movie.mkv``: Fichier qui va être modifié.
 
 .. note::
 
@@ -306,6 +308,56 @@ Modifions le titre du fichier mkv par « Titre ».
 
     On notera que cette fois-ci, nous n'avons pas besoins de spécfié une piste
     vus que c'est une propriété du fichier et non pas d'une piste.
+
+mkvextract
+==========
+
+La commande ``mkvextract`` permet d'extraire les pistes et les pièces jointe d'un fichier conteneur.
+
+Usage
+-----
+
+.. code::
+
+    $ mkvextract <chemin vers un fichier conteneur d'entré> <type d'extraction> <options> [<<numero piste>:<fichier de sortie>]
+
+Pour un usage plus avancé je vous redirige vers la `documentation`__
+Ou à la section `Aide-mémoire`_.
+
+.. __: https://mkvtoolnix.download/doc/mkvextract.html
+
+Extraire une piste de sous-titre
+--------------------------------
+
+Extrayons la piste de sous-titre française du fichier ``movie.mkv``.
+
+.. TODO: Mettre la sortie de la commande
+
+.. code::
+
+    $ mkvextract movie.mkv track 4:french-subtitle.h264
+
+
+.. hints::
+
+    Ici l'extension du fichier de sortie est ``.srt``, car c'est l'extention du format texte du sous-titre du fichier.
+    Voir `Exemple`_ vers la fin de l'arbre de l'aperçus.
+
+Extraire la piste vidéo
+-----------------------
+
+Extrayons la piste de vidéo pour pouvoir l'isoler des autres pistes.
+
+.. TODO: Mettre la sortie de la commande
+
+.. code::
+
+    $ mkvextract movie.mkv track 0:video.h264
+
+.. hints::
+
+    Ici l'extension du fichier de sortie est ``.h264``, car c'est l'extention du format vidéo du fichier.
+    Voir `Exemple`_ vers le début de la branche piste de l'arbre de l'aperçus.
 
 ------------
 Aide-mémoire
