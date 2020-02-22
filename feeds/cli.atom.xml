@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Loïc Penaud - cli</title><link href="https://lpenaud.github.io/" rel="alternate"></link><link href="https://lpenaud.github.io/feeds/cli.atom.xml" rel="self"></link><id>https://lpenaud.github.io/</id><updated>2020-02-22T17:47:38+01:00</updated><subtitle>Développeur Back-end</subtitle><entry><title>La gestion vidéo en ligne de commande</title><link href="https://lpenaud.github.io/video-cli.html" rel="alternate"></link><published>2020-02-22T17:47:38+01:00</published><updated>2020-02-22T17:47:29+01:00</updated><author><name>Penaud Loïc</name></author><id>tag:lpenaud.github.io,2020-02-22:/video-cli.html</id><summary type="html">&lt;p class="first last"&gt;Conversion, gestion de flux audio / vidéo en ligne de commande à l’aide de ffmpeg et mkvtoolnix.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Ayant un serveur de fichier qui contient majoritairement de l’audio et de la vidéo.
+Il peut arriver que j’ai besoin de faire de la conversion vidéo pour que ma Raspeberry Pi 3 puisse lire ces fichiers sans ralentissement et sans perte d’image.
+Cet article a donc pour but de faire un petit tour d’horizon sur les outils en ligne de commande disponible pour gérer les fichiers vidéos.&lt;/p&gt;
+&lt;p&gt;Tous les logiciels dans cet article peuvent être installés via le gestionnaire de paquet de votre système d’exploitation (&lt;tt class="docutils literal"&gt;apt&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;pacman&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;choco&lt;/tt&gt;, etc).&lt;/p&gt;
+&lt;p&gt;Pour toutes questions n’hésiter pas à m’envoyer un email à &lt;a class="reference external" href="mailto:l.penaud&amp;#64;zaclys.net"&gt;l.penaud&amp;#64;zaclys.net&lt;/a&gt;.&lt;/p&gt;
+&lt;hr class="docutils" /&gt;
+&lt;div class="contents topic" id="sommaire"&gt;
+&lt;p class="topic-title"&gt;Sommaire&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mediainfo" id="id9"&gt;Mediainfo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvtoolnix" id="id10"&gt;MKVToolNix&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvinfo" id="id11"&gt;mkvinfo&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#usage" id="id12"&gt;Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#exemple" id="id13"&gt;Exemple&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvmerge" id="id14"&gt;mkvmerge&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id3" id="id15"&gt;Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#ajout-dune-piste-de-sous-titre" id="id16"&gt;Ajout d’une piste de sous-titre&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#selection-de-pistes" id="id17"&gt;Sélection de pistes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvpropedit" id="id18"&gt;mkvpropedit&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id5" id="id19"&gt;Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#modification-de-la-langue-dune-piste" id="id20"&gt;Modification de la langue d’une piste&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#modification-du-titre-dun-fichier-mkv" id="id21"&gt;Modification du titre d’un fichier mkv&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvextract" id="id22"&gt;mkvextract&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#id7" id="id23"&gt;Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#extraction-dune-piste-de-sous-titre" id="id24"&gt;Extraction d’une piste de sous-titre&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#extraction-de-la-piste-video" id="id25"&gt;Extraction de la piste vidéo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#extraction-des-pistes-audio" id="id26"&gt;Extraction des pistes audio&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#ffmpeg" id="id27"&gt;ffmpeg&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#aide-memoire" id="id28"&gt;Aide-mémoire&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvmerge-general" id="id29"&gt;mkvmerge - général&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvmerge-ordre-des-arguments" id="id30"&gt;mkvmerge - ordre des arguments&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvmerge-sous-titre" id="id31"&gt;mkvmerge – sous-titre&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvmerge-fichier-conteneur" id="id32"&gt;mkvmerge – fichier conteneur&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvpropedit-general" id="id33"&gt;mkvpropedit – général&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvextract-general" id="id34"&gt;mkvextract – général&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvextract-pistes" id="id35"&gt;mkvextract – pistes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;hr class="docutils" /&gt;
+&lt;div class="section" id="mediainfo"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Mediainfo&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Mediainfo est un logiciel qui permet d’obtenir la liste des flux contenue dans un fichier container comme le &lt;strong&gt;Matroska (mkv)&lt;/strong&gt; par exemple.
+Il est possible d’utiliser ce logiciel en ligne de commande ou avec une interface graphique.&lt;/p&gt;
+&lt;p&gt;Son utilisation est très simple. En effet pour obtenir les informations d’un fichier il suffit de faire :&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+$ mediainfo &amp;lt;chemin vers une fichier multimédia&amp;gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mkvtoolnix"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#sommaire"&gt;MKVToolNix&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;MKVToolNix est un logiciel qui permet de lister, d’extraire, de mélanger différents flux dans des fichiers mkv.&lt;/p&gt;
+&lt;p&gt;Il se découpe en plusieurs sous-commandes :&lt;/p&gt;
+&lt;div class="contents local topic" id="id1"&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvinfo" id="id36"&gt;mkvinfo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvmerge" id="id37"&gt;mkvmerge&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvpropedit" id="id38"&gt;mkvpropedit&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#mkvextract" id="id39"&gt;mkvextract&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mkvinfo"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;mkvinfo&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;La commande &lt;tt class="docutils literal"&gt;mkvinfo&lt;/tt&gt; permet de lister tous les différents flux dans d’un fichier conteneur sous la forme d’un arbre.&lt;/p&gt;
+&lt;div class="section" id="usage"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Usage&lt;/a&gt;&lt;/h4&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvinfo &amp;lt;chemin vers une fichier multimédia&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Pour un usage plus avancé je vous redirige vers la &lt;a class="reference external" href="https://mkvtoolnix.download/doc/mkvinfo.html"&gt;documentation&lt;/a&gt;
+ou à la section &lt;a class="reference internal" href="#aide-memoire"&gt;Aide-mémoire&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Les différentes branches de l’arbre sont :&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;Entête EBML&lt;/strong&gt; : Les données d’entête (version du format de fichier…).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Segment&lt;/strong&gt; : Pour simplifier, cette section présente méta-données du fichier cela peut-être le titre de la vidéo qui sera affiché par lecteur multimédia, et l’application de multiplexage (comme mkvmerge).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pistes&lt;/strong&gt; : Liste des flux vidéo, audio et sous-titre avec leurs informations associées, s’affiche par ordre croisant d’id.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pièces jointes&lt;/strong&gt; : Les pièces jointes peuvent être des images (par exemple la couverture du DVD), du texte…&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Chapitres&lt;/strong&gt; : Informations diverses sur les chapitres du fichier (comme sur un DVD).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exemple"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Exemple&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Exemple de sortie avec un fichier (&lt;tt class="docutils literal"&gt;movie.mkv&lt;/tt&gt;) qui a :&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;1 piste vidéo au format H.264 en 1920 x 816 pixels&lt;/li&gt;
+&lt;li&gt;2 pistes audio 6 canaux l’une en anglais et l’autre en français&lt;/li&gt;
+&lt;li&gt;2 pistes de sous-titre l’une avec tous les dialogues et l’autre avec la traduction des mots à l’écran (forced)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvinfo movie.mkv
++ Entête EBML
+|+ Version EBML: 1
+|+ Version EBML lue: 1
+|+ Longueur maximale de l'ID EBML: 4
+|+ Longueur maximale de la taille EBML: 8
+|+ Type de document: matroska
+|+ Version du type de document: 2
+|+ Version lue du type de document: 2
++ Segment: taille 8211844081
+|+ Tête de positionnement (sous-entrées ignorées)
+|+ Vide EBML: taille 4025
+|+ Informations de segment
+| + Échelle d'horodatage: 1000000
+| + Application de multiplexage: libebml v1.3.0 + libmatroska v1.4.1
+| + Écriture de l'application: mkvmerge v7.0.0 ('Where We Going') 32bit built on Jun  9 2014 15:08:34
+| + Durée: 01:46:39.456000000
+| + Date: Mon Mar 02 20:29:35 2015 UTC
+| + UID de segment: 0xa2 0x75 0xe4 0xd1 0x70 0x23 0x8b 0x90 0x90 0x0b 0x73 0xe0 0x9d 0xcb 0xf3 0xd2
+|+ Pistes
+| + Piste
+|  + Numéro de la piste: 1 (ID de piste pour mkvmerge et mkvextract : 0)
+|  + UID de piste: 1
+|  + Type de piste: vidéo
+|  + Signal de laçage: 0
+|  + Cache minimal: 1
+|  + Identifiant du codec: V_MPEG4/ISO/AVC
+|  + Données privées de codec: taille 41 (profil AVC/H.264 : High &amp;#64;L4.1)
+|  + Durée par défaut: 00:00:00.041708333 (23.976 trames/champs par seconde pour une piste vidéo) |  + Piste vidéo
+|   + Largeur (pixel): 1920
+|   + Hauteur (pixel): 816
+|   + Largeur à l'écran: 1920
+|   + Hauteur à l'écran: 816
+| + Piste
+|  + Numéro de la piste: 2 (ID de piste pour mkvmerge et mkvextract : 1)
+|  + UID de piste: 10148295179763971202
+|  + Type de piste: audio
+|  + Identifiant du codec: A_DTS
+|  + Durée par défaut: 00:00:00.010666666 (93.750 trames/champs par seconde pour une piste vidéo) |  + Langue: fre
+|  + Piste audio
+|   + Fréquence d'échantillonnage: 48000
+|   + Canaux: 6
+| + Piste
+|  + Numéro de la piste: 3 (ID de piste pour mkvmerge et mkvextract : 2)
+|  + UID de piste: 1829564080678812061
+|  + Type de piste: audio
+|  + Signal « Piste par défaut »: 0
+|  + Identifiant du codec: A_AC3
+|  + Durée par défaut: 00:00:00.032000000 (31.250 trames/champs par seconde pour une piste vidéo) |  + Piste audio
+|   + Fréquence d'échantillonnage: 48000
+|   + Canaux: 6
+| + Piste
+|  + Numéro de la piste: 4 (ID de piste pour mkvmerge et mkvextract : 3)
+|  + UID de piste: 12492895828352048821
+|  + Type de piste: sous-titres
+|  + Signal de laçage: 0
+|  + Identifiant du codec: S_TEXT/UTF8
+|  + Langue: fre
+|  + Nom: French Forced
+| + Piste
+|  + Numéro de la piste: 5 (ID de piste pour mkvmerge et mkvextract : 4)
+|  + UID de piste: 18398026066537722243
+|  + Type de piste: sous-titres
+|  + Signal « Piste par défaut »: 0
+|  + Signal de laçage: 0
+|  + Identifiant du codec: S_TEXT/UTF8
+|  + Langue: fre
+|+ Vide EBML: taille 1203
+|+ Grappe
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mkvmerge"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;mkvmerge&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;La commande &lt;tt class="docutils literal"&gt;mkvmerge&lt;/tt&gt; est très pratique puisqu’elle
+nous permet de créer des fichiers mkv en mélangeant plusieurs fichiers qui deviendront des pistes.&lt;/p&gt;
+&lt;div class="section" id="id3"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Usage&lt;/a&gt;&lt;/h4&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvmerge -o &amp;lt;fichier de sortie&amp;gt; [options] &amp;lt;liste de fichier d’entrée (audio, vidéo, sous-titre, conteneur…)&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Pour un usage plus avancé je vous redirige vers la &lt;a class="reference external" href="https://mkvtoolnix.download/doc/mkvmerge.html"&gt;documentation&lt;/a&gt;
+ou à la section &lt;a class="reference internal" href="#aide-memoire"&gt;Aide-mémoire&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="ajout-dune-piste-de-sous-titre"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Ajout d’une piste de sous-titre&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;En prenant le fichier de la partie précédente &lt;a class="reference internal" href="#exemple"&gt;Exemple&lt;/a&gt;
+et que je souhaite rajouter une piste de sous-titre anglaise en format texte encodé en &lt;em&gt;ISO-8859-1&lt;/em&gt;
+(format beaucoup utilisé sur sous-titre).&lt;/p&gt;
+&lt;p&gt;Je devrai taper la commande suivante :&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvmerge -o movie-subtitled.mkv --sub-charset 0:iso-8859-1 --language 0:eng subtitle.srt movie.mkv
+mkvmerge v43.0.0 ('The Quartermaster') 64-bit
+« subtitle.srt » : utilisation du démultiplexeur pour le format «&amp;nbsp;Sous-titres SRT&amp;nbsp;».
+« movie.mkv » : utilisation du démultiplexeur pour le format «&amp;nbsp;Matroska&amp;nbsp;».
+« subtitle.srt » piste 0 : utilisation du module de sortie pour le format «&amp;nbsp;sous-titres texte&amp;nbsp;».
+« movie.mkv » piste 0 : utilisation du module de sortie pour le format «&amp;nbsp;AVC/H.264&amp;nbsp;».
+« movie.mkv » piste 1 : utilisation du module de sortie pour le format «&amp;nbsp;DTS&amp;nbsp;».
+« movie.mkv » piste 2 : utilisation du module de sortie pour le format «&amp;nbsp;AC-3&amp;nbsp;».
+« movie.mkv » piste 3 : utilisation du module de sortie pour le format «&amp;nbsp;sous-titres texte&amp;nbsp;».
+« movie.mkv » piste 4 : utilisation du module de sortie pour le format «&amp;nbsp;sous-titres texte&amp;nbsp;».
+Le fichier « movie-subtitled.mkv » est ouvert en écriture.
+Progression : 100%
+Les entrées CUE (l'index) sont en cours d’écriture…
+Le multiplexage a pris 33 secondes.
+&lt;/pre&gt;
+&lt;p&gt;Que fait exactement cette ligne de commande ?
+Faisons du pas à pas avec les arguments :&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-o&lt;/span&gt; &lt;span class="pre"&gt;movie-subtitled.mkv&lt;/span&gt;&lt;/tt&gt; : Le fichier de sortie de la fusion sera &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;movie-subtitled.mkv&lt;/span&gt;&lt;/tt&gt;&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--sub-charset&lt;/span&gt; &lt;span class="pre"&gt;0:iso-8859-1&lt;/span&gt;&lt;/tt&gt; : On précise que la piste 0 sera encodé en &lt;em&gt;ISO-8859-1&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--language&lt;/span&gt; 0:eng&lt;/tt&gt; : On précise que la piste 0 sera en anglais&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;subtitle.srt&lt;/tt&gt; : On donne le chemin du fichier sous-titre qui sera la piste 0&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;movie.mkv&lt;/tt&gt; : On donne le chemin du fichier mkv pour obtenir les autres pistes qui seront décalés automatiquement.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="admonition tip"&gt;
+&lt;p class="first admonition-title"&gt;Astuce&lt;/p&gt;
+&lt;p class="last"&gt;Si vous voulez que le lecteur vidéo lise cette piste par défaut vous pouvez rajouter l’option &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--default-track&lt;/span&gt; 0&lt;/tt&gt;
+dans les options de &lt;tt class="docutils literal"&gt;subtitle.srt&lt;/tt&gt;, on le rentrant juste avant celui-ci.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="selection-de-pistes"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Sélection de pistes&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Maintenant imaginons que vous souhaitez garder seulement l’audio anglais et supprime tous les sous-titres
+parce que votre ami anglais en a que faire des sous-titres en français.&lt;/p&gt;
+&lt;p&gt;On pourra taper la commande suivante :&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvmerge -o movie-eng.mkv --audio-tracks 2 --no-subtitles movie.mkv
+mkvmerge v43.0.0 ('The Quartermaster') 64-bit
+« movie.mkv » : utilisation du démultiplexeur pour le format «&amp;nbsp;Matroska&amp;nbsp;».
+« movie.mkv » piste 0 : utilisation du module de sortie pour le format «&amp;nbsp;AVC/H.264&amp;nbsp;».
+« movie.mkv » piste 2 : utilisation du module de sortie pour le format «&amp;nbsp;AC-3&amp;nbsp;».
+Le fichier « movie-eng.mkv » est ouvert en écriture.
+Progression : 100%
+Les entrées CUE (l'index) sont en cours d’écriture…
+Le multiplexage a pris 1 minute 18 secondes.
+&lt;/pre&gt;
+&lt;p&gt;Découpons les arguments :&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-o&lt;/span&gt; &lt;span class="pre"&gt;movie-eng.mkv&lt;/span&gt;&lt;/tt&gt; : Fichier de sortie&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--audio-tracks&lt;/span&gt; 2&lt;/tt&gt; : Sélection de la piste audio n°2 (l’anglaise)&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-subtitles&lt;/span&gt;&lt;/tt&gt; : Précise qu’on ne veut pas garder les pistes de sous-titre&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;movie.mkv&lt;/tt&gt; : Fichier d’entrée.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="admonition tip"&gt;
+&lt;p class="first admonition-title"&gt;Astuce&lt;/p&gt;
+&lt;p class="last"&gt;Vous pouvez sélectionner plusieurs pistes en séparant les pistes avec des virgules (&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--audio-tracks&lt;/span&gt; 1,2&lt;/tt&gt;).
+La sélection des pistes se fait toujours sous la forme &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--&amp;lt;type&amp;gt;-tracks&lt;/span&gt;&lt;/tt&gt;.
+Tout comme il y a des commandes sous la forme &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-&amp;lt;type&amp;gt;&lt;/span&gt;&lt;/tt&gt; pour ignorer les pistes.
+Pour plus d’information, voir la section &lt;a class="reference internal" href="#mkvmerge-fichier-conteneur"&gt;mkvmerge – fichier conteneur&lt;/a&gt; de l’&lt;a class="reference internal" href="#aide-memoire"&gt;aide-mémoire&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mkvpropedit"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;mkvpropedit&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;La commande &lt;tt class="docutils literal"&gt;mkvpropedit&lt;/tt&gt; permet d’éditer les propriétés d’un fichier mkv.
+Elle est utile lors d’un oubli dans &lt;tt class="docutils literal"&gt;mkvmerge&lt;/tt&gt;.&lt;/p&gt;
+&lt;div class="admonition hint"&gt;
+&lt;p class="first admonition-title"&gt;Indication&lt;/p&gt;
+&lt;p class="last"&gt;Cette commande ne permet pas d’ajouter ou de supprimer des pistes.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id5"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Usage&lt;/a&gt;&lt;/h4&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvpropedit [options] &amp;lt;chemin vers un fichier multimédia&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Pour un usage plus avancé je vous redirige vers la &lt;a class="reference external" href="https://mkvtoolnix.download/doc/mkvpropedit.html"&gt;documentation&lt;/a&gt;
+ou à la section &lt;a class="reference internal" href="#aide-memoire"&gt;Aide-mémoire&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="modification-de-la-langue-dune-piste"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Modification de la langue d’une piste&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Modifions la langue de la piste vidéo (0) pour préciser qu’elle est française.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvpropedit --edit track:0 --set language=fre movie.mkv
+&lt;/pre&gt;
+&lt;p&gt;Découpons les arguments :&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--edit&lt;/span&gt; track:0&lt;/tt&gt; : Sélectionne la piste 0 qui correspond à la piste vidéo dans notre cas.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--set&lt;/span&gt; language=fre&lt;/tt&gt; : Attribution de la langue française à la piste.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;movie.mkv&lt;/tt&gt;: Fichier qui va être modifié.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;L’option &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--set&lt;/span&gt;&lt;/tt&gt; permet l’attribution d’une propriété mais si celle-ci n’existe pas.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="modification-du-titre-dun-fichier-mkv"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Modification du titre d’un fichier mkv&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Modifions le titre du fichier mkv par «&amp;nbsp;Titre&amp;nbsp;».&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvpropedit --edit info --set &amp;quot;title=Titre&amp;quot; movie.mkv
+&lt;/pre&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;On notera que cette fois-ci, nous n’avons pas besoins de spécifier une piste
+vu que c’est une propriété du fichier et non pas d’une piste.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mkvextract"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;mkvextract&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;La commande &lt;tt class="docutils literal"&gt;mkvextract&lt;/tt&gt; permet d’extraire les pistes et les pièces jointe d’un fichier conteneur.&lt;/p&gt;
+&lt;div class="section" id="id7"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Usage&lt;/a&gt;&lt;/h4&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvextract &amp;lt;chemin vers un fichier conteneur d’entré&amp;gt; &amp;lt;type d’extraction&amp;gt; &amp;lt;options&amp;gt; ...[&amp;lt;numero piste&amp;gt;:&amp;lt;fichier de sortie&amp;gt;]
+&lt;/pre&gt;
+&lt;p&gt;Pour un usage plus avancé je vous redirige vers la &lt;a class="reference external" href="https://mkvtoolnix.download/doc/mkvextract.html"&gt;documentation&lt;/a&gt;
+ou à la section &lt;a class="reference internal" href="#aide-memoire"&gt;Aide-mémoire&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="extraction-dune-piste-de-sous-titre"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Extraction d’une piste de sous-titre&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Extrayons la piste de sous-titre française du fichier &lt;tt class="docutils literal"&gt;movie.mkv&lt;/tt&gt;.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvextract movie.mkv tracks 4:french-subtitle.srt
+Extraction de la piste 4 avec le codec « S_TEXT/UTF8 » dans le fichier « french-subtitle.srt ». Format de conteneur : SRT text subtitles
+Progression : 100%
+&lt;/pre&gt;
+&lt;div class="admonition hint"&gt;
+&lt;p class="first admonition-title"&gt;Indication&lt;/p&gt;
+&lt;p class="last"&gt;Ici l’extension du fichier de sortie est &lt;tt class="docutils literal"&gt;.srt&lt;/tt&gt;, car c’est l’extension du format texte du sous-titre du fichier.
+Voir &lt;a class="reference internal" href="#exemple"&gt;Exemple&lt;/a&gt; vers la fin de l’arbre de l’aperçu.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="extraction-de-la-piste-video"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Extraction de la piste vidéo&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Extrayons la piste vidéo pour pouvoir l’isoler des autres pistes.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvextract movie.mkv tracks 0:video.h264
+Extraction de la piste 0 avec le codec « V_MPEG4/ISO/AVC » dans le fichier « video.h264 ». Format de conteneur : AVC/H.264 elementary stream
+Progression : 100%
+&lt;/pre&gt;
+&lt;div class="admonition hint"&gt;
+&lt;p class="first admonition-title"&gt;Indication&lt;/p&gt;
+&lt;p class="last"&gt;Ici l’extension du fichier de sortie est &lt;tt class="docutils literal"&gt;.h264&lt;/tt&gt;, car c’est l’extension du format vidéo du fichier.
+Voir &lt;a class="reference internal" href="#exemple"&gt;Exemple&lt;/a&gt; vers le début de la branche piste de l’arbre de l’aperçus.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="extraction-des-pistes-audio"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Extraction des pistes audio&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;mkvextract&lt;/tt&gt; nous permet d’extraire plusieurs pistes en même temps.
+Illustrons ça tout de suite en extrayant les pistes audio du fichier &lt;tt class="docutils literal"&gt;movie.mkv&lt;/tt&gt;.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvextract movie.mkv tracks 1:audio-fre.dts 2:audio-eng.ac3
+Extraction de la piste 1 avec le codec « A_DTS » dans le fichier « audio-fre.dts ». Format de conteneur : Digital Theater System (DTS)
+Extraction de la piste 2 avec le codec « A_AC3 » dans le fichier « audio-eng.ac3 ». Format de conteneur : Dolby Digital (AC-3)
+Progression : 100%
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="ffmpeg"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#sommaire"&gt;ffmpeg&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;À venir&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="aide-memoire"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Aide-mémoire&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="section" id="mkvmerge-general"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;mkvmerge - général&lt;/a&gt;&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--language&lt;/span&gt; &amp;lt;id &lt;span class="pre"&gt;piste&amp;gt;:&amp;lt;langue&lt;/span&gt; dans le format ISO &lt;span class="pre"&gt;639-2&lt;/span&gt; ou ISO &lt;span class="pre"&gt;639-1&amp;gt;&lt;/span&gt;&lt;/tt&gt; : Spécifie la langue d’une piste&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--default-track&lt;/span&gt; &amp;lt;id piste&amp;gt;&lt;/tt&gt; : Précise si la piste devra lus par défaut par les lecteurs&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--title&lt;/span&gt; &amp;lt;titre&amp;gt;&lt;/tt&gt; : Permet de donner un titre au fichier.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-o&lt;/span&gt; &amp;lt;fichier de sortie mkv&amp;gt;&lt;/tt&gt; : Fichier mkv de sortie.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mkvmerge-ordre-des-arguments"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;mkvmerge - ordre des arguments&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="admonition caution"&gt;
+&lt;p class="first admonition-title"&gt;Avertissement!&lt;/p&gt;
+&lt;p class="last"&gt;L’ordre des arguments est important. Il faut toujours commencer par le &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-o&lt;/span&gt;&lt;/tt&gt; pour indiquer le fichier de sortie.
+Puis les options appliquées au premier fichier, ensuite le nom de celui-ci et pareil pour les autres.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Exemple&lt;/strong&gt; :&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvmerge --title &amp;quot;Titre&amp;quot; -o movie.mkv --no-subtitle movie-subtitled.mkv --audio-tracks 1 movie-audio.mkv
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Contre-exemple&lt;/strong&gt; :&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;
+$ mkvmerge movie-subtitled.mkv --no-subtitle movie-audio.mkv --audio-tracks 1 -o movie.mkv --title &amp;quot;Titre&amp;quot;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mkvmerge-sous-titre"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;mkvmerge – sous-titre&lt;/a&gt;&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--sub-charset&lt;/span&gt; &amp;lt;id &lt;span class="pre"&gt;piste&amp;gt;:&amp;lt;encodage&amp;gt;&lt;/span&gt;&lt;/tt&gt; : Spécifie le codec (non obligatoire si l’encodage du fichier est l’UTF-8) d’une piste de sous-titre&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mkvmerge-fichier-conteneur"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;mkvmerge – fichier conteneur&lt;/a&gt;&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--video-track&lt;/span&gt;&lt;/tt&gt; : Sélection des pistes vidéo&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--audio-track&lt;/span&gt;&lt;/tt&gt; : Sélection des pistes audio&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--subtitle-track&lt;/span&gt;&lt;/tt&gt; : Sélection des pistes de sous-titre&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-video&lt;/span&gt;&lt;/tt&gt; : Suppression des pistes vidéo&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-audio&lt;/span&gt;&lt;/tt&gt; : Suppression des pistes audio&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-subtitle&lt;/span&gt;&lt;/tt&gt; : Suppression des pistes de sous-titre&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mkvpropedit-general"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;mkvpropedit – général&lt;/a&gt;&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--edit&lt;/span&gt; &lt;span class="pre"&gt;track:&amp;lt;id&lt;/span&gt; piste&amp;gt; &lt;span class="pre"&gt;--set&lt;/span&gt; &lt;span class="pre"&gt;&amp;lt;propriété&amp;gt;=&amp;lt;nouvelle&lt;/span&gt; valeur&amp;gt;&lt;/tt&gt; : Permet d’éditer une propriété d’une piste&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--edit&lt;/span&gt; &lt;span class="pre"&gt;track:&amp;lt;id&lt;/span&gt; piste&amp;gt; &lt;span class="pre"&gt;--add&lt;/span&gt; &lt;span class="pre"&gt;&amp;lt;propriété&amp;gt;=&amp;lt;nouvelle&lt;/span&gt; valeur&amp;gt;&lt;/tt&gt; : Permet d’éditer une propriété d’une piste&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--edit&lt;/span&gt; &lt;span class="pre"&gt;track:&amp;lt;id&lt;/span&gt; piste&amp;gt; &lt;span class="pre"&gt;--delete&lt;/span&gt; &amp;lt;propriété&amp;gt;&lt;/tt&gt; : Permet de supprimer une propriété d’une piste&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mkvextract-general"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;mkvextract – général&lt;/a&gt;&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;tracks&lt;/tt&gt; : Spécifie que nous souhaitons extraire une ou plusieurs pistes du conteneur.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mkvextract-pistes"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;mkvextract – pistes&lt;/a&gt;&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;&amp;lt;numero &lt;span class="pre"&gt;piste&amp;gt;:&amp;lt;fichier&lt;/span&gt; de sortie&amp;gt;&lt;/tt&gt; : Spécifie le fichier de sortie de la piste correspondant au numéro donné (cette options peut-être utilisé au temps de fois que l’on souhaite).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="cli"></category><category term="cli"></category><category term="video"></category></entry></feed>
