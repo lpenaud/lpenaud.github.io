@@ -14,66 +14,66 @@
     font-weight: 600;
 }
 
-.contents.topic ul {
+.contents.topic:not(.local) ul {
     list-style: none;
     line-height: 1.5em;
 }
 
-.contents.topic ul a:hover {
+.contents.topic:not(.local) ul a:hover {
     font-weight: 700;
 }
 
-.contents.topic > ul {
+.contents.topic:not(.local) > ul {
     counter-reset: first-level;
     color: var(--first-title-color);
 }
 
-.contents.topic > ul > li::before {
+.contents.topic:not(.local) > ul > li::before {
     counter-increment: first-level;
     content: counters(first-level, ".", upper-roman) ". ";
 }
 
-.contents.topic > ul > li > a {
+.contents.topic:not(.local) > ul > li > a {
     color: var(--first-title-color);
 }
 
-.contents.topic > ul > li > a:hover {
+.contents.topic:not(.local) > ul > li > a:hover {
     color: var(--first-title-color-hover);
 }
 
-.contents.topic > ul > li > ul {
+.contents.topic:not(.local) > ul > li > ul {
     counter-reset: second-level;
     color: var(--second-title-color);
 }
 
-.contents.topic > ul > li > ul > li::before {
+.contents.topic:not(.local) > ul > li > ul > li::before {
     counter-increment: second-level;
     content: counters(first-level, "", upper-roman) "." counters(second-level, "", decimal) ") ";
 }
 
-.contents.topic > ul > li > ul > li > a {
+.contents.topic:not(.local) > ul > li > ul > li > a {
     color: var(--second-title-color);
 }
 
-.contents.topic > ul > li > ul > li > a:hover {
+.contents.topic:not(.local) > ul > li > ul > li > a:hover {
     color: var(--second-title-color-hover);
 }
 
-.contents.topic > ul > li > ul > li > ul {
+.contents.topic:not(.local) > ul > li > ul > li > ul {
     counter-reset: third-level;
     color: var(--third-title-color);
 }
 
-.contents.topic > ul > li > ul > li > ul > li::before {
+.contents.topic:not(.local) > ul > li > ul > li > ul > li::before {
     counter-increment: third-level;
     content: counters(first-level, ".", upper-roman) "." counters(second-level, "", decimal) "." counters(third-level, "", lower-alpha) ") ";
 }
 
-.contents.topic > ul > li > ul > li > ul > li > a {
+.contents.topic:not(.local) > ul > li > ul > li > ul > li > a {
     color: var(--third-title-color);
 }
 
-.contents.topic > ul > li > ul > li > ul > li > a:hover {
+.contents.topic:not(.local) > ul > li > ul > li > ul > li > a:hover {
     color: var(--third-title-color-hover);
 }
 
