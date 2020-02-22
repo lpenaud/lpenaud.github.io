@@ -2,21 +2,22 @@
 La gestion vidéo en ligne de commande
 =====================================
 
-:date: 2020-01-12 18:00:00
-:modified: 2020-01-12 18:00:00
+:date: 2020-02-22 17:47:38
+:modified: 2020-02-22 17:47:29
 :category: cli
 :tags: cli, video
 :slug: video-cli
 :lang: fr
 :authors: Penaud Loïc
 :summary: Conversion, gestion de flux audio / vidéo en ligne de commande à l’aide de ffmpeg et mkvtoolnix.
-:status: draft
 
 Ayant un serveur de fichier qui contient majoritairement de l’audio et de la vidéo.
 Il peut arriver que j’ai besoin de faire de la conversion vidéo pour que ma Raspeberry Pi 3 puisse lire ces fichiers sans ralentissement et sans perte d’image.
-Cette article a donc pour but de faire un petit tour d’horizon sur les outils en ligne de commande disponible pour gérer les fichiers vidéos.
+Cet article a donc pour but de faire un petit tour d’horizon sur les outils en ligne de commande disponible pour gérer les fichiers vidéos.
 
-Tout les logiciels dans cet article peuvent être installés via le gestionnaire de paquet de votre système d'exploitation (``apt``, ``pacman``, ``choco``, etc).
+Tous les logiciels dans cet article peuvent être installés via le gestionnaire de paquet de votre système d’exploitation (``apt``, ``pacman``, ``choco``, etc).
+
+Pour toutes questions n’hésiter pas à m’envoyer un email à l.penaud@zaclys.net.
 
 ------------------
 
@@ -55,7 +56,7 @@ Il se découpe en plusieurs sous-commandes :
 mkvinfo
 =======
 
-La commande ``mkvinfo`` permet de lister tout les différents flux dans d’un fichier conteneur sous la forme d’un arbre.
+La commande ``mkvinfo`` permet de lister tous les différents flux dans d’un fichier conteneur sous la forme d’un arbre.
 
 Usage
 -----
@@ -65,29 +66,27 @@ Usage
     $ mkvinfo <chemin vers une fichier multimédia>
 
 Pour un usage plus avancé je vous redirige vers la `documentation`__
-Ou à la section `Aide-mémoire`_.
+ou à la section `Aide-mémoire`_.
 
 .. __: https://mkvtoolnix.download/doc/mkvinfo.html
 
 
 Les différentes branches de l’arbre sont :
 
-* **Entête EBML** : Les données d'entête (version du format de fichier…).
-* **Segment** : Pour simplifier méta-données du fichier cela peut-être le titre de la vidéo qui sera afficher par lecteur multimédia, et l'application de multiplexage (comme mkvmerge).
-* **Pistes** : Liste des flux vidéo, audio et sous-titre avec leur informations associé, s'affiche par ordre croisant d’id.
-* **Pièces jointes** : Les pièces jointes peuvent être des images (par exemple la converture du DVD), du text…
-* **Chapitres** : Informations diverses sur les chapitres du fichier.
-
-.. TODO: Voir les informations d'un mkv
+* **Entête EBML** : Les données d’entête (version du format de fichier…).
+* **Segment** : Pour simplifier, cette section présente méta-données du fichier cela peut-être le titre de la vidéo qui sera affiché par lecteur multimédia, et l’application de multiplexage (comme mkvmerge).
+* **Pistes** : Liste des flux vidéo, audio et sous-titre avec leurs informations associées, s’affiche par ordre croisant d’id.
+* **Pièces jointes** : Les pièces jointes peuvent être des images (par exemple la couverture du DVD), du texte…
+* **Chapitres** : Informations diverses sur les chapitres du fichier (comme sur un DVD).
 
 Exemple
 -------
 
 Exemple de sortie avec un fichier (``movie.mkv``) qui a :
 
-* 1 piste vidéo au format H.264 en 1920x816 pixels
-* 2 pistes audio 6 canaux l'une en anglais et l'autre en français
-* 2 pistes de sous-titre l'une avec tout les dialogues et l'autre avec la traduction des mots à l'écran (forced)
+* 1 piste vidéo au format H.264 en 1920 x 816 pixels
+* 2 pistes audio 6 canaux l’une en anglais et l’autre en français
+* 2 pistes de sous-titre l’une avec tous les dialogues et l’autre avec la traduction des mots à l’écran (forced)
 
 .. code::
     
@@ -164,7 +163,7 @@ Exemple de sortie avec un fichier (``movie.mkv``) qui a :
 mkvmerge
 ========
 
-La commande ``mkvmerge`` est très pratique puisqu'elle
+La commande ``mkvmerge`` est très pratique puisqu’elle
 nous permet de créer des fichiers mkv en mélangeant plusieurs fichiers qui deviendront des pistes.
 
 Usage
@@ -172,14 +171,14 @@ Usage
 
 .. code::
 
-    $ mkvmerge -o <fichier de sortie> [options] <liste de fichier d'entrée (audio, vidéo, sous-titre, conteneur…)>
+    $ mkvmerge -o <fichier de sortie> [options] <liste de fichier d’entrée (audio, vidéo, sous-titre, conteneur…)>
 
 Pour un usage plus avancé je vous redirige vers la `documentation`__
-Ou à la section `Aide-mémoire`_.
+ou à la section `Aide-mémoire`_.
 
 .. __: https://mkvtoolnix.download/doc/mkvmerge.html
 
-Ajout d'une piste de sous-titre
+Ajout d’une piste de sous-titre
 -------------------------------
 
 En prenant le fichier de la partie précédente `Exemple`_ 
@@ -202,7 +201,7 @@ Je devrai taper la commande suivante :
     « movie.mkv » piste 4 : utilisation du module de sortie pour le format « sous-titres texte ».
     Le fichier « movie-subtitled.mkv » est ouvert en écriture.
     Progression : 100%
-    Les entrées CUE (l'index) sont en cours d'écriture…
+    Les entrées CUE (l'index) sont en cours d’écriture…
     Le multiplexage a pris 33 secondes.
 
 Que fait exactement cette ligne de commande ?
@@ -212,18 +211,18 @@ Faisons du pas à pas avec les arguments :
 2. ``--sub-charset 0:iso-8859-1`` : On précise que la piste 0 sera encodé en *ISO-8859-1*
 3. ``--language 0:eng`` : On précise que la piste 0 sera en anglais
 4. ``subtitle.srt`` : On donne le chemin du fichier sous-titre qui sera la piste 0
-5. ``movie.mkv`` : On donne le chemin du fichier mkv pour obtenir les autres pistes qui seront décalé automatiquement.
+5. ``movie.mkv`` : On donne le chemin du fichier mkv pour obtenir les autres pistes qui seront décalés automatiquement.
 
 .. tip::
 
-    Si vous voulez que le lecteur vidéo lise cette piste par défaut vous pouvez rajouter l'option ``--default-track 0``
+    Si vous voulez que le lecteur vidéo lise cette piste par défaut vous pouvez rajouter l’option ``--default-track 0``
     dans les options de ``subtitle.srt``, on le rentrant juste avant celui-ci.
 
 Sélection de pistes
 -------------------
 
-Maintenant imaginons que vous souhaitez garder seulement l'audio anglais et supprime tout les sous-titres
-pour votre amis anglais qui en a que faire des sous-titre en français.
+Maintenant imaginons que vous souhaitez garder seulement l’audio anglais et supprime tous les sous-titres
+parce que votre ami anglais en a que faire des sous-titres en français.
 
 On pourra taper la commande suivante :
 
@@ -236,49 +235,49 @@ On pourra taper la commande suivante :
     « movie.mkv » piste 2 : utilisation du module de sortie pour le format « AC-3 ».
     Le fichier « movie-eng.mkv » est ouvert en écriture.
     Progression : 100%
-    Les entrées CUE (l'index) sont en cours d'écriture…
+    Les entrées CUE (l'index) sont en cours d’écriture…
     Le multiplexage a pris 1 minute 18 secondes.
 
 Découpons les arguments :
 
 1. ``-o movie-eng.mkv`` : Fichier de sortie
-2. ``--audio-tracks 2`` : Sélection de la piste audio n°2 (l'anglaise)
-3. ``--no-subtitles`` : Précise qu'on ne veut pas garder les pistes de sous-titre
-4. ``movie.mkv`` : Fichier d'entré.
+2. ``--audio-tracks 2`` : Sélection de la piste audio n°2 (l’anglaise)
+3. ``--no-subtitles`` : Précise qu’on ne veut pas garder les pistes de sous-titre
+4. ``movie.mkv`` : Fichier d’entrée.
 
 .. tip::
 
     Vous pouvez sélectionner plusieurs pistes en séparant les pistes avec des virgules (``--audio-tracks 1,2``).
     La sélection des pistes se fait toujours sous la forme ``--<type>-tracks``.
     Tout comme il y a des commandes sous la forme ``--no-<type>`` pour ignorer les pistes.
-    Plus d'information dans la section `mkvmerge - fichier conteneur`_ de l'`aide-mémoire`_.
+    Pour plus d’information, voir la section `mkvmerge – fichier conteneur`_ de l’`aide-mémoire`_.
 
 mkvpropedit
 ===========
 
-La commande ``mkvpropedit`` permet d'éditer les propriété d'un fichier mkv.
-Elle est utile lors d'un oublis dans ``mkvmerge``.
+La commande ``mkvpropedit`` permet d’éditer les propriétés d’un fichier mkv.
+Elle est utile lors d’un oubli dans ``mkvmerge``.
 
 .. hint::
     
-    À noter que cette commande ne permet pas d'ajouter ou de supprimer des pistes.
+    Cette commande ne permet pas d’ajouter ou de supprimer des pistes.
 
 Usage
 -----
 
 .. code::
 
-    $ mkvinfo [options] <chemin vers un fichier mkv>
+    $ mkvpropedit [options] <chemin vers un fichier multimédia>
 
 Pour un usage plus avancé je vous redirige vers la `documentation`__
-Ou à la section `Aide-mémoire`_.
+ou à la section `Aide-mémoire`_.
 
 .. __: https://mkvtoolnix.download/doc/mkvpropedit.html
 
-Modification de la langue d'une piste
+Modification de la langue d’une piste
 -------------------------------------
 
-Modifions la langue de la piste vidéo (0) pour préciser qu'elle est française.
+Modifions la langue de la piste vidéo (0) pour préciser qu’elle est française.
 
 .. code::
 
@@ -292,10 +291,10 @@ Découpons les arguments :
 
 .. note::
 
-    L'option ``--set`` permet l'attribution d'une propriété mais si celle-ci n'existe pas.
+    L’option ``--set`` permet l’attribution d’une propriété mais si celle-ci n’existe pas.
 
 
-Modification du titre d'un fichier mkv
+Modification du titre d’un fichier mkv
 --------------------------------------
 
 Modifions le titre du fichier mkv par « Titre ».
@@ -306,58 +305,76 @@ Modifions le titre du fichier mkv par « Titre ».
 
 .. note::
 
-    On notera que cette fois-ci, nous n'avons pas besoins de spécfié une piste
-    vus que c'est une propriété du fichier et non pas d'une piste.
+    On notera que cette fois-ci, nous n’avons pas besoins de spécifier une piste
+    vu que c’est une propriété du fichier et non pas d’une piste.
 
 mkvextract
 ==========
 
-La commande ``mkvextract`` permet d'extraire les pistes et les pièces jointe d'un fichier conteneur.
+La commande ``mkvextract`` permet d’extraire les pistes et les pièces jointe d’un fichier conteneur.
 
 Usage
 -----
 
 .. code::
 
-    $ mkvextract <chemin vers un fichier conteneur d'entré> <type d'extraction> <options> [<<numero piste>:<fichier de sortie>]
+    $ mkvextract <chemin vers un fichier conteneur d’entré> <type d’extraction> <options> ...[<numero piste>:<fichier de sortie>]
 
 Pour un usage plus avancé je vous redirige vers la `documentation`__
-Ou à la section `Aide-mémoire`_.
+ou à la section `Aide-mémoire`_.
 
 .. __: https://mkvtoolnix.download/doc/mkvextract.html
 
-Extraire une piste de sous-titre
---------------------------------
+Extraction d’une piste de sous-titre
+------------------------------------
 
 Extrayons la piste de sous-titre française du fichier ``movie.mkv``.
 
-.. TODO: Mettre la sortie de la commande
+.. code::
+
+    $ mkvextract movie.mkv tracks 4:french-subtitle.srt
+    Extraction de la piste 4 avec le codec « S_TEXT/UTF8 » dans le fichier « french-subtitle.srt ». Format de conteneur : SRT text subtitles
+    Progression : 100%
+
+.. hint::
+
+    Ici l’extension du fichier de sortie est ``.srt``, car c’est l’extension du format texte du sous-titre du fichier.
+    Voir `Exemple`_ vers la fin de l’arbre de l’aperçu.
+
+Extraction de la piste vidéo
+----------------------------
+
+Extrayons la piste vidéo pour pouvoir l’isoler des autres pistes.
 
 .. code::
 
-    $ mkvextract movie.mkv track 4:french-subtitle.h264
+    $ mkvextract movie.mkv tracks 0:video.h264
+    Extraction de la piste 0 avec le codec « V_MPEG4/ISO/AVC » dans le fichier « video.h264 ». Format de conteneur : AVC/H.264 elementary stream
+    Progression : 100%
 
+.. hint::
 
-.. hints::
+    Ici l’extension du fichier de sortie est ``.h264``, car c’est l’extension du format vidéo du fichier.
+    Voir `Exemple`_ vers le début de la branche piste de l’arbre de l’aperçus.
 
-    Ici l'extension du fichier de sortie est ``.srt``, car c'est l'extention du format texte du sous-titre du fichier.
-    Voir `Exemple`_ vers la fin de l'arbre de l'aperçus.
+Extraction des pistes audio
+---------------------------
 
-Extraire la piste vidéo
------------------------
-
-Extrayons la piste de vidéo pour pouvoir l'isoler des autres pistes.
-
-.. TODO: Mettre la sortie de la commande
+``mkvextract`` nous permet d’extraire plusieurs pistes en même temps.
+Illustrons ça tout de suite en extrayant les pistes audio du fichier ``movie.mkv``.
 
 .. code::
 
-    $ mkvextract movie.mkv track 0:video.h264
+    $ mkvextract movie.mkv tracks 1:audio-fre.dts 2:audio-eng.ac3
+    Extraction de la piste 1 avec le codec « A_DTS » dans le fichier « audio-fre.dts ». Format de conteneur : Digital Theater System (DTS)
+    Extraction de la piste 2 avec le codec « A_AC3 » dans le fichier « audio-eng.ac3 ». Format de conteneur : Dolby Digital (AC-3)
+    Progression : 100%
 
-.. hints::
+------
+ffmpeg
+------
 
-    Ici l'extension du fichier de sortie est ``.h264``, car c'est l'extention du format vidéo du fichier.
-    Voir `Exemple`_ vers le début de la branche piste de l'arbre de l'aperçus.
+**À venir**
 
 ------------
 Aide-mémoire
@@ -366,7 +383,7 @@ Aide-mémoire
 mkvmerge - général
 ==================
 
-* ``--language <id piste>:<langue dans le format ISO 639-2 ou ISO 639-1>`` : Spécifie la langue d'une piste
+* ``--language <id piste>:<langue dans le format ISO 639-2 ou ISO 639-1>`` : Spécifie la langue d’une piste
 * ``--default-track <id piste>`` : Précise si la piste devra lus par défaut par les lecteurs
 * ``--title <titre>`` : Permet de donner un titre au fichier.
 * ``-o <fichier de sortie mkv>`` : Fichier mkv de sortie.
@@ -376,8 +393,8 @@ mkvmerge - ordre des arguments
 
 .. caution::
 
-    L'ordre des arguments est important. Il faut toujours commencé par le ``-o`` pour indiquer le fichier de sortie.
-    Puis les options appliqué au premier fichier, ensuite le nom de celui-ci et pareil pour les autres.
+    L’ordre des arguments est important. Il faut toujours commencer par le ``-o`` pour indiquer le fichier de sortie.
+    Puis les options appliquées au premier fichier, ensuite le nom de celui-ci et pareil pour les autres.
 
 **Exemple** :
 
@@ -391,12 +408,12 @@ mkvmerge - ordre des arguments
 
     $ mkvmerge movie-subtitled.mkv --no-subtitle movie-audio.mkv --audio-tracks 1 -o movie.mkv --title "Titre"
 
-mkvmerge - sous-titre
+mkvmerge – sous-titre
 =====================
 
-* ``--sub-charset <id piste>:<encodage>`` : Spécifie le codec (non obligatoire si l'encodage du fichier est l'UTF-8) d'une piste de sous-titre
+* ``--sub-charset <id piste>:<encodage>`` : Spécifie le codec (non obligatoire si l’encodage du fichier est l’UTF-8) d’une piste de sous-titre
 
-mkvmerge - fichier conteneur
+mkvmerge – fichier conteneur
 ============================
 
 * ``--video-track`` : Sélection des pistes vidéo
@@ -406,11 +423,19 @@ mkvmerge - fichier conteneur
 * ``--no-audio`` : Suppression des pistes audio
 * ``--no-subtitle`` : Suppression des pistes de sous-titre
 
-mkvpropedit - général
+mkvpropedit – général
 =====================
 
-* ``--edit track:<id piste> --set <propriété>=<nouvelle valeur>`` : Permet d'éditer une propriété d'une piste
-* ``--edit track:<id piste> --add <propriété>=<nouvelle valeur>`` : Permet d'éditer une propriété d'une piste
-* ``--edit track:<id piste> --delete <propriété>`` : Permet de supprimer une propriété d'une piste 
+* ``--edit track:<id piste> --set <propriété>=<nouvelle valeur>`` : Permet d’éditer une propriété d’une piste
+* ``--edit track:<id piste> --add <propriété>=<nouvelle valeur>`` : Permet d’éditer une propriété d’une piste
+* ``--edit track:<id piste> --delete <propriété>`` : Permet de supprimer une propriété d’une piste
 
+mkvextract – général
+====================
 
+* ``tracks`` : Spécifie que nous souhaitons extraire une ou plusieurs pistes du conteneur.
+
+mkvextract – pistes
+===================
+
+* ``<numero piste>:<fichier de sortie>`` : Spécifie le fichier de sortie de la piste correspondant au numéro donné (cette options peut-être utilisé au temps de fois que l’on souhaite).
