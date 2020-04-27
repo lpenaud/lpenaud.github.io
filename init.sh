@@ -6,6 +6,6 @@ python3 -m venv venv
 mkdir themes plugins
 git clone https://github.com/alexandrevicenzi/Flex themes/Flex
 svn export https://github.com/getpelican/pelican-plugins.git/trunk/i18n_subsites plugins/i18n_subsites
-echo "To start execute:"
-echo "source ./venv/bin/activate"
-echo "pip install -r requirements.txt"
+source ./venv/bin/activate
+pip install -r requirements.txt
+make help
