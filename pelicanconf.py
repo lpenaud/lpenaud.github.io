@@ -17,10 +17,13 @@ SITELOGO = SITEURL + '/images/profile.jpg'
 FAVICON = SITEURL + '/images/favicon.ico'
 
 THEME = 'themes/Flex'
-PYGMENTS_STYLE = 'manni'
-BROWSER_COLOR = '#333'
 ROBOTS = 'index, follow'
 LINKS_IN_NEW_TAB = 'external'
+BROWSER_COLOR = '#333'
+PYGMENTS_STYLE = 'manni'
+THEME_COLOR_AUTO_DETECT_BROWSER_PREFERENCE = True
+THEME_COLOR_ENABLE_USER_OVERRIDE = True
+PYGMENTS_STYLE_DARK = "monokai"
 
 COPYRIGHT_YEAR = datetime.now().year
 COPYRIGHT_NAME = AUTHOR
