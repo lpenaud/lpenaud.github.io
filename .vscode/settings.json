@@ -1,5 +1,6 @@
 {
   "editor.tabSize": 4,
   "python.pythonPath": "venv/bin/python3",
-  "editor.wordWrap": "on"
+  "editor.wordWrap": "on",
+  "restructuredtext.confPath": ""
 }
