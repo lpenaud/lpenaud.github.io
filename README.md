@@ -5,8 +5,29 @@
 ## Install
 
 - Clone the repository: `git clone https://github.com/lpenaud/lpenaud.github.io.git`
-- Init the project (in the cloned repository): `source ./init.sh`
-- Dev server: `make devserver`
+- Create a virtual environment: `python -m venv venv`
+- Activate the virtual environment:
+    - In GNU / Linux: `source ./venv/bin/activate.sh`
+    - In Windows: `./venv/activate.bat`
+- Install dependencies: `pip install -r requirements.txt`
+- Download plugins and theme: `invoke install`
+
+## Run
+
+- Serve articles (with automatic reload): `invoke serve`
+- Open your favorite webbrowser and paste the given URL (by default `http://127.0.0.1:8000`) by the previous command
+
+## Publish
+
+To publish as Github page:
+
+    $ invoke github
+
+## Tasks
+
+You can see all available tasks with the command:
+
+    $ invoke -l
 
 ## TODO
 

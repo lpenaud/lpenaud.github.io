@@ -1,1 +1,4 @@
 pelican
+invoke
+livereload
+ghp-import
