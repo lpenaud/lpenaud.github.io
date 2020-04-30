@@ -46,7 +46,7 @@ CUSTOM_CSS = 'style.css'
 TIMEZONE = 'Europe/Paris'
 
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['i18n_subsites']
+PLUGINS = ['i18n_subsites', 'neighbors']
 
 # Translate template
 I18N_TEMPLATES_LANG = 'en'
@@ -89,6 +89,7 @@ DEFAULT_PAGINATION = 10
 #RELATIVE_URLS = True
 
 OUTPUT_SOURCES = True
+OUTPUT_PATH = "public"
 
 # TODO: Add language buttons ?
 # languages_lookup = {
