@@ -1,5 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Loïc Penaud</title><link href="https://lpenaud.github.io/" rel="alternate"></link><link href="https://lpenaud.github.io/feeds/all.atom.xml" rel="self"></link><id>https://lpenaud.github.io/</id><updated>2020-02-22T17:47:38+01:00</updated><subtitle>Développeur Back-end</subtitle><entry><title>La gestion vidéo en ligne de commande</title><link href="https://lpenaud.github.io/video-cli.html" rel="alternate"></link><published>2020-02-22T17:47:38+01:00</published><updated>2020-02-22T17:47:29+01:00</updated><author><name>Penaud Loïc</name></author><id>tag:lpenaud.github.io,2020-02-22:/video-cli.html</id><summary type="html">&lt;p class="first last"&gt;Conversion, gestion de flux audio / vidéo en ligne de commande à l’aide de ffmpeg et mkvtoolnix.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Loïc Penaud</title><link href="https://lpenaud.github.io/" rel="alternate"></link><link href="https://lpenaud.github.io/feeds/all.atom.xml" rel="self"></link><id>https://lpenaud.github.io/</id><updated>2020-04-27T15:40:11+02:00</updated><subtitle>Développeur Back-end</subtitle><entry><title>Deno - Une nouvelle façon d'utiliser le JavaScript</title><link href="https://lpenaud.github.io/deno-une-nouvelle-facon-dutiliser-le-javascript.html" rel="alternate"></link><published>2020-04-27T15:40:11+02:00</published><updated>2020-04-27T15:40:11+02:00</updated><author><name>Penaud Loïc</name></author><id>tag:lpenaud.github.io,2020-04-27:/deno-une-nouvelle-facon-dutiliser-le-javascript.html</id><summary type="html">&lt;p class="first last"&gt;Comment évolue Deno ? Le nouvel environnement d'éxecution JavaScript annoncé par Ryan Dahl créateur de Node 2 ans après son annonce.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Le JavaScript a bien évolué depuis la création en 2010 de Node, ce qui n'est pas passé inaperçus par Ryan Dahl et son équipe.
+C'est pourquoi avant de parler de Deno parlons un peu de l'évolution du JavaScript.&lt;/p&gt;
+&lt;hr class="docutils" /&gt;
+&lt;div class="contents topic" id="sommaire"&gt;
+&lt;p class="topic-title first"&gt;Sommaire&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#pourquoi-node" id="id2"&gt;Pourquoi Node ?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#es6-la-grosse-mise-a-jour" id="id3"&gt;ES6 - La grosse mise-à-jour&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#probleme-liees-a-node" id="id4"&gt;Problème liées à Node&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#promise" id="id5"&gt;Promise&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#securite" id="id6"&gt;Sécurité&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#le-systeme-de-compilation-de-module-natifs-gyp" id="id7"&gt;Le système de compilation de module natifs GYP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#les-systeme-de-modules" id="id8"&gt;Les système de modules&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#package-json" id="id9"&gt;package.json&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#node-modules" id="id10"&gt;node_modules&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;hr class="docutils" /&gt;
+&lt;div class="section" id="pourquoi-node"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Pourquoi Node ?&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;L'idée derière la création de Node était d'avoir un système asynchrones permettant de supporter un grand nombres d'entrées et de sorties (par exemple, les sockets ou les fichiers).&lt;/p&gt;
+&lt;p&gt;Donc, pour ça Ryan Dahl a utilisé &lt;a class="reference external" href="https://fr.wikipedia.org/wiki/V8_(moteur_JavaScript)"&gt;V8&lt;/a&gt;, le moteur JavaScript, développé par Google pour le projet &lt;a class="reference external" href="https://fr.wikipedia.org/wiki/Chromium"&gt;Chromium&lt;/a&gt;.
+Puis, dans l'optique de simplier la vie des développeurs, il créa la fonction &lt;a class="reference external" href="https://nodejs.org/fr/knowledge/getting-started/what-is-require/"&gt;require&lt;/a&gt; permettant d'importer des modules et des fichiers JSON ou JavaScript.
+Ensuite, il rajouta un gestionnaire de paquets &lt;a class="reference external" href="https://www.npmjs.com/"&gt;npm&lt;/a&gt; permettant aux développeurs de partager leurs modules.
+De plus, Node posséde une bibliothéque standard riche.&lt;/p&gt;
+&lt;p&gt;L'un des problèmes, c'est que le JavaScript a bien changé depuis 2010, surtout depuis &lt;a class="reference external" href="#es6-la-grosse-mise-a-jour"&gt;ES6&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="admonition hint"&gt;
+&lt;p class="first admonition-title"&gt;Indication&lt;/p&gt;
+&lt;p class="last"&gt;Pourquoi le JavaScript ? La réponse est simple : la boucle d'événement.
+Cette boucle est un peu comme une vigile. Elle permet d'organiser l'éxecution des fonctions asynchrones.
+Je ne rentrerai pas dans les détails de celle-ci, puisqu'elle meriterait un article à elle seule.
+De plus, si vous êtes à l'aise avec l'anglais vous pouvez regarder la présentation &lt;a class="reference external" href="https://youtu.be/8aGhZQkoFbQ"&gt;What the heck is the event loop anyway? | Philip Roberts | JSConf EU&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="es6-la-grosse-mise-a-jour"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#sommaire"&gt;ES6 - La grosse mise-à-jour&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Pour rappel, JavaScript suit les normes standards ECMAScript dictées par l'&lt;a class="reference external" href="https://www.ecma-international.org/"&gt;ECMA&lt;/a&gt; (European Association for Standardizing Information and Communication Systems). &lt;a class="reference external" href="https://www.ecma-international.org/"&gt;ECMA&lt;/a&gt; est une association d'industriel qui existe depuis 1961 qui proposes différentes normes et standards dans le domaines de l'informatique.&lt;/p&gt;
+&lt;p&gt;ECMAScript 6&lt;sup&gt;e&lt;/sup&gt; a fait 2 gros ajouts :&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Le système de module avec les mots-clés &lt;a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/import"&gt;import&lt;/a&gt;, &lt;a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/export"&gt;export&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Le système des promesses asynchrones avec la classe &lt;a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Promise"&gt;Promise&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;L'ES8 continue l'évolution des promesses en rajoutant d'autre méthodes en lien avec la classe &lt;a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Promise"&gt;Promise&lt;/a&gt; et en rajoutant les mots-clés &lt;a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/async_function"&gt;async&lt;/a&gt; et &lt;a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/await"&gt;await&lt;/a&gt; afin de simplifier encore plus, le système des promesses asynchrones, en éliminant l'utilisation des fonctions de rappelles (callback).&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="probleme-liees-a-node"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Problème liées à Node&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;C'est en 2018 que le créateur de Node, a fait une conférence qui s'appelle &lt;a class="reference external" href="https://youtu.be/M3BM9TB-8yA"&gt;10 Things I Regret About Node.js (10 choses que je regrette à propos de Node.js)&lt;/a&gt; (sous-titre en français disponible) où Ryan Dahl expose les problèmes de Node liée à sa conception.&lt;/p&gt;
+&lt;div class="admonition important"&gt;
+&lt;p class="first admonition-title"&gt;Important&lt;/p&gt;
+&lt;p class="last"&gt;J'expose ici avec mes mots, l'avis de Ryan Dahl et de son équipe.
+Par contre, ma conclusion, mon avis.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="promise"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Promise&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;La bibliothéque standard de Node posséde de nombreuse fonctions asynchrones, le problème c'est qu'elles ne sont pas compatible avec les promesses.
+Par conséquent, ces fonctions sont incompatibles avec la syntaxe &lt;a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/async_function"&gt;async&lt;/a&gt; et &lt;a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/await"&gt;await&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="admonition hint"&gt;
+&lt;p class="first admonition-title"&gt;Indication&lt;/p&gt;
+&lt;p class="last"&gt;D'ailleurs dans la conférence, Ryan Dahl explique qu'il avait ajouté les promesses en juin 2009.
+Mais il les a supprimé en février 2010, car il voulait que son API, soit la plus simple possible.
+Il n'aurait pas pris cette décission s'il avait sus quel impact aurait les promesses dans le JavaScript d'aujourd'hui.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="securite"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Sécurité&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Node donne accées à tout imédiatement, aux système de fichier, aux ports réseaux...
+Ce qui pose des problèmes puisque par exemple, via un scripts on imaginer quelqu'un qui copie des fichiers confidentiels (comme des clés SSH par exemple) et les envois via les interfaces réseaux.&lt;/p&gt;
+&lt;div class="admonition hint"&gt;
+&lt;p class="first admonition-title"&gt;Indication&lt;/p&gt;
+&lt;p class="last"&gt;À noter que &lt;a class="reference external" href="https://fr.wikipedia.org/wiki/V8_(moteur_JavaScript)"&gt;V8&lt;/a&gt; exécute le code dans une machine virtuelle, donc on pourrait restraintre l'accées au système.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="le-systeme-de-compilation-de-module-natifs-gyp"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Le système de compilation de module natifs GYP&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://github.com/nodejs/node-gyp"&gt;node-gyp&lt;/a&gt; est un système permettant de compiler des modules natifs programmer en &lt;cite&gt;C&lt;/cite&gt;, &lt;cite&gt;C++&lt;/cite&gt; pour pouvoir les utiliser en JavaScript.
+Le problème de ce système c'est qu'il n'a pas été bien pensé, car :&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Plein de couche inutile (JSON, &lt;a class="reference external" href="https://fr.wikipedia.org/wiki/Python_(langage)"&gt;Python&lt;/a&gt;, &lt;a class="reference external" href="https://github.com/nodejs/node-gyp"&gt;node-gyp&lt;/a&gt;, &lt;a class="reference external" href="https://gyp.gsrc.io/"&gt;gyp&lt;/a&gt;) qui rajoute de la compléxité.&lt;/li&gt;
+&lt;li&gt;Le fait qu'il n'est pas une interface de fonction étrangère (&lt;a class="reference external" href="https://en.wikipedia.org/wiki/Foreign_function_interface"&gt;FFI&lt;/a&gt;) qui permet aux développeur d'appeller une fonction à partir d'un fichier bibliothéque (&lt;tt class="docutils literal"&gt;.dll&lt;/tt&gt; pour Windows, &lt;tt class="docutils literal"&gt;.so&lt;/tt&gt; pour GNU / Linux) comme en &lt;a class="reference external" href="https://fr.wikipedia.org/wiki/Python_(langage)"&gt;Python&lt;/a&gt; avec le module &lt;a class="reference external" href="https://docs.python.org/3/library/ctypes.html"&gt;ctypes&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="admonition hint"&gt;
+&lt;p class="first admonition-title"&gt;Indication&lt;/p&gt;
+&lt;p class="last"&gt;De plus, &lt;a class="reference external" href="https://gyp.gsrc.io/"&gt;GYP&lt;/a&gt; vient du projet &lt;a class="reference external" href="https://fr.wikipedia.org/wiki/Chromium"&gt;chromium&lt;/a&gt;. Cependant, les développeurs de celui-ci ont arrêté de l'utiliser au profit de &lt;a class="reference external" href="https://gn.googlesource.com/gn/"&gt;GN&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="les-systeme-de-modules"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="#sommaire"&gt;Les système de modules&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Le système de module CommonJS est celui utiliser par Node, cependant il n'a pas été développer ni standardisé par ECMA.&lt;/p&gt;
+&lt;p&gt;Donc ce système différe de son anolog embarqué dans les navigateurs web :&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Une résolution de chemin dynamique ce qui entraine des requêtes inutiles aux système de fichiers et l'utilisation du fichier package.json.&lt;/li&gt;
+&lt;li&gt;Le fait qu'on doit pas préciser l'extention &lt;cite&gt;.js&lt;/cite&gt; du fichier&lt;/li&gt;
+&lt;li&gt;Le possibilité d'importer un dossier si celui-ci a un fichier &lt;tt class="docutils literal"&gt;index.js&lt;/tt&gt; (ajouter aux système, car Ryan Dahl trouvait sa mignon)&lt;/li&gt;
+&lt;li&gt;L'impossibilité d'utiliser une URL pour importer des modules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="admonition hint"&gt;
+&lt;p class="first admonition-title"&gt;Indication&lt;/p&gt;
+&lt;p class="last"&gt;Les 3 premiers points, permettent de gagner en abstration superflues.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="package-json"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;package.json&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Ce fichier permet d'avoir une descriptions du projet, la liste des dépendances du projet ainsi que leurs versions, des lignes de commandes et pleins d'autre informations qui ne sont pas forcément très utiles en tant que développeur.
+Chaque projet Node doit obligatoirement avoir un fichier &lt;tt class="docutils literal"&gt;package.json&lt;/tt&gt; donc l'utilisation de &lt;a class="reference external" href="https://www.npmjs.com/"&gt;npm&lt;/a&gt; aussi, ce qui n'étais pas prévus.&lt;/p&gt;
+&lt;p&gt;De plus, les modules disponible via &lt;a class="reference external" href="https://www.npmjs.com/"&gt;npm&lt;/a&gt; sont héberger de façon centralisé et privé.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="node-modules"&gt;
+&lt;h4&gt;&lt;a class="toc-backref" href="#sommaire"&gt;node_modules&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Les problèmes de &lt;tt class="docutils literal"&gt;node_modules&lt;/tt&gt; sont liée avec ceux de &lt;a class="reference internal" href="#package-json"&gt;package.json&lt;/a&gt;. Du fait du système de résolution de dépendances, le dossier &lt;tt class="docutils literal"&gt;node_modules&lt;/tt&gt; a tendances à devenir très vite, très lourd.&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="node_modules plus lourds qu'un trou noir ?" src="images/deno-node_module-meme.jpg" /&gt;
+&lt;p class="caption"&gt;Mème concernant la taille volumineuse du dossier &lt;tt class="docutils literal"&gt;node_modules&lt;/tt&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="développement"></category><category term="développement"></category><category term="script"></category><category term="javascript"></category><category term="typescript"></category><category term="node"></category><category term="deno"></category></entry><entry><title>La gestion vidéo en ligne de commande</title><link href="https://lpenaud.github.io/video-cli.html" rel="alternate"></link><published>2020-02-22T17:47:38+01:00</published><updated>2020-02-22T17:47:29+01:00</updated><author><name>Penaud Loïc</name></author><id>tag:lpenaud.github.io,2020-02-22:/video-cli.html</id><summary type="html">&lt;p class="first last"&gt;Conversion, gestion de flux audio / vidéo en ligne de commande à l’aide de ffmpeg et mkvtoolnix.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;Ayant un serveur de fichier qui contient majoritairement de l’audio et de la vidéo.
 Il peut arriver que j’ai besoin de faire de la conversion vidéo pour que ma Raspeberry Pi 3 puisse lire ces fichiers sans ralentissement et sans perte d’image.
 Cet article a donc pour but de faire un petit tour d’horizon sur les outils en ligne de commande disponible pour gérer les fichiers vidéos.&lt;/p&gt;
@@ -7,7 +130,7 @@ Cet article a donc pour but de faire un petit tour d’horizon sur les outils en
 &lt;p&gt;Pour toutes questions n’hésiter pas à m’envoyer un email à &lt;a class="reference external" href="mailto:l.penaud&amp;#64;zaclys.net"&gt;l.penaud&amp;#64;zaclys.net&lt;/a&gt;.&lt;/p&gt;
 &lt;hr class="docutils" /&gt;
 &lt;div class="contents topic" id="sommaire"&gt;
-&lt;p class="topic-title"&gt;Sommaire&lt;/p&gt;
+&lt;p class="topic-title first"&gt;Sommaire&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#mediainfo" id="id9"&gt;Mediainfo&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#mkvtoolnix" id="id10"&gt;MKVToolNix&lt;/a&gt;&lt;ul&gt;
@@ -483,7 +606,7 @@ Then for the first time, I put my passion at the service of my studies.&lt;/p&gt
 &lt;p&gt;Cet article a pour but de vous faire savoir pourquoi j’ai commencé à utiliser Vagrant et à faire un tour d’horizon sur les fonctionnalités qu’il propose.&lt;/p&gt;
 &lt;hr class="docutils" /&gt;
 &lt;div class="contents topic" id="sommaire"&gt;
-&lt;p class="topic-title"&gt;Sommaire&lt;/p&gt;
+&lt;p class="topic-title first"&gt;Sommaire&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#pourquoi-lutiliser" id="id8"&gt;Pourquoi l’utiliser&amp;nbsp;?&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#le-probleme-initial" id="id9"&gt;Le problème initial&lt;/a&gt;&lt;/li&gt;

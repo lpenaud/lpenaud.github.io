@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://lpenaud.github.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://lpenaud.github.io/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://lpenaud.github.io/theme/pygments/manni.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/font-awesome/css/solid.css">
+
+    <link href="https://lpenaud.github.io/style.css" rel="stylesheet">
+
+    <link href="https://lpenaud.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Loïc Penaud Atom">
+
+
+    <link rel="shortcut icon" href="https://lpenaud.github.io/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://lpenaud.github.io/images/favicon.ico" type="image/x-icon">
+
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333">
+
+<meta name="author" content="Penaud Loïc" />
+<meta name="description" content="Comment évolue Deno ? Le nouvel environnement d&#39;éxecution JavaScript annoncé par Ryan Dahl créateur de Node 2 ans après son annonce." />
+<meta name="keywords" content="développement, script, javascript, typescript, node, deno">
+
+
+<meta property="og:site_name" content="Loïc Penaud"/>
+<meta property="og:title" content="Deno - Une nouvelle façon d&#39;utiliser le JavaScript"/>
+<meta property="og:description" content="Comment évolue Deno ? Le nouvel environnement d&#39;éxecution JavaScript annoncé par Ryan Dahl créateur de Node 2 ans après son annonce."/>
+<meta property="og:locale" content="fr_FR"/>
+<meta property="og:url" content="https://lpenaud.github.io/deno-une-nouvelle-facon-dutiliser-le-javascript.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-04-27 15:40:11+02:00"/>
+<meta property="article:modified_time" content="2020-04-27 15:40:11+02:00"/>
+<meta property="article:author" content="https://lpenaud.github.io/author/penaud-loic.html">
+<meta property="article:section" content="développement"/>
+<meta property="article:tag" content="développement"/>
+<meta property="article:tag" content="script"/>
+<meta property="article:tag" content="javascript"/>
+<meta property="article:tag" content="typescript"/>
+<meta property="article:tag" content="node"/>
+<meta property="article:tag" content="deno"/>
+<meta property="og:image" content="https://lpenaud.github.io/images/deno/deno_logo_3.svg">
+
+  <title>Loïc Penaud &ndash; Deno - Une nouvelle façon d&#39;utiliser le JavaScript</title>
+
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://lpenaud.github.io">
+        <img src="https://lpenaud.github.io/images/profile.jpg" alt="Loïc Penaud" title="Loïc Penaud">
+      </a>
+
+      <h1>
+        <a href="https://lpenaud.github.io">Loïc Penaud</a>
+      </h1>
+
+<p>Développeur Back-end</p>
+
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:l.penaud@zaclys.net" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/lpenaud" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/lo%C3%AFc-penaud-296067129/" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/LoicPenaud" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://lpenaud.github.io">Accueil</a>
+
+
+      <a href="https://lpenaud.github.io/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="deno-une-nouvelle-facon-dutiliser-le-javascript">Deno - Une nouvelle façon d'utiliser le JavaScript</h1>
+    <p>
+      Posté le lun. 27 avril 2020 dans <a href="https://lpenaud.github.io/category/developpement.html">développement</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Le JavaScript a bien évolué depuis la création en 2010 de Node, ce qui n'est pas passé inaperçus par Ryan Dahl et son équipe.
+C'est pourquoi avant de parler de Deno parlons un peu de l'évolution du JavaScript.</p>
+<hr class="docutils" />
+<div class="contents topic" id="sommaire">
+<p class="topic-title first">Sommaire</p>
+<ul class="simple">
+<li><a class="reference internal" href="#pourquoi-node" id="id2">Pourquoi Node ?</a></li>
+<li><a class="reference internal" href="#es6-la-grosse-mise-a-jour" id="id3">ES6 - La grosse mise-à-jour</a></li>
+<li><a class="reference internal" href="#probleme-liees-a-node" id="id4">Problème liées à Node</a><ul>
+<li><a class="reference internal" href="#promise" id="id5">Promise</a></li>
+<li><a class="reference internal" href="#securite" id="id6">Sécurité</a></li>
+<li><a class="reference internal" href="#le-systeme-de-compilation-de-module-natifs-gyp" id="id7">Le système de compilation de module natifs GYP</a></li>
+<li><a class="reference internal" href="#les-systeme-de-modules" id="id8">Les système de modules</a><ul>
+<li><a class="reference internal" href="#package-json" id="id9">package.json</a></li>
+<li><a class="reference internal" href="#node-modules" id="id10">node_modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="pourquoi-node">
+<h2><a class="toc-backref" href="#sommaire">Pourquoi Node ?</a></h2>
+<p>L'idée derière la création de Node était d'avoir un système asynchrones permettant de supporter un grand nombres d'entrées et de sorties (par exemple, les sockets ou les fichiers).</p>
+<p>Donc, pour ça Ryan Dahl a utilisé <a class="reference external" href="https://fr.wikipedia.org/wiki/V8_(moteur_JavaScript)">V8</a>, le moteur JavaScript, développé par Google pour le projet <a class="reference external" href="https://fr.wikipedia.org/wiki/Chromium">Chromium</a>.
+Puis, dans l'optique de simplier la vie des développeurs, il créa la fonction <a class="reference external" href="https://nodejs.org/fr/knowledge/getting-started/what-is-require/">require</a> permettant d'importer des modules et des fichiers JSON ou JavaScript.
+Ensuite, il rajouta un gestionnaire de paquets <a class="reference external" href="https://www.npmjs.com/">npm</a> permettant aux développeurs de partager leurs modules.
+De plus, Node posséde une bibliothéque standard riche.</p>
+<p>L'un des problèmes, c'est que le JavaScript a bien changé depuis 2010, surtout depuis <a class="reference external" href="#es6-la-grosse-mise-a-jour">ES6</a>.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Indication</p>
+<p class="last">Pourquoi le JavaScript ? La réponse est simple : la boucle d'événement.
+Cette boucle est un peu comme une vigile. Elle permet d'organiser l'éxecution des fonctions asynchrones.
+Je ne rentrerai pas dans les détails de celle-ci, puisqu'elle meriterait un article à elle seule.
+De plus, si vous êtes à l'aise avec l'anglais vous pouvez regarder la présentation <a class="reference external" href="https://youtu.be/8aGhZQkoFbQ">What the heck is the event loop anyway? | Philip Roberts | JSConf EU</a>.</p>
+</div>
+</div>
+<div class="section" id="es6-la-grosse-mise-a-jour">
+<h2><a class="toc-backref" href="#sommaire">ES6 - La grosse mise-à-jour</a></h2>
+<p>Pour rappel, JavaScript suit les normes standards ECMAScript dictées par l'<a class="reference external" href="https://www.ecma-international.org/">ECMA</a> (European Association for Standardizing Information and Communication Systems). <a class="reference external" href="https://www.ecma-international.org/">ECMA</a> est une association d'industriel qui existe depuis 1961 qui proposes différentes normes et standards dans le domaines de l'informatique.</p>
+<p>ECMAScript 6<sup>e</sup> a fait 2 gros ajouts :</p>
+<ul class="simple">
+<li>Le système de module avec les mots-clés <a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/import">import</a>, <a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/export">export</a>.</li>
+<li>Le système des promesses asynchrones avec la classe <a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Promise">Promise</a>.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">L'ES8 continue l'évolution des promesses en rajoutant d'autre méthodes en lien avec la classe <a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Promise">Promise</a> et en rajoutant les mots-clés <a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/async_function">async</a> et <a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/await">await</a> afin de simplifier encore plus, le système des promesses asynchrones, en éliminant l'utilisation des fonctions de rappelles (callback).</p>
+</div>
+</div>
+<div class="section" id="probleme-liees-a-node">
+<h2><a class="toc-backref" href="#sommaire">Problème liées à Node</a></h2>
+<p>C'est en 2018 que le créateur de Node, a fait une conférence qui s'appelle <a class="reference external" href="https://youtu.be/M3BM9TB-8yA">10 Things I Regret About Node.js (10 choses que je regrette à propos de Node.js)</a> (sous-titre en français disponible) où Ryan Dahl expose les problèmes de Node liée à sa conception.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">J'expose ici avec mes mots, l'avis de Ryan Dahl et de son équipe.
+Par contre, ma conclusion, mon avis.</p>
+</div>
+<div class="section" id="promise">
+<h3><a class="toc-backref" href="#sommaire">Promise</a></h3>
+<p>La bibliothéque standard de Node posséde de nombreuse fonctions asynchrones, le problème c'est qu'elles ne sont pas compatible avec les promesses.
+Par conséquent, ces fonctions sont incompatibles avec la syntaxe <a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/async_function">async</a> et <a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/await">await</a>.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Indication</p>
+<p class="last">D'ailleurs dans la conférence, Ryan Dahl explique qu'il avait ajouté les promesses en juin 2009.
+Mais il les a supprimé en février 2010, car il voulait que son API, soit la plus simple possible.
+Il n'aurait pas pris cette décission s'il avait sus quel impact aurait les promesses dans le JavaScript d'aujourd'hui.</p>
+</div>
+</div>
+<div class="section" id="securite">
+<h3><a class="toc-backref" href="#sommaire">Sécurité</a></h3>
+<p>Node donne accées à tout imédiatement, aux système de fichier, aux ports réseaux...
+Ce qui pose des problèmes puisque par exemple, via un scripts on imaginer quelqu'un qui copie des fichiers confidentiels (comme des clés SSH par exemple) et les envois via les interfaces réseaux.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Indication</p>
+<p class="last">À noter que <a class="reference external" href="https://fr.wikipedia.org/wiki/V8_(moteur_JavaScript)">V8</a> exécute le code dans une machine virtuelle, donc on pourrait restraintre l'accées au système.</p>
+</div>
+</div>
+<div class="section" id="le-systeme-de-compilation-de-module-natifs-gyp">
+<h3><a class="toc-backref" href="#sommaire">Le système de compilation de module natifs GYP</a></h3>
+<p><a class="reference external" href="https://github.com/nodejs/node-gyp">node-gyp</a> est un système permettant de compiler des modules natifs programmer en <cite>C</cite>, <cite>C++</cite> pour pouvoir les utiliser en JavaScript.
+Le problème de ce système c'est qu'il n'a pas été bien pensé, car :</p>
+<ul class="simple">
+<li>Plein de couche inutile (JSON, <a class="reference external" href="https://fr.wikipedia.org/wiki/Python_(langage)">Python</a>, <a class="reference external" href="https://github.com/nodejs/node-gyp">node-gyp</a>, <a class="reference external" href="https://gyp.gsrc.io/">gyp</a>) qui rajoute de la compléxité.</li>
+<li>Le fait qu'il n'est pas une interface de fonction étrangère (<a class="reference external" href="https://en.wikipedia.org/wiki/Foreign_function_interface">FFI</a>) qui permet aux développeur d'appeller une fonction à partir d'un fichier bibliothéque (<tt class="docutils literal">.dll</tt> pour Windows, <tt class="docutils literal">.so</tt> pour GNU / Linux) comme en <a class="reference external" href="https://fr.wikipedia.org/wiki/Python_(langage)">Python</a> avec le module <a class="reference external" href="https://docs.python.org/3/library/ctypes.html">ctypes</a>.</li>
+</ul>
+<div class="admonition hint">
+<p class="first admonition-title">Indication</p>
+<p class="last">De plus, <a class="reference external" href="https://gyp.gsrc.io/">GYP</a> vient du projet <a class="reference external" href="https://fr.wikipedia.org/wiki/Chromium">chromium</a>. Cependant, les développeurs de celui-ci ont arrêté de l'utiliser au profit de <a class="reference external" href="https://gn.googlesource.com/gn/">GN</a>.</p>
+</div>
+</div>
+<div class="section" id="les-systeme-de-modules">
+<h3><a class="toc-backref" href="#sommaire">Les système de modules</a></h3>
+<p>Le système de module CommonJS est celui utiliser par Node, cependant il n'a pas été développer ni standardisé par ECMA.</p>
+<p>Donc ce système différe de son anolog embarqué dans les navigateurs web :</p>
+<ul class="simple">
+<li>Une résolution de chemin dynamique ce qui entraine des requêtes inutiles aux système de fichiers et l'utilisation du fichier package.json.</li>
+<li>Le fait qu'on doit pas préciser l'extention <cite>.js</cite> du fichier</li>
+<li>Le possibilité d'importer un dossier si celui-ci a un fichier <tt class="docutils literal">index.js</tt> (ajouter aux système, car Ryan Dahl trouvait sa mignon)</li>
+<li>L'impossibilité d'utiliser une URL pour importer des modules.</li>
+</ul>
+<div class="admonition hint">
+<p class="first admonition-title">Indication</p>
+<p class="last">Les 3 premiers points, permettent de gagner en abstration superflues.</p>
+</div>
+<div class="section" id="package-json">
+<h4><a class="toc-backref" href="#sommaire">package.json</a></h4>
+<p>Ce fichier permet d'avoir une descriptions du projet, la liste des dépendances du projet ainsi que leurs versions, des lignes de commandes et pleins d'autre informations qui ne sont pas forcément très utiles en tant que développeur.
+Chaque projet Node doit obligatoirement avoir un fichier <tt class="docutils literal">package.json</tt> donc l'utilisation de <a class="reference external" href="https://www.npmjs.com/">npm</a> aussi, ce qui n'étais pas prévus.</p>
+<p>De plus, les modules disponible via <a class="reference external" href="https://www.npmjs.com/">npm</a> sont héberger de façon centralisé et privé.</p>
+</div>
+<div class="section" id="node-modules">
+<h4><a class="toc-backref" href="#sommaire">node_modules</a></h4>
+<p>Les problèmes de <tt class="docutils literal">node_modules</tt> sont liée avec ceux de <a class="reference internal" href="#package-json">package.json</a>. Du fait du système de résolution de dépendances, le dossier <tt class="docutils literal">node_modules</tt> a tendances à devenir très vite, très lourd.</p>
+<div class="figure align-center">
+<img alt="node_modules plus lourds qu'un trou noir ?" src="images/deno-node_module-meme.jpg" />
+<p class="caption">Mème concernant la taille volumineuse du dossier <tt class="docutils literal">node_modules</tt></p>
+</div>
+</div>
+</div>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://lpenaud.github.io/tag/developpement.html">développement</a>
+      <a href="https://lpenaud.github.io/tag/script.html">script</a>
+      <a href="https://lpenaud.github.io/tag/javascript.html">javascript</a>
+      <a href="https://lpenaud.github.io/tag/typescript.html">typescript</a>
+      <a href="https://lpenaud.github.io/tag/node.html">node</a>
+      <a href="https://lpenaud.github.io/tag/deno.html">deno</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="https://lpenaud.github.io/video-cli.html" title="La gestion vidéo en ligne de commande">
+      <i class="fa fa-angle-left"></i> Post précédent
+    </a>
+  </div>
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy; Loïc Penaud 2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Construit avec <a href="http://getpelican.com" target="_blank">Pelican</a> utilisant le thème <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a>
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://lpenaud.github.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Loïc Penaud ",
+  "url" : "https://lpenaud.github.io",
+  "image": "https://lpenaud.github.io/images/profile.jpg",
+  "description": "Site d'article sur l'informatique"
+}
+</script>
+
+
+</body>
+</html>

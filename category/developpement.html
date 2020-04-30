@@ -12,7 +12,18 @@
 
     <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/stylesheet/style.min.css">
 
-  <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/pygments/manni.min.css">
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://lpenaud.github.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://lpenaud.github.io/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://lpenaud.github.io/theme/pygments/manni.min.css">
+
+
   <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/font-awesome/css/solid.css">
@@ -46,43 +57,46 @@
 <meta property="og:url" content="https://lpenaud.github.io"/>
 <meta property="og:image" content="https://lpenaud.github.io/images/profile.jpg">
 
-  <title>Loïc Penaud &ndash; Catégorie Développement</title>
+  <title>Loïc Penaud &ndash; Catégorie développement</title>
 
 </head>
-<body>
+<body >
   <aside>
     <div>
       <a href="https://lpenaud.github.io">
         <img src="https://lpenaud.github.io/images/profile.jpg" alt="Loïc Penaud" title="Loïc Penaud">
       </a>
-      <h1><a href="https://lpenaud.github.io">Loïc Penaud</a></h1>
+
+      <h1>
+        <a href="https://lpenaud.github.io">Loïc Penaud</a>
+      </h1>
 
 <p>Développeur Back-end</p>
+
 
       <ul class="social">
           <li>
             <a  class="sc-envelope" href="mailto:l.penaud@zaclys.net" target="_blank">
-            <i class="fas fa-envelope">
-            </i>
-          </a></li>
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
           <li>
             <a  class="sc-github" href="https://github.com/lpenaud" target="_blank">
-            <i class="fab fa-github">
-            </i>
-          </a></li>
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
           <li>
             <a  class="sc-linkedin" href="https://www.linkedin.com/in/lo%C3%AFc-penaud-296067129/" target="_blank">
-            <i class="fab fa-linkedin">
-            </i>
-          </a></li>
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
           <li>
             <a  class="sc-twitter" href="https://twitter.com/LoicPenaud" target="_blank">
-            <i class="fab fa-twitter">
-            </i>
-          </a></li>
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
       </ul>
     </div>
-
 
   </aside>
   <main>
@@ -99,6 +113,27 @@
 
 <article>
   <header>
+    <h2><a href="https://lpenaud.github.io/deno-une-nouvelle-facon-dutiliser-le-javascript.html#deno-une-nouvelle-facon-dutiliser-le-javascript">Deno - Une nouvelle façon d'utiliser le JavaScript</a></h2>
+    <p>
+      Posté le lun. 27 avril 2020 dans <a href="https://lpenaud.github.io/category/developpement.html">développement</a>
+
+          &#8226; Taggé avec
+              <a href="https://lpenaud.github.io/tag/developpement.html">développement</a>,              <a href="https://lpenaud.github.io/tag/script.html">script</a>,              <a href="https://lpenaud.github.io/tag/javascript.html">javascript</a>,              <a href="https://lpenaud.github.io/tag/typescript.html">typescript</a>,              <a href="https://lpenaud.github.io/tag/node.html">node</a>,              <a href="https://lpenaud.github.io/tag/deno.html">deno</a>
+    </p>
+  </header>
+  <div>
+      <p class="first last">Comment évolue Deno ? Le nouvel environnement d'éxecution JavaScript annoncé par Ryan Dahl créateur de Node 2 ans après son annonce.</p>
+
+        <br>
+        <a class="btn"
+           href="https://lpenaud.github.io/deno-une-nouvelle-facon-dutiliser-le-javascript.html#deno-une-nouvelle-facon-dutiliser-le-javascript">
+          Continuer à lire
+        </a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
     <h2><a href="https://lpenaud.github.io/vagrant.html#vagrant">Vagrant</a></h2>
     <p>
       Posté le dim. 20 octobre 2019 dans <a href="https://lpenaud.github.io/category/developpement.html">Développement</a>
@@ -111,7 +146,10 @@
       <p class="first last">Pourquoi Vagrant c’est bien et comment l’installer et l’utiliser</p>
 
         <br>
-        <a class="btn" href="https://lpenaud.github.io/vagrant.html#vagrant">Continuer à lire</a>
+        <a class="btn"
+           href="https://lpenaud.github.io/vagrant.html#vagrant">
+          Continuer à lire
+        </a>
   </div>
 </article>
 
@@ -120,12 +158,21 @@
 
 
 
-
     <footer>
 <p>
   &copy; Loïc Penaud 2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
 </p>
-<p>Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme</p><p>
+<p>
+Construit avec <a href="http://getpelican.com" target="_blank">Pelican</a> utilisant le thème <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a>
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://lpenaud.github.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p><p>
   <a rel="license"
      href="http://creativecommons.org/licenses/by-sa/4.0/"
      target="_blank">
@@ -152,6 +199,7 @@
   "description": "Site d'article sur l'informatique"
 }
 </script>
+
 
 </body>
 </html>

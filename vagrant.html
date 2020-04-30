@@ -12,7 +12,18 @@
 
     <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/stylesheet/style.min.css">
 
-  <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/pygments/manni.min.css">
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://lpenaud.github.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://lpenaud.github.io/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://lpenaud.github.io/theme/pygments/manni.min.css">
+
+
   <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="https://lpenaud.github.io/theme/font-awesome/css/solid.css">
@@ -62,40 +73,43 @@
   <title>Loïc Penaud &ndash; Vagrant</title>
 
 </head>
-<body>
+<body >
   <aside>
     <div>
       <a href="https://lpenaud.github.io">
         <img src="https://lpenaud.github.io/images/profile.jpg" alt="Loïc Penaud" title="Loïc Penaud">
       </a>
-      <h1><a href="https://lpenaud.github.io">Loïc Penaud</a></h1>
+
+      <h1>
+        <a href="https://lpenaud.github.io">Loïc Penaud</a>
+      </h1>
 
 <p>Développeur Back-end</p>
+
 
       <ul class="social">
           <li>
             <a  class="sc-envelope" href="mailto:l.penaud@zaclys.net" target="_blank">
-            <i class="fas fa-envelope">
-            </i>
-          </a></li>
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
           <li>
             <a  class="sc-github" href="https://github.com/lpenaud" target="_blank">
-            <i class="fab fa-github">
-            </i>
-          </a></li>
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
           <li>
             <a  class="sc-linkedin" href="https://www.linkedin.com/in/lo%C3%AFc-penaud-296067129/" target="_blank">
-            <i class="fab fa-linkedin">
-            </i>
-          </a></li>
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
           <li>
             <a  class="sc-twitter" href="https://twitter.com/LoicPenaud" target="_blank">
-            <i class="fab fa-twitter">
-            </i>
-          </a></li>
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
       </ul>
     </div>
-
 
   </aside>
   <main>
@@ -128,7 +142,7 @@
 <p>Cet article a pour but de vous faire savoir pourquoi j’ai commencé à utiliser Vagrant et à faire un tour d’horizon sur les fonctionnalités qu’il propose.</p>
 <hr class="docutils" />
 <div class="contents topic" id="sommaire">
-<p class="topic-title">Sommaire</p>
+<p class="topic-title first">Sommaire</p>
 <ul class="simple">
 <li><a class="reference internal" href="#pourquoi-lutiliser" id="id8">Pourquoi l’utiliser&nbsp;?</a><ul>
 <li><a class="reference internal" href="#le-probleme-initial" id="id9">Le problème initial</a></li>
@@ -391,6 +405,11 @@ $ vagrant provision
   </div>
 
 
+  <div class="neighbors">
+    <a class="btn float-right" href="https://lpenaud.github.io/about-me.html" title="À propos de moi">
+      Post suivant <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
 
 
 
@@ -400,7 +419,17 @@ $ vagrant provision
 <p>
   &copy; Loïc Penaud 2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
 </p>
-<p>Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme</p><p>
+<p>
+Construit avec <a href="http://getpelican.com" target="_blank">Pelican</a> utilisant le thème <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a>
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://lpenaud.github.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p><p>
   <a rel="license"
      href="http://creativecommons.org/licenses/by-sa/4.0/"
      target="_blank">
@@ -427,6 +456,7 @@ $ vagrant provision
   "description": "Site d'article sur l'informatique"
 }
 </script>
+
 
 </body>
 </html>
