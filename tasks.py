@@ -43,7 +43,7 @@ def build(c):
 @task
 def publish(c):
     """Build production version of site"""
-    c.run('pelican -r -s {settings_publish}'.format(**CONFIG))
+    c.run('pelican -d -s {settings_publish}'.format(**CONFIG))
 
 @task(pre=[build])
 def serve(c):
