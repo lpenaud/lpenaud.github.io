@@ -3,12 +3,9 @@
 import os
 import shutil
 import sys
-import datetime
 import asyncio
 
-from invoke import task, run
-from invoke.util import cd
-from pelican.server import ComplexHTTPRequestHandler, RootedHTTPServer
+from invoke import task
 from pelican.settings import DEFAULT_CONFIG, get_settings_from_file
 
 SETTINGS_FILE_BASE = 'pelicanconf.py'
