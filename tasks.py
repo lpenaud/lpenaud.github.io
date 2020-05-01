@@ -16,6 +16,7 @@ SETTINGS = {}
 SETTINGS.update(DEFAULT_CONFIG)
 LOCAL_SETTINGS = get_settings_from_file(SETTINGS_FILE_BASE)
 SETTINGS.update(LOCAL_SETTINGS)
+ON_WINDOWS = 'win32' in sys.platform
 
 CONFIG = {
     'settings_base': SETTINGS_FILE_BASE,
@@ -48,6 +49,8 @@ def publish(c):
 @task(pre=[build])
 def serve(c):
     """Automatically reload browser tab upon file modification."""
+    if ON_WINDOWS:
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     from livereload import Server
     from livereload.watcher import Watcher
     import glob
@@ -84,7 +87,7 @@ def github(c):
 @task
 def install(c):
     """Download plugins and theme"""
-    if 'win32' in sys.platform:
+    if ON_WINDOWS:
         asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
     asyncio.run(_install())
 
