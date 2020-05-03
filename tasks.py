@@ -61,14 +61,14 @@ def serve(c):
     # Watch the base settings file
     server.watch(CONFIG['settings_base'], lambda: build(c))
     # Watch content source files
-    content_file_extensions = ['.rst']
+    content_file_extensions = ('.rst', '.css',)
     for extension in content_file_extensions:
         content_blob = '{0}/**/*{1}'.format(SETTINGS['PATH'], extension)
         server.watch(content_blob, lambda: build(c))
     # Watch the theme's templates and static assets
     theme_path = SETTINGS['THEME']
     server.watch('{}/templates/*.html'.format(theme_path), lambda: build(c))
-    static_file_extensions = ['.css', '.js']
+    static_file_extensions = ('.css', '.js',)
     for extension in static_file_extensions:
         static_file = '{0}/static/**/*{1}'.format(theme_path, extension)
         server.watch(static_file, lambda: build(c))

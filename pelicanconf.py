@@ -39,7 +39,6 @@ PATH = 'content'
 STATIC_PATHS = ['images', 'js', 'css']
 EXTRA_PATH_METADATA = {
     'css/style.css': { 'path': 'style.css' },
-    '/en/style.css': { 'path': 'style.css' },
 }
 CUSTOM_CSS = 'style.css'
 
