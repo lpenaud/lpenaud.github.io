@@ -36,16 +36,16 @@ CC_LICENSE = {
 MAIN_MENU = True
 
 PATH = 'content'
-STATIC_PATHS = ['images', 'js', 'css']
-EXTRA_PATH_METADATA = {
-    'css/style.css': { 'path': 'style.css' },
-}
-CUSTOM_CSS = 'style.css'
+STATIC_PATHS = ['images', 'js', 'downloads']
 
 TIMEZONE = 'Europe/Paris'
 
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['i18n_subsites', 'neighbors']
+PLUGINS = ['i18n_subsites', 'neighbors', 'pelican-toc']
+TOC = {
+    'TOC_INCLUDE_TITLE': 'false',
+}
+TOC_FLOAT = 'right'
 
 # Translate template
 I18N_TEMPLATES_LANG = 'en'
