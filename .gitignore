@@ -1,0 +1,8 @@
+# Python byte code
+__pycache__/
+
+# Python virtual environnement
+venv
+
+# Site output
+output/
