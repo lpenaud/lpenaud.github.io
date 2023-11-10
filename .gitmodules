@@ -1,0 +1,4 @@
+[submodule "themes/pelican-theme"]
+	path = themes/pelican-theme
+	url = git@github.com:lpenaud/pelican-theme.git
+	branch = main
