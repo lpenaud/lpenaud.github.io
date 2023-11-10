@@ -37,7 +37,7 @@ Windows
 MSYS
 ====
 
-.. code-block::
+.. code-block:: console
  
   pacman -S mingw-w64-x86_64-curl unzip ncurses python3 make gcc
   git clone https://github.com/nvm-sh/nvm.git ~/.nvm
@@ -47,8 +47,9 @@ MSYS
 Par défaut MSYS va utiliser le ``curl`` pré-installer sur Windows qui n'a pas le même comportement (bah oui, ce serait trop simple si Windaube pouvait respecter des standard).
 Pour évtier de ce problème on va indiquer à MSYS d'utiliser le curl de ``mingw``.
 
+Put this into your ``.bash_aliases`` or ``.bashrc`` :
+
 .. code-block:: bash
-  :caption: .bash_aliases / .bashrc
 
   # Prend en priorité le vrai curl
   add2path /mingw64/bin
