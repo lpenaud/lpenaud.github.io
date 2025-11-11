@@ -1,0 +1,9 @@
+# Build files
+build/**/*.html
+build/**/*.css
+
+# Dist
+dist/
+
+# Node modules
+node_modules

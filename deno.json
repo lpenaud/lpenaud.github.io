@@ -1,0 +1,15 @@
+{
+  "tasks": {
+    "build": "deno run --allow-read --allow-write=build,dist --allow-sys --allow-env bin/build.ts",
+    "serve": "deno run --allow-read --allow-net --allow-run bin/serve.ts"
+  },
+  "imports": {
+    "@std/fs": "jsr:@std/fs@^1.0.19",
+    "@std/http": "jsr:@std/http@^1.0.21",
+    "@std/path": "jsr:@std/path@^1.1.2",
+    "pug": "npm:pug@^3.0.3",
+    "sass": "npm:sass@^1.94.0"
+  },
+  "allowScripts":true,
+  "nodeModulesDir":"auto"
+}
