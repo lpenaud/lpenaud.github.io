@@ -1,6 +1,7 @@
 import * as sass from "sass";
 import * as pug from "pug";
 import * as stdPath from "@std/path";
+import { delay } from "@std/async/delay";
 
 function mkdirp(dirpath: string) {
   return Deno.mkdir(dirpath, {
@@ -19,19 +20,23 @@ function tryStatsSync(f: string): Deno.FileInfo | null {
   }
 }
 
-function nt(f1: string, f2: string): boolean {
-  const s1 = tryStatsSync(f1);
-  const s2 = tryStatsSync(f2);
-  return s1 === null || s2 === null 
-    || s1.mtime === null || s2.mtime === null
-    || s1.mtime > s2.mtime;
+function nt(src: string, dest: string): boolean {
+  const srcStat = Deno.statSync(src);
+  const destStat = tryStatsSync(dest);
+  if (destStat === null) {
+    return false
+  }
+  if (srcStat.mtime === null || destStat.mtime === null) {
+    return false
+  }
+  return destStat.mtime > srcStat.mtime;
 }
 
 interface BuildOptions {
   nodeModules: string;
   buildDir: string;
   mainStyle: string;
-  distDir: string;
+  pages: string[];
 }
 
 interface CompilePugOptions {
@@ -43,32 +48,32 @@ class Build {
 
   #buildDir: string;
 
-  #distDir: string;
-
   #mainStyle: string;
+
+  #pages: string[];
 
   static async fromEnv(): Promise<Build> {
     const options: BuildOptions = {
       nodeModules: "node_modules",
       buildDir: "build",
-      distDir: "dist",
       mainStyle: "style/main.scss",
+      pages: ["template/index.pug"]
     };
-    await Promise.all([mkdirp(options.buildDir), mkdirp(options.distDir)]);
+    await mkdirp(options.buildDir);
     return new Build(options);
   }
 
-  constructor({ nodeModules, buildDir, distDir, mainStyle }: BuildOptions) {
+  constructor({ nodeModules, buildDir, mainStyle, pages }: BuildOptions) {
     this.#buildDir = stdPath.resolve(buildDir);
     this.#nodeModules = stdPath.resolve(nodeModules);
-    this.#distDir = stdPath.resolve(distDir);
     this.#mainStyle = stdPath.resolve(mainStyle);
+    this.#pages = pages.map(p => stdPath.resolve(p));
   }
 
   compileSass(): string {
     const name = stdPath.basename(this.#mainStyle, ".scss");
     const dest = stdPath.join(this.#buildDir, `${name}.css`);
-    if (nt(dest, this.#mainStyle)) {
+    if (nt(this.#mainStyle, dest)) {
       return stdPath.basename(dest);
     }
     const result = sass.compile(this.#mainStyle, {
@@ -78,22 +83,99 @@ class Build {
     return stdPath.basename(dest);
   }
 
-  compilePug(options: CompilePugOptions): string {
-    const compiler = pug.compileFile("template/main-layout.pug");
-    const result = compiler(options);
-    const dest = stdPath.join(this.#buildDir, "index.html")
-    Deno.writeTextFileSync(dest, result)
-    return dest;
+  compilePug(options: CompilePugOptions): string[] {
+    return this.#pages.map(p => {
+      const name = stdPath.basename(p, ".pug");
+      const dest = stdPath.join(this.#buildDir, `${name}.html`)
+      const compiler = pug.compileFile(p);
+      const result = compiler(options);
+      Deno.writeTextFileSync(dest, result)
+      return stdPath.basename(dest);;
+    })
   }
 }
 
-async function main(): Promise<number> {
+interface WatcherOptions {
+  ms: number;
+  dirs: string[] | string
+}
+
+class Watcher {
+
+  #watch: Deno.FsWatcher
+
+  #task: Promise<void> | null
+
+  #ms: number
+
+  #entries: Set<string>
+
+  constructor({ dirs, ms }: WatcherOptions) {
+    this.#watch = Deno.watchFs(dirs, {
+      recursive: true,
+    })
+    this.#ms = ms
+    this.#entries = new Set();
+    this.#task = null
+  }
+
+  async #start() {
+    for await (const entry of this.#watch) {
+      for (const p of entry.paths) {
+        this.#entries.add(p);
+      }
+    }
+  }
+
+  async close() {
+    this.#watch.close();
+    if (this.#task !== null) {
+      await this.#task;
+    }
+  }
+
+  [Symbol.asyncDispose]() {
+    return this.close();
+  } 
+
+  async *[Symbol.asyncIterator]() {
+    this.#task = this.#start();
+    while (this.#task !== null) {
+      await delay(this.#ms);
+      if (this.#entries.size > 0) {
+        const old = Array.from(this.#entries)
+        this.#entries = new Set()
+        yield old;
+      }
+    }
+  }
+}
+
+async function main(args: string[]): Promise<number> {
+  const watch = args.shift() === "watch"
   const build = await Build.fromEnv();
-  const mainStyle = build.compileSass()
-  console.log(build.compilePug({ mainStyle }))
+  const pugOptions: CompilePugOptions = {
+    mainStyle: build.compileSass()
+  }
+  console.log(build.compilePug(pugOptions));
+  if (!watch) {
+    return 0;
+  }
+  await using watcher = new Watcher({
+    dirs: ["style", "template"],
+    ms: 200,
+  })
+  for await (const paths of watcher) {
+    if (paths.some(p => p.endsWith('.pug'))) {
+      console.log(build.compilePug(pugOptions))
+    }
+    if (paths.some(p => p.endsWith('.scss'))) {
+      console.log(build.compileSass());
+    }
+  }
   return 0;
 }
 
 if (import.meta.main) {
-  main().then(Deno.exit);
+  main(Deno.args.slice()).then(Deno.exit);
 }
