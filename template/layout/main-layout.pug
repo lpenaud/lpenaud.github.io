@@ -1,0 +1,18 @@
+doctype html
+html(lang="fr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title PENAUD Loïc
+    link(rel="stylesheet", href=mainStyle)
+  body
+    //- has-background-primary
+    //- is-light is-dark
+    section.hero.is-light.is-fullheight 
+      include hero-head.pug
+      div.hero-body
+        div.container
+          block content
+      include hero-foot.pug
+    include footer.pug  
+              
