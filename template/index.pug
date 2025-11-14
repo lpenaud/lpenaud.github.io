@@ -1,11 +1,15 @@
 extends layout/main-layout.pug
-block content
+block hero-content
   div.columns.is-vcentered.is-centered
     div.column(aria-hidden=true)
-    div.column.is-narrow
-      figure.image.is-128x128
-        img.is-rounded(src="https://bulma.io/assets/images/placeholders/128x128.png", alt="Une photo de moi souriant.")
-    div.column
-      p.title PENAUD Loïc
-      p.subtitle Lead développeur et ops en devenir
+    div.column.is-3
+      figure.image
+        img.is-rounded(src="https://bulma.io/assets/images/placeholders/256x256.png", alt="Une photo de moi souriant.")
+    div.column(aria-hidden=true)
+    div.column.is-7
+      p.title.is-2 PENAUD Loïc
+      p.subtitle.is-2 Programmeur en chef et ops en devenir
+      p.is-size-4.has-background-light-soft.p-4
+        | Programmeur qui accompagne les autres dévelopeurs depuis plus de 5 ans.
+        | Auto-hébergeur de serice de la toile depuis 6 ans.
     div.column(aria-hidden=true)
