@@ -1,0 +1,69 @@
+mixin navbar-item(item)
+  a.navbar-item(href=item.href class={ "is-active": item.active })= item.text
+
+mixin section()
+  section.section
+    block
+
+mixin columns-centered()
+  div.columns.is-vcentered.is-centered
+    block
+
+mixin hidden-column()
+  div.column(aria-hidden=true)
+
+mixin box()
+  div.box(class!=attributes.class)
+    block
+
+mixin message(header)
+  article.message(class!=attributes.class)
+    if header
+      div.message-header
+        p= header
+    div.message-body
+      block
+
+mixin tags(...tags)
+  div.tags(class!=attributes.class)
+    each t in tags
+      span.tag= t
+
+doctype html
+html(lang="fr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title PENAUD Loïc
+    link(rel="stylesheet", href=mainStyle)
+  body
+    nav.navbar.is-fixed-top.is-scheme
+      div.container
+        div.navbar-brand
+          a.navbar-item(role="link")
+            block navbar-brand
+          a.navbar-burger(role="buttton" aria-expanded="false")
+            span(aria-hidden=true)
+            span(aria-hidden=true)
+            span(aria-hidden=true)
+            span(aria-hidden=true)
+        div.navbar-menu
+          div.navbar-start
+            block navbar-start
+          div.navbar-end
+            block navbar-end
+
+    section.hero.is-fullheight
+      div.hero-head
+        block hero-head
+      div.hero-body
+        div.container
+          block hero-body
+      div.hero-foot
+        block hero-foot
+
+    block content
+
+    footer.footer
+      div.content.has-text-centered
+        block footer
