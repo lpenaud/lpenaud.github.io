@@ -2,6 +2,7 @@ import * as sass from "sass";
 import * as pug from "pug";
 import * as stdPath from "@std/path";
 import { delay } from "@std/async/delay";
+import { NavbarItem, pugConfig, PugConfig } from "../config/data.ts";
 
 function mkdirp(dirpath: string) {
   return Deno.mkdir(dirpath, {
@@ -39,7 +40,7 @@ interface BuildOptions {
   pages: string[];
 }
 
-interface CompilePugOptions {
+interface CompilePugOptions extends PugConfig {
   mainStyle: string;
 }
 
@@ -155,14 +156,15 @@ async function main(args: string[]): Promise<number> {
   const watch = args.shift() === "watch"
   const build = await Build.fromEnv();
   const pugOptions: CompilePugOptions = {
-    mainStyle: build.compileSass()
+    mainStyle: build.compileSass(),
+    ...pugConfig,
   }
   console.log(build.compilePug(pugOptions));
   if (!watch) {
     return 0;
   }
   await using watcher = new Watcher({
-    dirs: ["style", "template"],
+    dirs: ["style", "template", "config"],
     ms: 200,
   })
   for await (const paths of watcher) {
