@@ -44,6 +44,10 @@ interface CompilePugOptions extends PugConfig {
   mainStyle: string;
 }
 
+interface PugFilterOptions {
+  filename: string;
+}
+
 class Build {
   #nodeModules: string;
 
@@ -87,8 +91,24 @@ class Build {
   compilePug(options: CompilePugOptions): string[] {
     return this.#pages.map((p) => {
       const name = stdPath.basename(p, ".pug");
-      const dest = stdPath.join(this.#buildDir, `${name}.html`)
-      const compiler = pug.compileFile(p);
+      const dest = stdPath.join(this.#buildDir, `${name}.html`);
+      const compiler = pug.compileFile(p, {
+        filters: {
+          "material-icon": (
+            _text: string,
+            { name, style }: PugFilterOptions & { style: string; name: string },
+          ) => {
+            const src = stdPath.join(
+              this.#nodeModules,
+              "@material-design-icons/svg",
+              style,
+              `${name}.svg`,
+            );
+            console.log(src);
+            return Deno.readTextFileSync(src);
+          },
+        },
+      });
       const result = compiler(options);
       Deno.writeTextFileSync(dest, result);
       return stdPath.basename(dest);

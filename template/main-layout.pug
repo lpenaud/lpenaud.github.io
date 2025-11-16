@@ -6,11 +6,11 @@ mixin section()
     block
 
 mixin columns-centered()
-  div.columns.is-vcentered.is-centered
+  div.columns.is-vcentered.is-centered(class!=attributes.class)
     block
 
 mixin hidden-column()
-  div.column(aria-hidden=true)
+  div.column(aria-hidden=true, class!=attributes.class)
 
 mixin box()
   div.box(class!=attributes.class)

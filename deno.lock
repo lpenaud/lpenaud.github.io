@@ -15,6 +15,7 @@
     "jsr:@std/path@^1.1.1": "1.1.2",
     "jsr:@std/path@^1.1.2": "1.1.2",
     "jsr:@std/streams@^1.0.13": "1.0.13",
+    "npm:@material-design-icons/svg@~0.14.15": "0.14.15",
     "npm:@types/node@*": "22.15.15",
     "npm:pug@^3.0.3": "3.0.3",
     "npm:sass@^1.94.0": "1.94.0"
@@ -95,6 +96,9 @@
         "@babel/helper-string-parser",
         "@babel/helper-validator-identifier"
       ]
+    },
+    "@material-design-icons/svg@0.14.15": {
+      "integrity": "sha512-6nbjwGwyJnphwQUscJAYqw1Tk6+W8KvsgOAeyVgzIFXVsHfgX5XyplTUcZ29wbcTUysMMyCUi1LYpmFKA/e61g=="
     },
     "@parcel/watcher-android-arm64@2.5.1": {
       "integrity": "sha512-KF8+j9nNbUN8vzOFDpRMsaKBHZ/mcjEjMToVMJOhTozkDonQFFrRcfdLWn6yWKCmJKmdVxSgHiYvTCef4/qcBA==",
@@ -550,6 +554,7 @@
       "jsr:@std/fs@^1.0.19",
       "jsr:@std/http@^1.0.21",
       "jsr:@std/path@^1.1.2",
+      "npm:@material-design-icons/svg@~0.14.15",
       "npm:pug@^3.0.3",
       "npm:sass@^1.94.0"
     ]

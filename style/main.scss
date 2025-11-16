@@ -1,1 +1,14 @@
-@use "bulma/sass";
+@use "bulma/sass" as bulma;
+
+// Svg icons
+svg {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+@each $name, $color in bulma.$colors {
+  .has-text-#{$name} svg {
+    fill: currentColor;
+    stroke: currentColor;
+  }
+}
