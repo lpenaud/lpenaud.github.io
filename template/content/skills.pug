@@ -1,0 +1,34 @@
+mixin skills-column()
+  div.column
+    +box
+      div.content
+        block
+
++columns-centered
+  div.column.is-3
+    p.title.is-2#skills Compétences
++columns-centered
+  +skills-column
+    p.title.is-4
+      :icon-text(style="outlined" name="storefront")
+        Frontale
+    ul
+      li Maquettage de site interatif
+      li Création de kit de développement (SDK) pour appeler des services de la toile
+      li Organisation de composants réutilisable
+  +skills-column
+    p.title.is-4 Dorsale
+    ul
+      li Conception d'interface de programmation applicative (API)
+      li Développement de service asynchrone
+      li Interaction directionnel ou bidirectionnel
+  +skills-column
+    p.title.is-4 Conteneur
+    ul
+      li Création de conteneur
+      li Utilisation de sous-réseaux
+  +skills-column
+    p.title.is-4 Intégration continue
+    ul
+      li Conception de pipeline automatisée.
+      li Création des différentes tâches et étapes de contructions d'application
