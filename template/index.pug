@@ -104,4 +104,19 @@ block content
         p.title.is-2#contact Contact
 
 block footer
-  p TODO
+  p Développé avec #[strong passion] avec :
+  ul
+    li
+      +ab("https://deno.com/", "Deno") 
+      | et sa bibliothéque standard (
+      +ab("https://jsr.io/@std", "std")
+      | )
+    li 
+      +ab("https://pugjs.org", "Pugjs")
+    li
+      +ab("https://bulma.io", "Bulma")
+      |  et 
+      +ab("https://sass-lang.com/", "Sass")
+    li 
+      +ab("https://marella.github.io/material-design-icons/demo/svg/", "material-design-icons")
+

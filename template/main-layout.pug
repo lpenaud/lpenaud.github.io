@@ -10,7 +10,7 @@ mixin columns-centered()
     block
 
 mixin hidden-column()
-  div.column(aria-hidden=true, class!=attributes.class)
+  div.column(aria-hidden=true class!=attributes.class)
 
 mixin box()
   div.box(class!=attributes.class)
@@ -28,6 +28,11 @@ mixin tags(...tags)
   div.tags(class!=attributes.class)
     each t in tags
       span.tag= t
+
+mixin ab(href, text)
+  a(href=href target="_blank")&attributes(attributes)= text
+    if block
+      block
 
 doctype html
 html(lang="fr")
@@ -65,5 +70,9 @@ html(lang="fr")
     block content
 
     footer.footer
-      div.content.has-text-centered
-        block footer
+      +columns-centered
+        div.column.is-3
+        div.column.is-3
+          div.content
+            block footer
+        div.column.is-3
