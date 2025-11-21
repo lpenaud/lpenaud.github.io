@@ -88,6 +88,17 @@ class Build {
     return stdPath.basename(dest);
   }
 
+  getMaterialIcon(style: string, name: string) {
+    const src = stdPath.join(
+      this.#nodeModules,
+      "@material-design-icons/svg",
+      style,
+      `${name}.svg`,
+    );
+    console.log(src);
+    return Deno.readTextFileSync(src);
+  }
+
   compilePug(options: CompilePugOptions): string[] {
     return this.#pages.map((p) => {
       const name = stdPath.basename(p, ".pug");
@@ -97,16 +108,14 @@ class Build {
           "material-icon": (
             _text: string,
             { name, style }: PugFilterOptions & { style: string; name: string },
-          ) => {
-            const src = stdPath.join(
-              this.#nodeModules,
-              "@material-design-icons/svg",
-              style,
-              `${name}.svg`,
-            );
-            console.log(src);
-            return Deno.readTextFileSync(src);
-          },
+          ) => this.getMaterialIcon(style, name),
+          "icon-text": (
+            text: string,
+            { name, style }: PugFilterOptions & { style: string; name: string },
+          ) =>
+            `<span class="icon-text"><span class="icon">${
+              this.getMaterialIcon(style, name)
+            }</span><span>${text}</span></span>`,
         },
       });
       const result = compiler(options);
