@@ -13,36 +13,30 @@ block navbar-end
 
 block hero-body
   div.columns.is-vcentered.is-centered.is-max
-    div.column(aria-hidden=true)
+    +hidden-column
     div.column.is-3
       figure.image
         img.is-rounded(src="https://bulma.io/assets/images/placeholders/256x256.png", alt="Une photo de moi souriant.")
-    div.column(aria-hidden=true)
+    +hidden-column
     div.column.is-7
       p.title.is-2 PENAUD Loïc
       p.subtitle.is-2 Programmeur en chef et ops en devenir
       +box.is-size-4
         | Programmeur qui accompagne les autres dévelopeurs depuis plus de 5 ans.
         | Auto-hébergeur de service de la toile depuis 6 ans.
-    div.column(aria-hidden=true)
+    +hidden-column
 
 block content
-  +section
+  +section()#about-me
     include content/about-me.pug
-  +section
+  +section()#skills
     include content/skills.pug
-  +section
-    +columns-centered
-      div.column.is-3
-        p.title.is-2#experience Expérience
-  +section
-    +columns-centered
-      div.column.is-3
-        p.title.is-2#tools Outils et cadriciels
-  +section
-    +columns-centered
-      div.column.is-3
-        p.title.is-2#contact Contact
+  +section()#experience
+    include content/experience.pug
+  +section()#tools
+    include content/tools.pug
+  +section()#contact
+    include content/contact.pug
 
 block footer
   p Développé avec #[strong passion] avec :

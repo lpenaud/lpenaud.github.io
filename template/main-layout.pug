@@ -2,11 +2,11 @@ mixin navbar-item(item)
   a.navbar-item(href=item.href class={ "is-active": item.active })= item.text
 
 mixin section()
-  section.section
+  section.section&attributes(attributes)
     block
 
 mixin columns-centered()
-  div.columns.is-vcentered.is-centered(class!=attributes.class)
+  div.columns.is-vcentered.is-centered&attributes(attributes)
     block
 
 mixin hidden-column()
@@ -33,6 +33,15 @@ mixin ab(href, text)
   a(href=href target="_blank")&attributes(attributes)= text
     if block
       block
+
+mixin h4()
+  h4.title.is-4
+    block
+
+mixin section-title(title)
+  +columns-centered
+    div.column.is-full.has-text-centered
+      h2.title.is-2= title
 
 doctype html
 html(lang="fr")

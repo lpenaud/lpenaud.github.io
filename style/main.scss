@@ -6,6 +6,11 @@ svg {
   stroke: currentColor;
 }
 
+// Cell children should take all the height
+.cell > div {
+  height: 100%;
+}
+
 @each $name, $color in bulma.$colors {
   .has-text-#{$name} svg {
     fill: currentColor;
