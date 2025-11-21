@@ -207,8 +207,10 @@ class Watcher {
 async function main(args: string[]): Promise<number> {
   const watch = args.shift() === "watch";
   const build = await Build.fromEnv();
+  const mainStyle = build.compileSass();
+  console.log(mainStyle)
   const pugOptions: CompilePugOptions = {
-    mainStyle: build.compileSass(),
+    mainStyle,
     ...pugConfig,
   };
   console.log(build.compilePug(pugOptions));
