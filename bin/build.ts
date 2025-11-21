@@ -37,6 +37,7 @@ interface BuildOptions {
   nodeModules: string;
   buildDir: string;
   mainStyle: string;
+  iconTypes: string[];
   pages: string[];
 }
 
@@ -55,24 +56,36 @@ class Build {
 
   #mainStyle: string;
 
+  #iconTypes: string[];
+
   #pages: string[];
 
   static async fromEnv(): Promise<Build> {
-    const options: BuildOptions = {
-      nodeModules: "node_modules",
-      buildDir: "build",
+    const nodeModules = "node_modules";
+    const buildDir = "build";
+    const iconDir = stdPath.join(nodeModules, "@material-design-icons/svg");
+    const [, iconsEntries] = await Promise.all([
+      mkdirp(buildDir),
+      Array.fromAsync(Deno.readDir(iconDir)),
+    ]);
+    return new Build({
+      nodeModules,
+      buildDir,
       mainStyle: "style/main.scss",
+      iconTypes: iconsEntries.filter((e) => e.isDirectory)
+        .map((e) => e.name),
       pages: ["template/index.pug"],
-    };
-    await mkdirp(options.buildDir);
-    return new Build(options);
+    });
   }
 
-  constructor({ nodeModules, buildDir, mainStyle, pages }: BuildOptions) {
+  constructor(
+    { nodeModules, buildDir, mainStyle, pages, iconTypes }: BuildOptions,
+  ) {
     this.#buildDir = stdPath.resolve(buildDir);
     this.#nodeModules = stdPath.resolve(nodeModules);
     this.#mainStyle = stdPath.resolve(mainStyle);
     this.#pages = pages.map((p) => stdPath.resolve(p));
+    this.#iconTypes = iconTypes;
   }
 
   compileSass(): string {
@@ -89,6 +102,17 @@ class Build {
   }
 
   getMaterialIcon(style: string, name: string) {
+    if (!this.#iconTypes.includes(style)) {
+      console.error(
+        "Expected one of %c%s%c, actual: %c%s",
+        "font-weight: bold;color: green;",
+        this.#iconTypes.join(),
+        "font-weight: unset;color: unset;",
+        "font-weight: bold;color: red;",
+        style,
+      );
+      throw new Error("Invalid icon style");
+    }
     const src = stdPath.join(
       this.#nodeModules,
       "@material-design-icons/svg",
