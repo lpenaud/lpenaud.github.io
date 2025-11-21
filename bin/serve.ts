@@ -5,7 +5,7 @@ function getOpenCommand(): string | null {
     case "linux":
       return "xdg-open";
     case "windows":
-      return "explorer"
+      return "explorer";
     case "darwin":
       return "open";
     default:
@@ -14,7 +14,7 @@ function getOpenCommand(): string | null {
 }
 
 async function open({ hostname, port }: Deno.NetAddr): Promise<void> {
-  const cmd = getOpenCommand()
+  const cmd = getOpenCommand();
   if (cmd === null) {
     return;
   }
@@ -24,10 +24,12 @@ async function open({ hostname, port }: Deno.NetAddr): Promise<void> {
     stdin: "null",
     stdout: "null",
   });
-  await command.output()
+  await command.output();
 }
 
-const server = Deno.serve((req) => serveDir(req, {
-  fsRoot: "build",
-}))
+const server = Deno.serve((req) =>
+  serveDir(req, {
+    fsRoot: "build",
+  })
+);
 open(server.addr);
