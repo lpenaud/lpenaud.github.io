@@ -25,18 +25,22 @@ mixin message(header)
       block
 
 mixin tags(...tags)
-  div.tags(class!=attributes.class)
-    each t in tags
-      span.tag= t
+  if tags.length > 0
+    div.tags&attributes(attributes)
+      each t in tags
+        span.tag= t
 
 mixin ab(href, text)
   a(href=href target="_blank")&attributes(attributes)= text
     if block
       block
 
-mixin h4()
-  h4.title.is-4
-    block
+mixin h4(title, subtitle)
+  h4.title.is-4&attributes(attributes)= title
+    if block
+      block
+  if subtitle
+    h6.subtitle.is-6= subtitle
 
 mixin section-title(title)
   +columns-centered

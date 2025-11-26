@@ -1,0 +1,41 @@
+extends experience-card.pug
+
+block variables
+  -
+    title = "Ingénieur logiciel"
+    company = "Infotel (Brest)"
+    startDate = new Date(2020, 5, 15)
+    tags = [
+      "Java",
+      "Spring",
+      "API REST",
+      "TypeScript",
+      "JavaScript",
+      "Bash",
+      "Deno",
+      "Node",
+      "Postman",
+      "Git",
+      "Vue 3",
+    ]
+
+block description
+  div.columns.is-multiline
+    div.column.is-full
+      div.content
+        p
+          | Stage suivi d’une alternance pour mon master puis embauché en CDI.
+          | Actuellement programmeur en chef spécialisé dans le développement de service de la toile dans le domaine de la bancassurance.
+    div.column.is-half
+      div.content
+        h6.title.is-6.has-text-centered Frontale
+        ul
+          li Rédaction de test de composant avec Cypress.
+          li Développement d'IHM back-office.
+          li Revue de code TypeScript Vue 3.
+    div.column.is-half
+      div.content
+        h6.title.is-6.has-text-centered Dorsale
+        ul
+          li Revue de code Java Spring.
+          li Rédaction de test de bout en bout avec Postman et Newman.

@@ -1,0 +1,47 @@
+-
+  var dateFormat = new Intl.DateTimeFormat("fr-FR")
+
+  var title = "Job title"
+  var company = "Company name"
+  var startDate = new Date(0)
+  var endDate = "aujourd'hui"
+  var tags = []
+
+block variables
+
+div.card
+  div.card-content
+    div.media
+      div.media-left
+        figure.image.is-96x96
+          block logo
+            img(src="https://bulma.io/assets/images/placeholders/96x96.png" alt="Logo entreprise")
+      div.media-content
+        +h4(title).is-hidden-tablet
+        h6.subtitle.is-6.is-hidden-tablet.has-text-weight-semibold
+          | #{company}
+          br
+          | #{dateFormat.format(startDate)} – 
+          if typeof endDate === "string"
+            | #{endDate}
+          else
+            | #{dateFormat.format(endDate)}
+        div.columns.is-hidden-mobile
+          div.column
+            +h4(title)
+            h6.subtitle.is-6.columns
+              div.column
+                p.has-text-left-tablet.has-text-weight-semibold= company
+              div.column
+                p.has-text-right-tablet.has-text-weight-bold= `${dateFormat.format(startDate)} – ${typeof endDate === "string" ? endDate : dateFormat.format(endDate)}`
+
+        //- div.fixed-grid.has-2-cols
+        //-   div.grid
+        //-     div.cell.is-col-span-2
+        //-       +h4(title)
+        //-     div.cell
+        //-       p.subtitle.is-6.has-text-left.has-text-weight-semibold= company
+        //-     div.cell
+        //-       p.subtitle.is-6.has-text-right.has-text-weight-bold= `${dateFormat.format(startDate)} – ${typeof endDate === "string" ? endDate : dateFormat.format(endDate)}`
+    block description
+    +tags(...tags)
