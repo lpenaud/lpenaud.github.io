@@ -4,9 +4,20 @@ export interface NavbarItem {
   active?: boolean;
 }
 
+export interface Tool {
+  alt: string;
+  src?: string;
+}
+
+export interface Toolbox {
+  title: string;
+  tools: Tool[];
+}
+
 export interface PugConfig {
   navbarStartItems: NavbarItem[];
   navbarEndItems: NavbarItem[];
+  toolboxes: Toolbox[];
 }
 
 export const pugConfig: PugConfig = {
@@ -37,6 +48,30 @@ export const pugConfig: PugConfig = {
     {
       href: "#blog",
       text: "Blog",
+    },
+  ],
+  toolboxes: [
+    {
+      title: "Langage de programmation",
+      tools: [
+        {
+          alt: "JavaScript",
+        },
+        {
+          alt: "Java",
+        },
+      ],
+    },
+    {
+      title: "Système",
+      tools: [
+        {
+          alt: "ArchLinux",
+        },
+        {
+          alt: "Debian",
+        },
+      ],
     },
   ],
 };

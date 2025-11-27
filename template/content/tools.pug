@@ -1,1 +1,19 @@
 +section-title("Outils et cadriciels")
+
+mixin tool-figure(alt, src="https://bulma.io/assets/images/placeholders/96x96.png")
+  div.column.is-narrow
+    figure.image.is-96x96
+      img(src=src, alt=alt)
+
+mixin tool-box(toolbox)
+  div.column
+    div.box
+      +h4(toolbox.title).has-text-centered
+      div.columns.is-justify-content-center.is-multiline.is-mobile
+        each tool in toolbox.tools
+          +tool-figure(tool.alt, tool.src)
+
+div.container
+  div.columns
+    each t in toolboxes
+      +tool-box(t)
