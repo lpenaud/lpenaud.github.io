@@ -1,24 +1,5 @@
-export interface NavbarItem {
-  href: string;
-  text: string;
-  active?: boolean;
-}
-
-export interface Picture {
-  alt: string;
-  src?: string;
-}
-
-export interface Toolbox {
-  title: string;
-  tools: Picture[];
-}
-
-export interface PugConfig {
-  navbarStartItems: NavbarItem[];
-  navbarEndItems: NavbarItem[];
-  toolboxes: Toolbox[];
-}
+import { toolboxes } from "./toolboxes.ts";
+import { PugConfig } from "./types.d.ts";
 
 export const pugConfig: PugConfig = {
   navbarStartItems: [
@@ -50,32 +31,5 @@ export const pugConfig: PugConfig = {
       text: "Blog",
     },
   ],
-  toolboxes: [
-    {
-      title: "Langage de programmation",
-      tools: [
-        {
-          alt: "Python",
-          src: "https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/files/python-logo-only.svg"
-        },
-        {
-          alt: "JavaScript",
-        },
-        {
-          alt: "Java",
-        },
-      ],
-    },
-    {
-      title: "Système",
-      tools: [
-        {
-          alt: "ArchLinux",
-        },
-        {
-          alt: "Debian",
-        },
-      ],
-    },
-  ],
+  toolboxes,
 };

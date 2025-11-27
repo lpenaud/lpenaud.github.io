@@ -2,7 +2,8 @@ import * as sass from "sass";
 import * as pug from "pug";
 import * as stdPath from "@std/path";
 import { delay } from "@std/async/delay";
-import { Picture, PugConfig, pugConfig, Toolbox } from "../config/data.ts";
+import { pugConfig } from "../config/data.ts";
+import type { Picture, PugConfig, Toolbox } from "../config/types.d.ts";
 
 function mkdirp(dirpath: string) {
   return Deno.mkdir(dirpath, {
