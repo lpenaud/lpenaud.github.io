@@ -6,6 +6,10 @@ svg {
   stroke: currentColor;
 }
 
+.is-fullheight {
+  height: 100%;
+}
+
 // Cell children should take all the height
 .cell > div {
   height: 100%;
