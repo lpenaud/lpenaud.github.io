@@ -2,7 +2,7 @@ import * as sass from "sass";
 import * as pug from "pug";
 import * as stdPath from "@std/path";
 import { delay } from "@std/async/delay";
-import { PugConfig, pugConfig } from "../config/data.ts";
+import { Picture, PugConfig, pugConfig, Toolbox } from "../config/data.ts";
 
 function mkdirp(dirpath: string) {
   return Deno.mkdir(dirpath, {
@@ -21,6 +21,17 @@ function tryStatsSync(f: string): Deno.FileInfo | null {
   }
 }
 
+async function tryStats(f: string): Promise<Deno.FileInfo | null> {
+  try {
+    return await Deno.stat(f);
+  } catch (error) {
+    if (error instanceof Deno.errors.NotFound) {
+      return null;
+    }
+    throw error;
+  }
+}
+
 function nt(src: string, dest: string): boolean {
   const srcStat = Deno.statSync(src);
   const destStat = tryStatsSync(dest);
@@ -31,6 +42,46 @@ function nt(src: string, dest: string): boolean {
     return false;
   }
   return destStat.mtime > srcStat.mtime;
+}
+
+interface DownlaodPicture {
+  picture: Picture;
+  url?: string;
+}
+
+function* genPic(pictures: Picture[]): Generator<DownlaodPicture> {
+  for (const { alt, src } of pictures) {
+    const pic: Picture = Object.create(null);
+    const d: DownlaodPicture = Object.create(null);
+    pic.alt = alt;
+    if (src) {
+      pic.src = `img/${stdPath.basename(src)}`;
+      d.url = src;
+    }
+    d.picture = pic;
+    yield d;
+  }
+}
+
+async function downlaodPicture(src: string, dest: string): Promise<void> {
+  if ((await tryStats(dest)) !== null) {
+    return;
+  }
+  const res = await fetch(src);
+  console.log("Fetch", src);
+  if (!res.ok) {
+    try {
+      console.error(await res.text());
+    } catch (_error) {
+      // Ignore error
+    }
+    throw new Error(`${res.status} - ${res.statusText}`);
+  }
+  if (res.body === null) {
+    throw new Error(`No body found from: ${src}`);
+  }
+  await Deno.writeFile(dest, res.body);
+  console.log("Downlaod", src, "to", dest);
 }
 
 interface BuildOptions {
@@ -65,7 +116,7 @@ class Build {
     const buildDir = "build";
     const iconDir = stdPath.join(nodeModules, "@material-design-icons/svg");
     const [, iconsEntries] = await Promise.all([
-      mkdirp(buildDir),
+      mkdirp(stdPath.join(buildDir, "img")),
       Array.fromAsync(Deno.readDir(iconDir)),
     ]);
     return new Build({
@@ -121,6 +172,29 @@ class Build {
     );
     console.log(src);
     return Deno.readTextFileSync(src);
+  }
+
+  async downlaodPictures(options: PugConfig): Promise<void> {
+    const toolboxes: Toolbox[] = [];
+    const pictures = new Map<string, string>();
+    for (const toolbox of options.toolboxes) {
+      const tools = Array.from(genPic(toolbox.tools));
+      for (const { picture, url } of tools) {
+        if (url === undefined) {
+          continue;
+        }
+        pictures.set(url, picture.src as string);
+      }
+      toolboxes.push({
+        title: toolbox.title,
+        tools: tools.map((t) => t.picture),
+      });
+    }
+    options.toolboxes = toolboxes;
+    if (pictures.size === 0) {
+      return
+    }
+    await Promise.all(pictures.entries().map(([s, d]) => downlaodPicture(s, stdPath.resolve(this.#buildDir, d))));
   }
 
   compilePug(options: CompilePugOptions): string[] {
@@ -208,7 +282,8 @@ async function main(args: string[]): Promise<number> {
   const watch = args.shift() === "watch";
   const build = await Build.fromEnv();
   const mainStyle = build.compileSass();
-  console.log(mainStyle)
+  console.log(mainStyle);
+  await build.downlaodPictures(pugConfig);
   const pugOptions: CompilePugOptions = {
     mainStyle,
     ...pugConfig,

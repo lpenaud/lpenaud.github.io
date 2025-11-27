@@ -1,6 +1,10 @@
 # Build files
 build/**/*.html
 build/**/*.css
+build/**/*.svg
+build/**/*.png
+build/**/*.jpg
+build/**/*.webp
 
 # Dist
 dist/

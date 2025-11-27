@@ -4,14 +4,14 @@ export interface NavbarItem {
   active?: boolean;
 }
 
-export interface Tool {
+export interface Picture {
   alt: string;
   src?: string;
 }
 
 export interface Toolbox {
   title: string;
-  tools: Tool[];
+  tools: Picture[];
 }
 
 export interface PugConfig {
@@ -54,6 +54,10 @@ export const pugConfig: PugConfig = {
     {
       title: "Langage de programmation",
       tools: [
+        {
+          alt: "Python",
+          src: "https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/files/python-logo-only.svg"
+        },
         {
           alt: "JavaScript",
         },
