@@ -70,7 +70,20 @@ const backEnd: Toolbox = {
     },
     {
       alt: "Deno",
-      src: "https://icon.icepanel.io/Technology/svg/Deno.svg",
+      src: "https://deno.com/logos/icon-light.svg",
+      basename: "deno-light.svg",
+      sources: [
+        {
+          media: "(prefers-color-scheme: dark)",
+          src: "https://deno.com/logos/icon-dark.svg",
+          basename: "deno-dark.svg"
+        },
+        {
+          media: "(prefers-color-scheme: light)",
+          src: "https://deno.com/logos/icon-light.svg",
+          basename: "deno-light.svg"
+        },
+      ],
     },
     {
       alt: "Spring",

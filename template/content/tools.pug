@@ -1,8 +1,13 @@
 +section-title("Outils et cadriciels")
 
-mixin tool-figure(alt, src="https://bulma.io/assets/images/placeholders/96x96.png")
+//- { sources: [{ media: string; src: string }] }
+
+mixin tool-figure(alt, src="https://bulma.io/assets/images/placeholders/96x96.png", ...sources)
   figure.image.is-64x64.my-auto.mx-auto
-    img(src=src, alt=alt)
+    picture
+      each s in sources
+        source(srcset=s.src, media=s.media)
+      img(src=src, alt=alt)
   p.is-italic= alt
 
 mixin tool-box(toolbox)
@@ -14,7 +19,7 @@ mixin tool-box(toolbox)
           div.columns.is-centered.is-multiline.is-mobile.is-vcentered.is-fullheight
             each tool in toolbox.tools
               div.column
-                +tool-figure(tool.alt, tool.src)
+                +tool-figure(tool.alt, tool.src, ...tool.sources)
 
 div.container
   div.columns.is-multiline

@@ -3,7 +3,7 @@ import * as pug from "pug";
 import * as stdPath from "@std/path";
 import { delay } from "@std/async/delay";
 import { pugConfig } from "../config/data.ts";
-import type { Picture, PugConfig, Toolbox } from "../config/types.d.ts";
+import type { Picture, PugConfig, Source, Toolbox } from "../config/types.d.ts";
 
 function mkdirp(dirpath: string) {
   return Deno.mkdir(dirpath, {
@@ -45,31 +45,66 @@ function nt(src: string, dest: string): boolean {
   return destStat.mtime > srcStat.mtime;
 }
 
+interface PictureEntry {
+  src: string;
+  url: URL;
+}
+
+function getPicEntry(src: string, basename: string | undefined): PictureEntry {
+  return {
+    src: `img/${basename || stdPath.basename(src)}`,
+    url: src.startsWith("http") ? new URL(src) : stdPath.toFileUrl(src),
+  };
+}
+
 interface DownlaodPicture {
   picture: Picture;
-  url?: string;
+  urls: [src: string, url: URL][];
 }
 
 function* genPic(pictures: Picture[]): Generator<DownlaodPicture> {
-  for (const { alt, src } of pictures) {
-    const pic: Picture = Object.create(null);
-    const d: DownlaodPicture = Object.create(null);
-    pic.alt = alt;
+  for (const pic of pictures) {
+    const sources: Source[] = [];
+    const urls: DownlaodPicture["urls"] = [];
+    let entry: PictureEntry;
+    let src = pic.src;
     if (src) {
-      pic.src = `img/${stdPath.basename(src)}`;
-      d.url = src;
+      entry = getPicEntry(src, pic.basename);
+      src = entry.src;
+      urls.push([entry.src, entry.url]);
     }
-    d.picture = pic;
-    yield d;
+    if (pic.sources) {
+      for (const s of pic.sources) {
+        entry = getPicEntry(s.src, s.basename);
+        sources.push({
+          media: s.media,
+          src: entry.src,
+        });
+        urls.push([entry.src, entry.url]);
+      }
+    }
+    yield {
+      picture: {
+        sources,
+        src,
+        alt: pic.alt,
+      },
+      urls,
+    };
   }
 }
 
-async function downlaodPicture(src: string, dest: string): Promise<void> {
+async function downlaodPicture(src: URL, dest: string): Promise<void> {
   if ((await tryStats(dest)) !== null) {
     return;
   }
+  if (src.protocol === "file:") {
+    await Deno.copyFile(src, dest);
+    console.log("Copy", src.pathname, "->", dest);
+    return;
+  }
   const res = await fetch(src);
-  console.log("Fetch", src);
+  console.log("Fetch", src.href);
   if (!res.ok) {
     try {
       console.error(await res.text());
@@ -82,7 +117,7 @@ async function downlaodPicture(src: string, dest: string): Promise<void> {
     throw new Error(`No body found from: ${src}`);
   }
   await Deno.writeFile(dest, res.body);
-  console.log("Downlaod", src, "to", dest);
+  console.log("Downlaod", src.href, "to", dest);
 }
 
 interface BuildOptions {
@@ -177,25 +212,28 @@ class Build {
 
   async downlaodPictures(options: PugConfig): Promise<void> {
     const toolboxes: Toolbox[] = [];
-    const pictures = new Map<string, string>();
+    const pictures: DownlaodPicture["urls"][] = [];
     for (const toolbox of options.toolboxes) {
-      const tools = Array.from(genPic(toolbox.tools));
-      for (const { picture, url } of tools) {
-        if (url === undefined) {
-          continue;
-        }
-        pictures.set(url, picture.src as string);
+      const tools: Picture[] = [];
+      for (const t of genPic(toolbox.tools)) {
+        tools.push(t.picture);
+        pictures.push(t.urls);
       }
       toolboxes.push({
         title: toolbox.title,
-        tools: tools.map((t) => t.picture),
+        tools,
       });
     }
     options.toolboxes = toolboxes;
-    if (pictures.size === 0) {
-      return
+    if (pictures.length === 0) {
+      return;
     }
-    await Promise.all(pictures.entries().map(([s, d]) => downlaodPicture(s, stdPath.resolve(this.#buildDir, d))));
+    await Promise.all(
+      pictures.flatMap((p) => p)
+        .map(([dest, src]) =>
+          downlaodPicture(src, stdPath.resolve(this.#buildDir, dest))
+        ),
+    );
   }
 
   compilePug(options: CompilePugOptions): string[] {
