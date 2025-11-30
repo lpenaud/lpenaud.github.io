@@ -21,7 +21,6 @@ mixin tool-box(toolbox)
               div.column
                 +tool-figure(tool.alt, tool.src, ...tool.sources)
 
-div.container
-  div.columns.is-multiline
-    each t in toolboxes
-      +tool-box(t)
+div.columns.is-multiline
+  each t in toolboxes
+    +tool-box(t)
