@@ -5,6 +5,8 @@ build/**/*.svg
 build/**/*.png
 build/**/*.jpg
 build/**/*.webp
+build/**/*.js
+build/**/*.mjs
 
 # Dist
 dist/

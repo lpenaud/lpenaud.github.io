@@ -1,5 +1,9 @@
 extends main-layout.pug
 
+block script
+  each s in scripts
+    script(type="module", src=s)
+
 block navbar-brand
   p.title PENAUD Loïc
 

@@ -1,14 +1,26 @@
 import * as sass from "sass";
 import * as pug from "pug";
 import * as stdPath from "@std/path";
+import * as fs from "@std/fs";
 import { delay } from "@std/async/delay";
 import { pugConfig } from "../config/data.ts";
 import type { Picture, PugConfig, Source, Toolbox } from "../config/types.d.ts";
 
-function mkdirp(dirpath: string) {
-  return Deno.mkdir(dirpath, {
+function mkdirp(path: string | URL) {
+  console.log("Make directory", path.toString());
+  return Deno.mkdir(path, {
     recursive: true,
   });
+}
+
+function copyFileVerb(src: string | URL, dest: string | URL) {
+  console.log("Copy", src.toString(), "to", dest.toString());
+  return Deno.copyFile(src, dest);
+}
+
+function readDirVerb(path: string | URL) {
+  console.log("ls", path.toString())
+  return Deno.readDir(path);
 }
 
 function tryStatsSync(f: string): Deno.FileInfo | null {
@@ -99,8 +111,7 @@ async function downlaodPicture(src: URL, dest: string): Promise<void> {
     return;
   }
   if (src.protocol === "file:") {
-    await Deno.copyFile(src, dest);
-    console.log("Copy", src.pathname, "->", dest);
+    await copyFileVerb(src, dest);
     return;
   }
   const res = await fetch(src);
@@ -130,6 +141,7 @@ interface BuildOptions {
 
 interface CompilePugOptions extends PugConfig {
   mainStyle: string;
+  scripts: string[];
 }
 
 interface PugFilterOptions {
@@ -153,7 +165,7 @@ class Build {
     const iconDir = stdPath.join(nodeModules, "@material-design-icons/svg");
     const [, iconsEntries] = await Promise.all([
       mkdirp(stdPath.join(buildDir, "img")),
-      Array.fromAsync(Deno.readDir(iconDir)),
+      Array.fromAsync(readDirVerb(iconDir)),
     ]);
     return new Build({
       nodeModules,
@@ -234,6 +246,31 @@ class Build {
           downlaodPicture(src, stdPath.resolve(this.#buildDir, dest))
         ),
     );
+  }
+
+  async getScripts(): Promise<string[]> {
+    const entries = await Array.fromAsync(fs.walk("js", {
+      exts: [".mjs"],
+      includeFiles: true,
+      includeDirs: false,
+      includeSymlinks: false,
+    }));
+    if (entries.length === 0) {
+      return [];
+    }
+    const outdir = stdPath.join(this.#buildDir, "js");
+    await mkdirp(outdir);
+    await Promise.all(entries.map((e) => copyFileVerb(e.path, stdPath.join(outdir, e.name))));
+    return entries.map(({ name }) => `js/${name}`);
+  }
+
+  async getCompileOptions(config: PugConfig): Promise<CompilePugOptions> {
+    await this.downlaodPictures(config);
+    return {
+      ...config,
+      mainStyle: this.compileSass(),
+      scripts: await this.getScripts(),
+    }
   }
 
   compilePug(options: CompilePugOptions): string[] {
@@ -320,13 +357,7 @@ class Watcher {
 async function main(args: string[]): Promise<number> {
   const watch = args.shift() === "watch";
   const build = await Build.fromEnv();
-  const mainStyle = build.compileSass();
-  console.log(mainStyle);
-  await build.downlaodPictures(pugConfig);
-  const pugOptions: CompilePugOptions = {
-    mainStyle,
-    ...pugConfig,
-  };
+  const pugOptions = await build.getCompileOptions(pugConfig);
   console.log(build.compilePug(pugOptions));
   if (!watch) {
     return 0;
