@@ -34,14 +34,6 @@ div.card
                 p.has-text-left-tablet.has-text-weight-semibold= company
               div.column
                 p.has-text-right-tablet.has-text-weight-bold= `${dateFormat.format(startDate)} – ${typeof endDate === "string" ? endDate : dateFormat.format(endDate)}`
-
-        //- div.fixed-grid.has-2-cols
-        //-   div.grid
-        //-     div.cell.is-col-span-2
-        //-       +h4(title)
-        //-     div.cell
-        //-       p.subtitle.is-6.has-text-left.has-text-weight-semibold= company
-        //-     div.cell
-        //-       p.subtitle.is-6.has-text-right.has-text-weight-bold= `${dateFormat.format(startDate)} – ${typeof endDate === "string" ? endDate : dateFormat.format(endDate)}`
+  
     block description
     +tags(...tags)

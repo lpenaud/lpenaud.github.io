@@ -19,7 +19,7 @@ function copyFileVerb(src: string | URL, dest: string | URL) {
 }
 
 function readDirVerb(path: string | URL) {
-  console.log("ls", path.toString())
+  console.log("ls", path.toString());
   return Deno.readDir(path);
 }
 
@@ -238,7 +238,9 @@ class Build {
     }
     const outdir = stdPath.join(this.#buildDir, "js");
     await mkdirp(outdir);
-    await Promise.all(entries.map((e) => copyFileVerb(e.path, stdPath.join(outdir, e.name))));
+    await Promise.all(
+      entries.map((e) => copyFileVerb(e.path, stdPath.join(outdir, e.name))),
+    );
     return entries.map(({ name }) => `js/${name}`);
   }
 
@@ -248,7 +250,7 @@ class Build {
       ...config,
       mainStyle: this.compileSass(),
       scripts: await this.getScripts(),
-    }
+    };
   }
 
   compilePug(options: CompilePugOptions): string[] {
