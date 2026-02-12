@@ -15,7 +15,6 @@ function activeLinks() {
   })
   .filter(e => e.length === 2));
   const observer = new IntersectionObserver((entries) => {
-    console.log(entries)
     const [last] = entries.filter(e => e.isIntersecting)
       .slice(-1);
     if (!last) {
@@ -31,6 +30,8 @@ function activeLinks() {
     }
   }, {
     threshold: 0.3,
+    root: null,
+    rootMargin: "0px",
   });
 
   for (const section of getSections()) {
