@@ -135,7 +135,6 @@ interface BuildOptions {
   nodeModules: string;
   buildDir: string;
   mainStyle: string;
-  iconTypes: string[];
   pages: string[];
 }
 
@@ -155,36 +154,31 @@ class Build {
 
   #mainStyle: string;
 
-  #iconTypes: string[];
-
   #pages: string[];
 
   static async fromEnv(): Promise<Build> {
     const nodeModules = "node_modules";
     const buildDir = "build";
     const iconDir = stdPath.join(nodeModules, "@material-design-icons/svg");
-    const [, iconsEntries] = await Promise.all([
+    await Promise.all([
       mkdirp(stdPath.join(buildDir, "img")),
-      Array.fromAsync(readDirVerb(iconDir)),
+      mkdirp(stdPath.join(buildDir, "icon")),
     ]);
     return new Build({
       nodeModules,
       buildDir,
       mainStyle: "style/main.scss",
-      iconTypes: iconsEntries.filter((e) => e.isDirectory)
-        .map((e) => e.name),
       pages: ["template/index.pug"],
     });
   }
 
   constructor(
-    { nodeModules, buildDir, mainStyle, pages, iconTypes }: BuildOptions,
+    { nodeModules, buildDir, mainStyle, pages }: BuildOptions,
   ) {
     this.#buildDir = stdPath.resolve(buildDir);
     this.#nodeModules = stdPath.resolve(nodeModules);
     this.#mainStyle = stdPath.resolve(mainStyle);
     this.#pages = pages.map((p) => stdPath.resolve(p));
-    this.#iconTypes = iconTypes;
   }
 
   compileSass(): string {
@@ -200,24 +194,8 @@ class Build {
     return stdPath.basename(dest);
   }
 
-  getMaterialIcon(style: string, name: string) {
-    if (!this.#iconTypes.includes(style)) {
-      console.error(
-        "Expected one of %c%s%c, actual: %c%s",
-        "font-weight: bold;color: green;",
-        this.#iconTypes.join(),
-        "font-weight: unset;color: unset;",
-        "font-weight: bold;color: red;",
-        style,
-      );
-      throw new Error("Invalid icon style");
-    }
-    const src = stdPath.join(
-      this.#nodeModules,
-      "@material-design-icons/svg",
-      style,
-      `${name}.svg`,
-    );
+  getMaterialIcon(name: string) {
+    const src = this.#getMaterialSrcPath(name);
     console.log(src);
     return Deno.readTextFileSync(src);
   }
@@ -281,21 +259,34 @@ class Build {
         filters: {
           "material-icon": (
             _text: string,
-            { name, style }: PugFilterOptions & { style: string; name: string },
-          ) => this.getMaterialIcon(style, name),
+            { name }: PugFilterOptions & { style: string; name: string },
+          ) => this.getMaterialIcon(name),
           "icon-text": (
             text: string,
-            { name, style }: PugFilterOptions & { style: string; name: string },
-          ) =>
-            `<span class="icon-text"><span class="icon">${
-              this.getMaterialIcon(style, name)
-            }</span><span>${text}</span></span>`,
+            { name, size }: PugFilterOptions & { style: string; name: string; size?: string; },
+          ) => {
+            const classList = ["icon"]
+            if (size !== undefined) {
+              classList.push(`is-${size}`);
+            }
+            return `<span class="icon-text"><span class="${classList.join(" ")}">${
+              this.getMaterialIcon(name)
+            }</span><span>${text}</span></span>`
+          },
         },
       });
       const result = compiler(options);
       Deno.writeTextFileSync(dest, result);
       return stdPath.basename(dest);
     });
+  }
+
+  #getMaterialSrcPath(name: string) {
+    return stdPath.join(
+      this.#nodeModules,
+      "@mdi/svg/svg",
+      `${name}.svg`,
+    );
   }
 }
 

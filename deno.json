@@ -5,7 +5,7 @@
     "serve": "deno run --allow-read --allow-net --allow-run bin/serve.ts"
   },
   "imports": {
-    "@material-design-icons/svg": "npm:@material-design-icons/svg@^0.14.15",
+    "@mdi/svg": "npm:@mdi/svg@^7.4.47",
     "@std/async": "jsr:@std/async@^1.0.15",
     "@std/fs": "jsr:@std/fs@^1.0.20",
     "@std/http": "jsr:@std/http@^1.0.22",
