@@ -354,15 +354,19 @@ async function main(args: string[]): Promise<number> {
     return 0;
   }
   await using watcher = new Watcher({
-    dirs: ["style", "template", "config"],
+    dirs: ["style", "template", "config", "js"],
     ms: 200,
   });
   for await (const paths of watcher) {
-    if (paths.some((p) => p.endsWith(".pug"))) {
+    const exts = Map.groupBy(paths, (p) => stdPath.extname(p));
+    if (exts.has(".pug")) {
       console.log(build.compilePug(pugOptions));
     }
-    if (paths.some((p) => p.endsWith(".scss"))) {
+    if (exts.has(".scss")) {
       console.log(build.compileSass());
+    }
+    if (exts.has(".mjs")) {
+      await build.getScripts();
     }
   }
   return 0;
