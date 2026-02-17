@@ -18,11 +18,6 @@ function copyFileVerb(src: string | URL, dest: string | URL) {
   return Deno.copyFile(src, dest);
 }
 
-function readDirVerb(path: string | URL) {
-  console.log("ls", path.toString());
-  return Deno.readDir(path);
-}
-
 function tryStatsSync(f: string): Deno.FileInfo | null {
   try {
     return Deno.statSync(f);
@@ -131,6 +126,43 @@ async function downlaodPicture(src: URL, dest: string): Promise<void> {
   console.log("Downlaod", src.href, "to", dest);
 }
 
+interface MagickCompressOptions {
+  infile: string;
+  background: string;
+  outfile: string;
+}
+
+async function magickCompress({ background, infile, outfile }: MagickCompressOptions) {
+  const cmd = new Deno.Command("magick", {
+    args: [
+      infile,
+      // Set background color
+      "-background",
+      background,
+      // Paint the background color
+      "-flatten",
+      // Remove all metadata
+      "-strip",
+      // Progressive (optimise loading)
+      "-interlace",
+      "Plane",
+      // Blur a little
+      "-gaussian-blur",
+      "0.05",
+      // JPEG compression
+      "-quality",
+      "85%",
+      outfile,
+    ],
+    stdout: "inherit",
+    stderr: "inherit",
+  });
+  const output = await cmd.output();
+  if (!output.success) {
+    throw new Error(`magick exited with ${output.code} on '${infile}'`);
+  }
+}
+
 interface BuildOptions {
   nodeModules: string;
   buildDir: string;
@@ -138,9 +170,12 @@ interface BuildOptions {
   pages: string[];
 }
 
-interface CompilePugOptions extends PugConfig {
+interface CompilePugOptions extends Omit<PugConfig, "experiences"> {
   mainStyle: string;
   scripts: string[];
+  experiences: {
+    [k in keyof PugConfig["experiences"]]: Picture;
+  }
 }
 
 interface PugFilterOptions {
@@ -159,11 +194,7 @@ class Build {
   static async fromEnv(): Promise<Build> {
     const nodeModules = "node_modules";
     const buildDir = "build";
-    const iconDir = stdPath.join(nodeModules, "@material-design-icons/svg");
-    await Promise.all([
-      mkdirp(stdPath.join(buildDir, "img")),
-      mkdirp(stdPath.join(buildDir, "icon")),
-    ]);
+    await mkdirp(stdPath.join(buildDir, "img"));
     return new Build({
       nodeModules,
       buildDir,
@@ -200,7 +231,7 @@ class Build {
     return Deno.readTextFileSync(src);
   }
 
-  async downlaodPictures(options: PugConfig): Promise<void> {
+  async downlaodToolboxPictures(options: PugConfig): Promise<void> {
     const toolboxes: Toolbox[] = [];
     const pictures: DownlaodPicture["urls"][] = [];
     for (const toolbox of options.toolboxes) {
@@ -226,6 +257,29 @@ class Build {
     );
   }
 
+  async compressCompaniesLogo(options: PugConfig): Promise<CompilePugOptions["experiences"]> {
+    const lightBg = "hsl(221,14%,100%)"
+    const darkBg = "hsl(221,14%,9%)"
+    for (const [company,{ alt, src }] of Object.entries(options.experiences)) {
+      const path = stdPath.parse(src);
+      const light = stdPath.resolve(this.#buildDir, "img", `${path.name}.light.jpg`);
+      const dark = stdPath.resolve(this.#buildDir, "img", `${path.name}.dark.jpg`);
+      const commands = await Promise.all([
+        magickCompress({
+          background: lightBg,
+          infile: src,
+          outfile: light,
+        }),
+        magickCompress({
+          background: darkBg,
+          infile: src,
+          outfile: dark,
+        }),
+      ]);
+
+    }
+  }
+
   async getScripts(): Promise<string[]> {
     const entries = await Array.fromAsync(fs.walk("js", {
       exts: [".mjs"],
@@ -245,7 +299,7 @@ class Build {
   }
 
   async getCompileOptions(config: PugConfig): Promise<CompilePugOptions> {
-    await this.downlaodPictures(config);
+    await this.downlaodToolboxPictures(config);
     return {
       ...config,
       mainStyle: this.compileSass(),
@@ -265,15 +319,19 @@ class Build {
           ) => this.getMaterialIcon(name),
           "icon-text": (
             text: string,
-            { name, size }: PugFilterOptions & { style: string; name: string; size?: string; },
+            { name, size }: PugFilterOptions & {
+              style: string;
+              name: string;
+              size?: string;
+            },
           ) => {
-            const classList = ["icon"]
+            const classList = ["icon"];
             if (size !== undefined) {
               classList.push(`is-${size}`);
             }
-            return `<span class="icon-text"><span class="${classList.join(" ")}">${
-              this.getMaterialIcon(name)
-            }</span><span>${text}</span></span>`
+            return `<span class="icon-text"><span class="${
+              classList.join(" ")
+            }">${this.getMaterialIcon(name)}</span><span>${text}</span></span>`;
           },
         },
       });

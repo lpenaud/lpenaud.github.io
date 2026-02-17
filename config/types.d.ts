@@ -22,8 +22,19 @@ export interface Toolbox {
   tools: Picture[];
 }
 
+export interface Experience {
+  alt: string;
+  src: string;
+}
+
 export interface PugConfig {
   navbarStartItems: NavbarItem[];
   navbarEndItems: NavbarItem[];
   toolboxes: Toolbox[];
+  experiences: {
+    infotel: Experience;
+    shakabay: Experience;
+    sentinellesDuWeb: Experience;
+    zip: Experience;
+  };
 }

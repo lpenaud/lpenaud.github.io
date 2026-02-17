@@ -7,6 +7,13 @@
   var endDate = "aujourd'hui"
   var tags = []
 
+mixin experience-logo(picture)
+  figure.image.is-96x96
+    picture
+      each s in picture.sources
+        source(srcset=s.src, media=s.media)
+      img(src=picture.src, alt=picture.alt)
+
 block variables
 
 div.card
@@ -15,7 +22,7 @@ div.card
       div.media-left
         figure.image.is-96x96
           block logo
-            img(src="https://bulma.io/assets/images/placeholders/96x96.png" alt="Logo entreprise")
+            +experience-logo({ alt: "Logo entreprise", src: "https://bulma.io/assets/images/placeholders/64x64.png" })
       div.media-content
         +h4(title).is-hidden-tablet
         h6.subtitle.is-6.is-hidden-tablet.has-text-weight-semibold

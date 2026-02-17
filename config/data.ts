@@ -1,3 +1,4 @@
+import { experiences } from "./experiences.ts";
 import { toolboxes } from "./toolboxes.ts";
 import { PugConfig } from "./types.d.ts";
 
@@ -32,4 +33,5 @@ export const pugConfig: PugConfig = {
     },
   ],
   toolboxes,
+  experiences,
 };
