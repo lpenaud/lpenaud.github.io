@@ -11,8 +11,17 @@ name: Compile
 on:
   push:
     branches: ["bulma"]
-  pull_request:
-    branches: ["bulma"]
+    paths:
+      - ".github/workflows/*.yml"
+      - "bin/**/*"
+      - "config/**/*"
+      - "img/**/*"
+      - "js/**/*"
+      - "style/**/*"
+      - "template/**/*"
+      - "deno.json"
+      - "deno.lock"
+      - "Brewfile"
 
 permissions:
   contents: read
