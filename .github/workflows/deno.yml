@@ -26,11 +26,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Deno
+        id: set-up-deno
         uses: denoland/setup-deno@v2.0.3
-      - name: Install ImageMagick
+
+      - name: Setup Homebrew
+        id: set-up-homebrew
         run: |
-          [ -s /home/linuxbrew/.linuxbrew/bin/brew ] || exit 1
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          echo "/home/linuxbrew/.linuxbrew/bin"  >> $GITHUB_PATH
+          echo "/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
+        
+      - name: Install dependencies
+        run: |
           brew install imagemagick
 
       - name: Build site
