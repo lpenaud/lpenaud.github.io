@@ -17,10 +17,9 @@ block navbar-end
 
 block hero-body
   div.columns.is-vcentered.is-centered.is-max
-    +hidden-column
-    div.column.is-3
+    div.column
       figure.image
-        img.is-rounded(src="https://bulma.io/assets/images/placeholders/256x256.png", alt="Une photo de moi souriant.")
+        img.is-rounded(src=profile.picture.src, alt=profile.picture.alt)
     +hidden-column
     div.column.is-7
       p.title.is-2 PENAUD Loïc
@@ -28,7 +27,6 @@ block hero-body
       +box.is-size-4
         | Programmeur qui accompagne les autres dévelopeurs depuis plus de 5 ans.
         | Auto-hébergeur de service de la toile depuis 6 ans.
-    +hidden-column
 
 block content
   +section()#about-me

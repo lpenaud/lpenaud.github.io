@@ -34,4 +34,10 @@ export const pugConfig: PugConfig = {
   ],
   toolboxes,
   experiences,
+  profile: {
+    picture: {
+      alt: "Photo de 3 quarts face de Penaud Loïc",
+      src: "img/profile.flop.jpg",
+    }
+  }
 };

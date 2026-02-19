@@ -27,6 +27,10 @@ export interface Experience {
   src: string;
 }
 
+export interface Profile {
+  picture: Required<Pick<Picture, "src">> & Picture;
+}
+
 export interface PugConfig {
   navbarStartItems: NavbarItem[];
   navbarEndItems: NavbarItem[];
@@ -37,4 +41,5 @@ export interface PugConfig {
     sentinellesDuWeb: Experience;
     zip: Experience;
   };
+  profile: Profile;
 }

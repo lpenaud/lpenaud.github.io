@@ -126,12 +126,6 @@ async function downlaodPicture(src: URL, dest: string): Promise<void> {
   console.log("Downlaod", src.href, "to", dest);
 }
 
-interface MagickCompressOptions {
-  infile: string;
-  background: string;
-  outfile: string;
-}
-
 function createCommands(command: string | URL, options?: Deno.CommandOptions) {
   if (options?.args) {
     console.log(command, ...options.args);
@@ -139,29 +133,34 @@ function createCommands(command: string | URL, options?: Deno.CommandOptions) {
   return new Deno.Command(command, options);
 }
 
+interface MagickCompressOptions {
+  background?: string;
+  resize?: number;
+  blur?: number;
+}
 async function magickCompress(
-  { background, infile, outfile }: MagickCompressOptions,
+  infile: string,
+  outfile: string,
+  options: MagickCompressOptions = {},
 ) {
+  const args: string[] = [infile];
+  if (options.background) {
+    args.push("-background", options.background, "-flatten");
+  }
+  if (options.resize) {
+    // Not upscaling the picture when resize
+    args.push("-resize", options.resize + ">");
+  }
+  // Remove all metadata
+  // Progressive (optimise loading)
+  args.push("-strip", "-interlace", "Plane");
+  // Blur to reduce file size
+  if (options.blur) {
+    args.push("-gaussian-blur", options.blur.toString());
+  }
   const cmd = createCommands("magick", {
     args: [
-      infile,
-      // Set background color
-      "-background",
-      background,
-      // Paint the background color
-      "-flatten",
-      // Resize image to 96px
-      "-resize",
-      // Not upscaling the picture
-      "96x96>",
-      // Remove all metadata
-      "-strip",
-      // Progressive (optimise loading)
-      "-interlace",
-      "Plane",
-      // Blur a little
-      "-gaussian-blur",
-      "0.05",
+      ...args,
       // JPEG compression
       "-quality",
       "85%",
@@ -290,6 +289,7 @@ class Build {
 
   async getCompileOptions(config: PugConfig): Promise<CompilePugOptions> {
     await this.downlaodToolboxPictures(config);
+    await this.#compressProfile(config);
     return {
       ...config,
       mainStyle: this.compileSass(),
@@ -332,6 +332,14 @@ class Build {
     });
   }
 
+  async #compressProfile(config: PugConfig) {
+    const infile = config.profile.picture.src;
+    const outfile = stdPath.resolve(this.#buildDir, infile);
+    await magickCompress(infile, outfile, {
+      // resize: 512,
+    });
+  }
+
   async #compressCompaniesLogo(
     options: PugConfig,
   ): Promise<CompilePugOptions["experiences"]> {
@@ -343,16 +351,22 @@ class Build {
       const light = `img/${path.name}.light.jpg`;
       const dark = `img/${path.name}.dark.jpg`;
       await Promise.all([
-        magickCompress({
-          background: lightBg,
-          infile: src,
-          outfile: stdPath.resolve(this.#buildDir, light),
-        }),
-        magickCompress({
-          background: darkBg,
-          infile: src,
-          outfile: stdPath.resolve(this.#buildDir, dark),
-        }),
+        magickCompress(
+          src,
+          stdPath.resolve(this.#buildDir, light),
+          {
+            background: lightBg,
+            resize: 96,
+          },
+        ),
+        magickCompress(
+          src,
+          stdPath.resolve(this.#buildDir, dark),
+          {
+            background: darkBg,
+            resize: 96,
+          },
+        ),
       ]);
       experiences[company as keyof CompilePugOptions["experiences"]] = {
         alt,
