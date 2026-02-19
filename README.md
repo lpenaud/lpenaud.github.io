@@ -1,6 +1,13 @@
 # My personal page
 
-Just a simple portfolio / résumé.
+Just a simple résumé.
+
+## TODO
+
+- [ ] Add cover picture
+- [ ] Update profile picture
+- [ ] Fix profile picture in mobile
+- [ ] Set theme colors
 
 ## Dependencies
 
@@ -19,3 +26,9 @@ deno task build
 ```
 
 ## Serve
+
+Serve static file in build directory to localhost:8000.
+
+```console
+deno task serve
+```
