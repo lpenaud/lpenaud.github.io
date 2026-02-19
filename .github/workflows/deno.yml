@@ -38,6 +38,7 @@ jobs:
       - name: Install dependencies
         run: |
           brew install imagemagick
+          deno install
 
       - name: Build site
         run: deno task build
