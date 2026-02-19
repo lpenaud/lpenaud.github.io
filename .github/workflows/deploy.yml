@@ -58,7 +58,7 @@ jobs:
       - name: Install Homebrew dependencies
         id: install-homebrew-dependencies
         run: |
-          brew bundle install
+          brew bundle --no-upgrade install
 
       - name: Save Homebrew cache
         if: ${{ steps.cache-homebrew.outputs.cache-hit != 'true' }}
