@@ -26,12 +26,7 @@ export const pugConfig: PugConfig = {
       text: "Contact",
     },
   ],
-  navbarEndItems: [
-    {
-      href: "#blog",
-      text: "Blog",
-    },
-  ],
+  navbarEndItems: [],
   toolboxes,
   experiences,
   profile: {
