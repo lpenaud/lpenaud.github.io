@@ -46,7 +46,7 @@ jobs:
       - name: Install Homebrew dependencies
         id: install-homebrew-dependencies
         run: |
-          brew bundle --no-upgrade install
+          brew bundle install
 
       - name: Restore Deno cache
         uses: actions/cache/restore@v5
