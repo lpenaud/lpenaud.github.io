@@ -32,6 +32,7 @@ jobs:
 
     env:
       DENO_DIR: ${{ github.workspace }}/.deno_cache
+      HOMEBREW_NO_AUTO_UPDATE: 1
 
     steps:
       - name: Setup repo
