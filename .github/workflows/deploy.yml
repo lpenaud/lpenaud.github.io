@@ -55,7 +55,6 @@ jobs:
           echo "/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
         
       - name: Install Homebrew dependencies
-        if: ${{ steps.cache-homebrew.outputs.cache-hit != 'true' }}
         id: install-homebrew-dependencies
         run: |
           brew bundle install
