@@ -30,6 +30,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      DENO_DIR: ${{ github.workspace }}/.deno_cache
+
     steps:
       - name: Setup repo
         uses: actions/checkout@v4
@@ -66,9 +69,26 @@ jobs:
             /home/linuxbrew/.linuxbrew/Homebrew
           key: ${{ runner.os }}-brew-${{ hashFiles('Brewfile') }}
 
+      - name: Restore Deno cache
+        uses: actions/cache/restore@v5
+        id: cache-deno
+        with:
+          path: ${{ env.DENO_DIR }}
+          key: ${{ runner.os }}-deno-${{ hashFiles('deno.lock', 'deno.json') }}
+          restore-keys: |
+            ${{ runner.os }}-deno-
+  
       - name: Install Deno dependencies
+        if: ${{ steps.cache-deno.outputs.cache-hit != 'true' }}
         run: |
           deno install
+
+      - name: Save Homebrew cache
+        if: ${{ steps.cache-homebrew.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ env.DENO_DIR }}
+          key: ${{ runner.os }}-deno-${{ hashFiles('deno.lock', 'deno.json') }}
         
       - name: Build site
         run: |
