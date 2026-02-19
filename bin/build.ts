@@ -58,9 +58,16 @@ interface PictureEntry {
 }
 
 function getPicEntry(src: string, basename: string | undefined): PictureEntry {
+  const imgSrc = `img/${basename || stdPath.basename(src)}`;
+  if (src.startsWith("http")) {
+    return {
+      src: imgSrc,
+      url: new URL(src),
+    };
+  }
   return {
-    src: `img/${basename || stdPath.basename(src)}`,
-    url: src.startsWith("http") ? new URL(src) : stdPath.toFileUrl(src),
+    src: imgSrc,
+    url: stdPath.toFileUrl(stdPath.resolve(src)),
   };
 }
 

@@ -76,12 +76,12 @@ const backEnd: Toolbox = {
         {
           media: "(prefers-color-scheme: dark)",
           src: "https://deno.com/logos/icon-dark.svg",
-          basename: "deno-dark.svg"
+          basename: "deno-dark.svg",
         },
         {
           media: "(prefers-color-scheme: light)",
           src: "https://deno.com/logos/icon-light.svg",
-          basename: "deno-light.svg"
+          basename: "deno-light.svg",
         },
       ],
     },
@@ -194,8 +194,7 @@ const development: Toolbox = {
     },
     {
       alt: "Ant",
-      src:
-        "https://upload.wikimedia.org/wikipedia/commons/2/2f/Apache-Ant-logo.svg",
+      src: "https://www.apache.org/logos/originals/ant.svg",
     },
     {
       alt: "Gradle",
@@ -225,8 +224,7 @@ const devOps: Toolbox = {
     },
     {
       alt: "VirtualBox",
-      src:
-        "https://upload.wikimedia.org/wikipedia/commons/f/ff/VirtualBox_2024_Logo.svg",
+      src: "img/VirtualBox_2024_Logo.svg",
     },
     {
       alt: "YAML",
@@ -245,12 +243,12 @@ const documentation: Toolbox = {
     {
       alt: "Mkdocs",
       src:
-        "https://upload.wikimedia.org/wikipedia/commons/d/dd/MkDocs_Logo.png",
+        "img/MkDocs_Logo.png",
     },
     {
       alt: "Mermaid.js",
       src:
-        "https://upload.wikimedia.org/wikipedia/commons/7/77/Mermaid_Logo.svg",
+        "https://raw.githubusercontent.com/mermaid-js/mermaid-live-editor/refs/heads/develop/static/icons/mermaid.svg",
     },
     {
       alt: "UML",
