@@ -16,11 +16,9 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,12 +38,21 @@ jobs:
           deno install
 
       - name: Build site
-        run: deno task build
+        run: |
+          deno task build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v6.0.0
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./build
+
+  deploy:
+      needs: build
+
+      permissions:
+        pages: write      # to deploy to Pages
+        id-token: write   # to verify the deployment originates from an appropriate source
 
       - name: Deploy
         id: deployment
