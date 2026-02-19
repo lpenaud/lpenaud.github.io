@@ -132,8 +132,17 @@ interface MagickCompressOptions {
   outfile: string;
 }
 
-async function magickCompress({ background, infile, outfile }: MagickCompressOptions) {
-  const cmd = new Deno.Command("magick", {
+function createCommands(command: string | URL, options?: Deno.CommandOptions) {
+  if (options?.args) {
+    console.log(command, ...options.args);
+  }
+  return new Deno.Command(command, options);
+}
+
+async function magickCompress(
+  { background, infile, outfile }: MagickCompressOptions,
+) {
+  const cmd = createCommands("magick", {
     args: [
       infile,
       // Set background color
@@ -141,6 +150,10 @@ async function magickCompress({ background, infile, outfile }: MagickCompressOpt
       background,
       // Paint the background color
       "-flatten",
+      // Resize image to 96px
+      "-resize",
+      // Not upscaling the picture
+      "96x96>",
       // Remove all metadata
       "-strip",
       // Progressive (optimise loading)
@@ -175,7 +188,7 @@ interface CompilePugOptions extends Omit<PugConfig, "experiences"> {
   scripts: string[];
   experiences: {
     [k in keyof PugConfig["experiences"]]: Picture;
-  }
+  };
 }
 
 interface PugFilterOptions {
@@ -257,29 +270,6 @@ class Build {
     );
   }
 
-  async compressCompaniesLogo(options: PugConfig): Promise<CompilePugOptions["experiences"]> {
-    const lightBg = "hsl(221,14%,100%)"
-    const darkBg = "hsl(221,14%,9%)"
-    for (const [company,{ alt, src }] of Object.entries(options.experiences)) {
-      const path = stdPath.parse(src);
-      const light = stdPath.resolve(this.#buildDir, "img", `${path.name}.light.jpg`);
-      const dark = stdPath.resolve(this.#buildDir, "img", `${path.name}.dark.jpg`);
-      const commands = await Promise.all([
-        magickCompress({
-          background: lightBg,
-          infile: src,
-          outfile: light,
-        }),
-        magickCompress({
-          background: darkBg,
-          infile: src,
-          outfile: dark,
-        }),
-      ]);
-
-    }
-  }
-
   async getScripts(): Promise<string[]> {
     const entries = await Array.fromAsync(fs.walk("js", {
       exts: [".mjs"],
@@ -304,6 +294,7 @@ class Build {
       ...config,
       mainStyle: this.compileSass(),
       scripts: await this.getScripts(),
+      experiences: await this.#compressCompaniesLogo(config),
     };
   }
 
@@ -339,6 +330,40 @@ class Build {
       Deno.writeTextFileSync(dest, result);
       return stdPath.basename(dest);
     });
+  }
+
+  async #compressCompaniesLogo(
+    options: PugConfig,
+  ): Promise<CompilePugOptions["experiences"]> {
+    const lightBg = "hsl(221,14%,100%)";
+    const darkBg = "hsl(221,14%,9%)";
+    const experiences: Partial<CompilePugOptions["experiences"]> = {};
+    for (const [company, { alt, src }] of Object.entries(options.experiences)) {
+      const path = stdPath.parse(src);
+      const light = `img/${path.name}.light.jpg`;
+      const dark = `img/${path.name}.dark.jpg`;
+      await Promise.all([
+        magickCompress({
+          background: lightBg,
+          infile: src,
+          outfile: stdPath.resolve(this.#buildDir, light),
+        }),
+        magickCompress({
+          background: darkBg,
+          infile: src,
+          outfile: stdPath.resolve(this.#buildDir, dark),
+        }),
+      ]);
+      experiences[company as keyof CompilePugOptions["experiences"]] = {
+        alt,
+        src: light,
+        sources: [
+          { media: "(prefers-color-scheme: light)", src: light },
+          { media: "(prefers-color-scheme: dark)", src: dark },
+        ],
+      };
+    }
+    return experiences as CompilePugOptions["experiences"];
   }
 
   #getMaterialSrcPath(name: string) {
