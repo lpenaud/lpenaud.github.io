@@ -1,2 +1,2 @@
-imagemagick
-deno
+brew 'imagemagick'
+brew 'deno'
