@@ -15,7 +15,7 @@ on:
     branches: ["bulma"]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   test:
@@ -25,10 +25,6 @@ jobs:
       - name: Setup repo
         uses: actions/checkout@v4
 
-      - name: Setup Deno
-        id: set-up-deno
-        uses: denoland/setup-deno@v2.0.3
-
       - name: Setup Homebrew
         id: set-up-homebrew
         run: |
@@ -36,8 +32,9 @@ jobs:
           echo "/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
         
       - name: Install dependencies
+        id: install-dependencies
         run: |
-          brew install imagemagick
+          brew bundle install
           deno install
 
       - name: Build site
