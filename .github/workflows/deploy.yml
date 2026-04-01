@@ -35,8 +35,8 @@ jobs:
 
     steps:
       - name: Prepare env
-        run:
-          - echo "BUILD_ENV=GH_PAGES" >> $GITHUB_ENV
+        run: |
+          echo "BUILD_ENV=GH_PAGES" >> $GITHUB_ENV
 
       - name: Setup repo
         uses: actions/checkout@v4
