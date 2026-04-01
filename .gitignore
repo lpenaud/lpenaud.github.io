@@ -7,6 +7,7 @@ build/**/*.jpg
 build/**/*.webp
 build/**/*.js
 build/**/*.mjs
+build/**/*.map
 
 # Dist
 dist/
