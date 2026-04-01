@@ -2,194 +2,24 @@ import * as sass from "sass";
 import * as pug from "pug";
 import * as stdPath from "@std/path";
 import * as fs from "@std/fs";
-import { delay } from "@std/async/delay";
+import { bundle, BundleOptions } from "@deno/emit";
+import type { Picture, PugConfig, Toolbox } from "../config/types.d.ts";
+import { magickCompress } from "../src/magick.ts";
+import { copyFileVerb, mkdirp, nt, walk } from "../src/fs.ts";
+import { DownlaodPicture, downlaodPicture, genPic } from "../src/picture.ts";
 import { pugConfig } from "../config/data.ts";
-import type { Picture, PugConfig, Source, Toolbox } from "../config/types.d.ts";
+import { Watcher } from "./watch.ts";
+import { browserBundle, BrowserBundleOptions } from "./bundle.ts";
+import { IS_DEV } from "./env.ts";
 
-function mkdirp(path: string | URL) {
-  console.log("Make directory", path.toString());
-  return Deno.mkdir(path, {
-    recursive: true,
-  });
-}
-
-function copyFileVerb(src: string | URL, dest: string | URL) {
-  console.log("Copy", src.toString(), "to", dest.toString());
-  return Deno.copyFile(src, dest);
-}
-
-function tryStatsSync(f: string): Deno.FileInfo | null {
-  try {
-    return Deno.statSync(f);
-  } catch (error) {
-    if (error instanceof Deno.errors.NotFound) {
-      return null;
-    }
-    throw error;
-  }
-}
-
-async function tryStats(f: string): Promise<Deno.FileInfo | null> {
-  try {
-    return await Deno.stat(f);
-  } catch (error) {
-    if (error instanceof Deno.errors.NotFound) {
-      return null;
-    }
-    throw error;
-  }
-}
-
-function nt(src: string, dest: string): boolean {
-  const srcStat = Deno.statSync(src);
-  const destStat = tryStatsSync(dest);
-  if (destStat === null) {
-    return false;
-  }
-  if (srcStat.mtime === null || destStat.mtime === null) {
-    return false;
-  }
-  return destStat.mtime > srcStat.mtime;
-}
-
-interface PictureEntry {
-  src: string;
-  url: URL;
-}
-
-function getPicEntry(src: string, basename: string | undefined): PictureEntry {
-  const imgSrc = `img/${basename || stdPath.basename(src)}`;
-  if (src.startsWith("http")) {
-    return {
-      src: imgSrc,
-      url: new URL(src),
-    };
-  }
-  return {
-    src: imgSrc,
-    url: stdPath.toFileUrl(stdPath.resolve(src)),
-  };
-}
-
-interface DownlaodPicture {
-  picture: Picture;
-  urls: [src: string, url: URL][];
-}
-
-function* genPic(pictures: Picture[]): Generator<DownlaodPicture> {
-  for (const pic of pictures) {
-    const sources: Source[] = [];
-    const urls: DownlaodPicture["urls"] = [];
-    let entry: PictureEntry;
-    let src = pic.src;
-    if (src) {
-      entry = getPicEntry(src, pic.basename);
-      src = entry.src;
-      urls.push([entry.src, entry.url]);
-    }
-    if (pic.sources) {
-      for (const s of pic.sources) {
-        entry = getPicEntry(s.src, s.basename);
-        sources.push({
-          media: s.media,
-          src: entry.src,
-        });
-        urls.push([entry.src, entry.url]);
-      }
-    }
-    yield {
-      picture: {
-        sources,
-        src,
-        alt: pic.alt,
-      },
-      urls,
-    };
-  }
-}
-
-async function downlaodPicture(src: URL, dest: string): Promise<void> {
-  if ((await tryStats(dest)) !== null) {
-    return;
-  }
-  if (src.protocol === "file:") {
-    await copyFileVerb(src, dest);
-    return;
-  }
-  const res = await fetch(src);
-  console.log("Fetch", src.href);
-  if (!res.ok) {
-    try {
-      console.error(await res.text());
-    } catch (_error) {
-      // Ignore error
-    }
-    throw new Error(`${res.status} - ${res.statusText}`);
-  }
-  if (res.body === null) {
-    throw new Error(`No body found from: ${src}`);
-  }
-  await Deno.writeFile(dest, res.body);
-  console.log("Downlaod", src.href, "to", dest);
-}
-
-function createCommands(command: string | URL, options?: Deno.CommandOptions) {
-  if (options?.args) {
-    console.log(command, ...options.args);
-  }
-  return new Deno.Command(command, options);
-}
-
-interface MagickCompressOptions {
-  background?: string;
-  resize?: number;
-  blur?: number;
-}
-async function magickCompress(
-  infile: string,
-  outfile: string,
-  options: MagickCompressOptions = {},
-) {
-  const args: string[] = [infile];
-  if (options.background) {
-    args.push("-background", options.background, "-flatten");
-  }
-  if (options.resize) {
-    // Not upscaling the picture when resize
-    args.push("-resize", options.resize + ">");
-  }
-  // Remove all metadata
-  // Progressive (optimise loading)
-  args.push("-strip", "-interlace", "Plane");
-  // Blur to reduce file size
-  if (options.blur) {
-    args.push("-gaussian-blur", options.blur.toString());
-  }
-  const cmd = createCommands("magick", {
-    args: [
-      ...args,
-      // JPEG compression
-      "-quality",
-      "85%",
-      outfile,
-    ],
-    stdout: "inherit",
-    stderr: "inherit",
-  });
-  const output = await cmd.output();
-  if (!output.success) {
-    throw new Error(`magick exited with ${output.code} on '${infile}'`);
-  }
-}
-
-interface BuildOptions {
+export interface BuildOptions {
   nodeModules: string;
   buildDir: string;
   mainStyle: string;
   pages: string[];
 }
 
-interface CompilePugOptions extends Omit<PugConfig, "experiences"> {
+export interface CompilePugOptions extends Omit<PugConfig, "experiences"> {
   mainStyle: string;
   scripts: string[];
   experiences: {
@@ -197,11 +27,11 @@ interface CompilePugOptions extends Omit<PugConfig, "experiences"> {
   };
 }
 
-interface PugFilterOptions {
+export interface PugFilterOptions {
   filename: string;
 }
 
-class Build {
+export class Build {
   #nodeModules: string;
 
   #buildDir: string;
@@ -277,8 +107,8 @@ class Build {
   }
 
   async getScripts(): Promise<string[]> {
-    const entries = await Array.fromAsync(fs.walk("js", {
-      exts: [".mjs"],
+    const entries = await Array.fromAsync(walk("js", {
+      exts: [".ts", ".mjs", ".js"],
       includeFiles: true,
       includeDirs: false,
       includeSymlinks: false,
@@ -288,10 +118,16 @@ class Build {
     }
     const outdir = stdPath.join(this.#buildDir, "js");
     await mkdirp(outdir);
+    const bundleOptions: BrowserBundleOptions = {
+      minify: IS_DEV,
+      sourceMap: IS_DEV,
+    };
     await Promise.all(
-      entries.map((e) => copyFileVerb(e.path, stdPath.join(outdir, e.name))),
+      entries.map((e) =>
+        browserBundle(e.path, stdPath.join(outdir, `${e.name}.js`), bundleOptions)
+      ),
     );
-    return entries.map(({ name }) => `js/${name}`);
+    return entries.map(e => `js/${e.name}.js`)
   }
 
   async getCompileOptions(config: PugConfig): Promise<CompilePugOptions> {
@@ -306,6 +142,7 @@ class Build {
   }
 
   compilePug(options: CompilePugOptions): string[] {
+    console.error(options);
     return this.#pages.map((p) => {
       const name = stdPath.basename(p, ".pug");
       const dest = stdPath.join(this.#buildDir, `${name}.html`);
@@ -342,9 +179,7 @@ class Build {
   async #compressProfile(config: PugConfig) {
     const infile = config.profile.picture.src;
     const outfile = stdPath.resolve(this.#buildDir, infile);
-    await magickCompress(infile, outfile, {
-      // resize: 512,
-    });
+    await magickCompress(infile, outfile);
   }
 
   async #compressCompaniesLogo(
@@ -396,62 +231,7 @@ class Build {
   }
 }
 
-interface WatcherOptions {
-  ms: number;
-  dirs: string[] | string;
-}
-
-class Watcher {
-  #watch: Deno.FsWatcher;
-
-  #task: Promise<void> | null;
-
-  #ms: number;
-
-  #entries: Set<string>;
-
-  constructor({ dirs, ms }: WatcherOptions) {
-    this.#watch = Deno.watchFs(dirs, {
-      recursive: true,
-    });
-    this.#ms = ms;
-    this.#entries = new Set();
-    this.#task = null;
-  }
-
-  async #start() {
-    for await (const entry of this.#watch) {
-      for (const p of entry.paths) {
-        this.#entries.add(p);
-      }
-    }
-  }
-
-  async close() {
-    this.#watch.close();
-    if (this.#task !== null) {
-      await this.#task;
-    }
-  }
-
-  [Symbol.asyncDispose]() {
-    return this.close();
-  }
-
-  async *[Symbol.asyncIterator]() {
-    this.#task = this.#start();
-    while (this.#task !== null) {
-      await delay(this.#ms);
-      if (this.#entries.size > 0) {
-        const old = Array.from(this.#entries);
-        this.#entries = new Set();
-        yield old;
-      }
-    }
-  }
-}
-
-async function main(args: string[]): Promise<number> {
+export async function build(args: string[]): Promise<number> {
   const watch = args.shift() === "watch";
   const build = await Build.fromEnv();
   const pugOptions = await build.getCompileOptions(pugConfig);
@@ -476,8 +256,4 @@ async function main(args: string[]): Promise<number> {
     }
   }
   return 0;
-}
-
-if (import.meta.main) {
-  main(Deno.args.slice()).then(Deno.exit);
 }

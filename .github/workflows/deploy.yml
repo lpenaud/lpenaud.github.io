@@ -32,6 +32,7 @@ jobs:
 
     env:
       DENO_DIR: ${{ github.workspace }}/.deno_cache
+      BUILD_ENV: "GH_PAGES"
 
     steps:
       - name: Setup repo

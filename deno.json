@@ -1,10 +1,11 @@
 {
   "tasks": {
-    "build": "deno run --allow-read --allow-write --allow-sys --allow-env --allow-net --allow-run=magick bin/build.ts",
+    "build": "deno run --allow-read --allow-write --allow-sys --allow-env --allow-net --allow-run=magick bin/main.ts build",
     "watch": "deno run --allow-read --allow-write --allow-sys --allow-env --allow-net --allow-run=magick bin/build.ts watch",
-    "serve": "deno run --allow-read --allow-net --allow-run bin/serve.ts"
+    "serve": "deno run --allow-read --allow-net --allow-sys --allow-env --allow-run bin/main.ts serve"
   },
   "imports": {
+    "@deno/emit": "jsr:@deno/emit@^0.46.0",
     "@mdi/svg": "npm:@mdi/svg@^7.4.47",
     "@std/async": "jsr:@std/async@^1.0.15",
     "@std/fs": "jsr:@std/fs@^1.0.20",
