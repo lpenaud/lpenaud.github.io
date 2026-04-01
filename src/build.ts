@@ -119,8 +119,8 @@ export class Build {
     const outdir = stdPath.join(this.#buildDir, "js");
     await mkdirp(outdir);
     const bundleOptions: BrowserBundleOptions = {
-      minify: IS_DEV,
-      sourceMap: IS_DEV,
+      minify: !IS_DEV,
+      sourceMap: !IS_DEV,
     };
     await Promise.all(
       entries.map((e) =>
@@ -142,7 +142,6 @@ export class Build {
   }
 
   compilePug(options: CompilePugOptions): string[] {
-    console.error(options);
     return this.#pages.map((p) => {
       const name = stdPath.basename(p, ".pug");
       const dest = stdPath.join(this.#buildDir, `${name}.html`);
