@@ -32,9 +32,12 @@ jobs:
 
     env:
       DENO_DIR: ${{ github.workspace }}/.deno_cache
-      BUILD_ENV: "GH_PAGES"
 
     steps:
+      - name: Prepare env
+        run:
+          - echo "BUILD_ENV=GH_PAGES" >> $GITHUB_ENV
+
       - name: Setup repo
         uses: actions/checkout@v4
 
