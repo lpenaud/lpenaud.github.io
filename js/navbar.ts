@@ -7,8 +7,10 @@ function tryUrl(url: string) {
 }
 
 function getNavbarLinks() {
-  const entries = Array.from(document.querySelectorAll<HTMLAnchorElement>("a.navbar-item"))
-    .map<[string, HTMLAnchorElement]>(e => {
+  const entries = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>("a.navbar-item"),
+  )
+    .map<[string, HTMLAnchorElement]>((e) => {
       const url = tryUrl(e.href);
       return url !== null && url.hash ? [url.hash.substring(1), e] : ["", e];
     })
@@ -45,7 +47,9 @@ function activeLinks() {
 }
 
 function getSections(): HTMLElement[] {
-  return Array.from(document.querySelectorAll<HTMLElement>("div.container > section"))
+  return Array.from(
+    document.querySelectorAll<HTMLElement>("div.container > section"),
+  )
     .filter((s) => s.id);
 }
 

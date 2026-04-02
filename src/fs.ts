@@ -8,7 +8,11 @@ export function mkdirp(path: string | URL) {
   });
 }
 
-export async function writeTextFile<P extends string | URL>(path: P, data: string | ReadableStream<string>, options?: Deno.WriteFileOptions): Promise<P> {
+export async function writeTextFile<P extends string | URL>(
+  path: P,
+  data: string | ReadableStream<string>,
+  options?: Deno.WriteFileOptions,
+): Promise<P> {
   await Deno.writeTextFile(path, data, options);
   return path;
 }
@@ -57,6 +61,6 @@ export async function* walk(root: string | URL, options?: fs.WalkOptions) {
     yield {
       ...entry,
       ...stdPath.parse(entry.path),
-    }
+    };
   }
 }

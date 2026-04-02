@@ -1,10 +1,11 @@
 import { serveDir } from "@std/http/file-server";
 import { open } from "./command.ts";
+import { BUILD_DIR } from "./env.ts";
 
 export async function serve(): Promise<number> {
   const server = Deno.serve((req) =>
     serveDir(req, {
-      fsRoot: "build",
+      fsRoot: BUILD_DIR,
     })
   );
   await open(`http://${server.addr.hostname}:${server.addr.port}`);

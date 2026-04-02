@@ -242,8 +242,7 @@ const documentation: Toolbox = {
   tools: [
     {
       alt: "Mkdocs",
-      src:
-        "img/MkDocs_Logo.png",
+      src: "img/MkDocs_Logo.png",
     },
     {
       alt: "Mermaid.js",

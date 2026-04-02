@@ -47,7 +47,7 @@ jobs:
         run: |
           echo "/home/linuxbrew/.linuxbrew/bin"  >> $GITHUB_PATH
           echo "/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
-        
+
       - name: Install Homebrew dependencies
         id: install-homebrew-dependencies
         run: |
@@ -61,7 +61,7 @@ jobs:
           key: ${{ runner.os }}-deno-${{ hashFiles('deno.lock', 'deno.json') }}
           restore-keys: |
             ${{ runner.os }}-deno-
-  
+
       - name: Install Deno dependencies
         if: ${{ steps.cache-deno.outputs.cache-hit != 'true' }}
         run: |
@@ -73,7 +73,7 @@ jobs:
         with:
           path: ${{ env.DENO_DIR }}
           key: ${{ runner.os }}-deno-${{ hashFiles('deno.lock', 'deno.json') }}
-        
+
       - name: Build site
         run: |
           deno task build
@@ -90,12 +90,12 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
+
     needs: build
 
     permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
 
     steps:
       - name: Deploy

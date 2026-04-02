@@ -1,16 +1,14 @@
 import * as sass from "sass";
 import * as pug from "pug";
 import * as stdPath from "@std/path";
-import * as fs from "@std/fs";
-import { bundle, BundleOptions } from "@deno/emit";
 import type { Picture, PugConfig, Toolbox } from "../config/types.d.ts";
 import { magickCompress } from "../src/magick.ts";
-import { copyFileVerb, mkdirp, nt, walk } from "../src/fs.ts";
+import { mkdirp, nt, walk } from "../src/fs.ts";
 import { DownlaodPicture, downlaodPicture, genPic } from "../src/picture.ts";
 import { pugConfig } from "../config/data.ts";
 import { Watcher } from "./watch.ts";
 import { browserBundle, BrowserBundleOptions } from "./bundle.ts";
-import { IS_DEV } from "./env.ts";
+import { BUILD_DIR, IS_DEV } from "./env.ts";
 
 export interface BuildOptions {
   nodeModules: string;
@@ -42,11 +40,10 @@ export class Build {
 
   static async fromEnv(): Promise<Build> {
     const nodeModules = "node_modules";
-    const buildDir = "build";
-    await mkdirp(stdPath.join(buildDir, "img"));
+    await mkdirp(stdPath.join(BUILD_DIR, "img"));
     return new Build({
       nodeModules,
-      buildDir,
+      buildDir: BUILD_DIR,
       mainStyle: "style/main.scss",
       pages: ["template/index.pug"],
     });
@@ -69,6 +66,8 @@ export class Build {
     }
     const result = sass.compile(this.#mainStyle, {
       loadPaths: [this.#nodeModules],
+      style: IS_DEV ? "expanded" : "compressed",
+      sourceMapIncludeSources: IS_DEV,
     });
     Deno.writeTextFileSync(dest, result.css);
     return stdPath.basename(dest);
@@ -124,10 +123,14 @@ export class Build {
     };
     await Promise.all(
       entries.map((e) =>
-        browserBundle(e.path, stdPath.join(outdir, `${e.name}.js`), bundleOptions)
+        browserBundle(
+          e.path,
+          stdPath.join(outdir, `${e.name}.js`),
+          bundleOptions,
+        )
       ),
     );
-    return entries.map(e => `js/${e.name}.js`)
+    return entries.map((e) => `js/${e.name}.js`);
   }
 
   async getCompileOptions(config: PugConfig): Promise<CompilePugOptions> {
@@ -146,6 +149,7 @@ export class Build {
       const name = stdPath.basename(p, ".pug");
       const dest = stdPath.join(this.#buildDir, `${name}.html`);
       const compiler = pug.compileFile(p, {
+        compileDebug: IS_DEV,
         filters: {
           "material-icon": (
             _text: string,

@@ -7,7 +7,10 @@ export interface PictureEntry {
   url: URL;
 }
 
-export function getPicEntry(src: string, basename: string | undefined): PictureEntry {
+export function getPicEntry(
+  src: string,
+  basename: string | undefined,
+): PictureEntry {
   const imgSrc = `img/${basename || stdPath.basename(src)}`;
   if (src.startsWith("http")) {
     return {
