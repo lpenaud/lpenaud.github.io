@@ -31,6 +31,19 @@ export interface Profile {
   picture: Required<Pick<Picture, "src">> & Picture;
 }
 
+export type I18nKeys =
+  | "footer.develop.with"
+  | "footer.love"
+  | "footer.with.help";
+
+export type I18nLanguagesCode = "fr-FR" | "en";
+
+export type I18n = {
+  [c in I18nLanguagesCode]?: {
+    [k in I18nKeys]?: string;
+  };
+};
+
 export interface PugConfig {
   navbarStartItems: NavbarItem[];
   navbarEndItems: NavbarItem[];
@@ -42,4 +55,5 @@ export interface PugConfig {
     zip: Experience;
   };
   profile: Profile;
+  i18n: I18n;
 }

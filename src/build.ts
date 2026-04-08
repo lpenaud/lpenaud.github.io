@@ -1,7 +1,13 @@
 import * as sass from "sass";
 import * as pug from "pug";
 import * as stdPath from "@std/path";
-import type { Picture, PugConfig, Toolbox } from "../config/types.d.ts";
+import type {
+  I18nKeys,
+  I18nLanguagesCode,
+  Picture,
+  PugConfig,
+  Toolbox,
+} from "../config/types.d.ts";
 import { magickCompress } from "../src/magick.ts";
 import { mkdirp, nt, walk } from "../src/fs.ts";
 import { DownlaodPicture, downlaodPicture, genPic } from "../src/picture.ts";
@@ -145,9 +151,9 @@ export class Build {
   }
 
   compilePug(options: CompilePugOptions): string[] {
-    return this.#pages.map((p) => {
+    const languages = Object.keys(options.i18n);
+    const locales = this.#pages.flatMap((p) => {
       const name = stdPath.basename(p, ".pug");
-      const dest = stdPath.join(this.#buildDir, `${name}.html`);
       const compiler = pug.compileFile(p, {
         compileDebug: IS_DEV,
         filters: {
@@ -173,10 +179,29 @@ export class Build {
           },
         },
       });
-      const result = compiler(options);
-      Deno.writeTextFileSync(dest, result);
-      return stdPath.basename(dest);
+      return (Object.keys(options.i18n) as I18nLanguagesCode[]).map(lang => {
+        const dest = stdPath.join(this.#buildDir, `${name}.${lang}.html`);
+        const result = compiler({
+          ...options,
+          lang,
+          languages,
+          "t": (text: I18nKeys) => {
+            return options.i18n[lang]![text] ?? "";
+          },
+        });
+        Deno.writeTextFileSync(dest, result);
+        return stdPath.basename(dest);
+      });
     });
+    const compiler = pug.compileFile("template/languages.pug", {
+      compileDebug: IS_DEV,
+    });
+    const result = compiler({
+      languages,
+    });
+    const dest = stdPath.join(this.#buildDir, "index.html");
+    Deno.writeTextFileSync(dest, result);
+    return ["index.html", ...locales];
   }
 
   async #compressProfile(config: PugConfig) {

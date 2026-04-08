@@ -42,7 +42,7 @@ block content
     include content/contact.pug
 
 block footer
-  p Développé avec #[strong passion] avec :
+  p #{t("footer.develop.with")} #[strong= t("footer.love")] #{t("footer.with.help")}
   ul
     li
       +ab("https://deno.com/", "Deno") 

@@ -35,4 +35,16 @@ export const pugConfig: PugConfig = {
       src: "img/profile.flop.jpg",
     },
   },
+  i18n: {
+    "fr-FR": {
+      "footer.develop.with": "Développé avec",
+      "footer.love": "amour",
+      "footer.with.help": "à l'aide de : "
+    },
+    "en": {
+      "footer.develop.with": "Develop with",
+      "footer.love": "love",
+      "footer.with.help": "with help from: "
+    }
+  }
 };

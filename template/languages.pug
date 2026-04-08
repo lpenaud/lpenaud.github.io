@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title PENAUD Loïc
+    script(type="module").
+      import { automaticRedirect } from "./js/redirect.js";
+
+      (() => {
+        automaticRedirect();
+      })();
+  body
+    p If JavaScript is enabled, you will be redirected automatically.
+    ul(id="languages-list")
+      each lang in languages
+        li
+          a(href=`/index.${lang}.html`)= lang
